@@ -1,10 +1,16 @@
-import { FieldMetadataType, RelationType } from 'twenty-shared/types';
+import { CoreObjectNamePlural } from '@/object-metadata/types/CoreObjectNamePlural';
+import {
+  CoreObjectNameSingular,
+  FieldMetadataType,
+  RelationType,
+} from 'twenty-shared/types';
 import { type FieldMetadataItem } from '@/object-metadata/types/FieldMetadataItem';
 import { type EnrichedObjectMetadataItem } from '@/object-metadata/types/EnrichedObjectMetadataItem';
 import { type RecordGqlFields } from '@/object-record/graphql/record-gql-fields/types/RecordGqlFields';
 import { buildIdentifierGqlFields } from '@/object-record/graphql/record-gql-fields/utils/buildIdentifierGqlFields';
+import { generateActivityTargetGqlFields } from '@/object-record/graphql/record-gql-fields/utils/generateActivityTargetGqlFields';
 import { generateJunctionRelationGqlFields } from '@/object-record/graphql/record-gql-fields/utils/generateJunctionRelationGqlFields';
-import { getReverseJunctionConfig } from '@/object-record/record-field/ui/utils/junction/getReverseJunctionConfig';
+import { isJunctionRelationField } from '@/object-record/record-field/ui/utils/junction/isJunctionRelationField';
 import {
   computeMorphRelationGqlFieldName,
   isDefined,
@@ -20,8 +26,6 @@ export type GenerateDepthRecordGqlFieldsFromFields = {
     | 'nameSingular'
     | 'namePlural'
   >[];
-  // Required to resolve the junction records held by the reverse side of a junction
-  sourceObjectMetadataItem?: Pick<EnrichedObjectMetadataItem, 'id'>;
   fields: Pick<
     FieldMetadataItem,
     'id' | 'name' | 'type' | 'settings' | 'morphRelations' | 'relation'
@@ -32,7 +36,6 @@ export type GenerateDepthRecordGqlFieldsFromFields = {
 
 export const generateDepthRecordGqlFieldsFromFields = ({
   objectMetadataItems,
-  sourceObjectMetadataItem,
   fields,
   depth,
   shouldOnlyLoadRelationIdentifiers = true,
@@ -59,37 +62,40 @@ export const generateDepthRecordGqlFieldsFromFields = ({
           );
         }
 
-        const reverseJunctionConfig = getReverseJunctionConfig({
-          junctionObjectMetadataId: targetObjectMetadataItem.id,
-          sourceObjectMetadataId: sourceObjectMetadataItem?.id,
-          objectMetadataItems,
-        });
+        const isActivityTargetField =
+          fieldMetadata.name === CoreObjectNamePlural.NoteTarget ||
+          fieldMetadata.name === CoreObjectNamePlural.TaskTarget;
 
-        if (isDefined(reverseJunctionConfig) && depth === 1) {
+        if (isActivityTargetField && depth === 1) {
+          const activityTargetObjectNameSingular =
+            fieldMetadata.name === CoreObjectNamePlural.NoteTarget
+              ? CoreObjectNameSingular.Note
+              : CoreObjectNameSingular.Task;
+
+          const activityTargetGqlFields = generateActivityTargetGqlFields({
+            activityObjectNameSingular: activityTargetObjectNameSingular,
+            objectMetadataItems,
+            loadRelations: 'activity',
+          });
+
           return {
             ...recordGqlFields,
-            [fieldMetadata.name]: {
-              ...buildIdentifierGqlFields(
-                reverseJunctionConfig.junctionObjectMetadata,
-              ),
-              [reverseJunctionConfig.relationFieldName]:
-                buildIdentifierGqlFields(
-                  reverseJunctionConfig.relatedObjectMetadata,
-                ),
-            },
+            [fieldMetadata.name]: activityTargetGqlFields,
           };
         }
 
-        const junctionGqlFields = generateJunctionRelationGqlFields({
-          fieldMetadataItem: fieldMetadata,
-          objectMetadataItems,
-        });
+        if (isJunctionRelationField(fieldMetadata)) {
+          const junctionGqlFields = generateJunctionRelationGqlFields({
+            fieldMetadataItem: fieldMetadata,
+            objectMetadataItems,
+          });
 
-        if (isDefined(junctionGqlFields) && depth === 1) {
-          return {
-            ...recordGqlFields,
-            [fieldMetadata.name]: junctionGqlFields,
-          };
+          if (isDefined(junctionGqlFields) && depth === 1) {
+            return {
+              ...recordGqlFields,
+              [fieldMetadata.name]: junctionGqlFields,
+            };
+          }
         }
 
         const relationIdentifierSubGqlFields = buildIdentifierGqlFields(

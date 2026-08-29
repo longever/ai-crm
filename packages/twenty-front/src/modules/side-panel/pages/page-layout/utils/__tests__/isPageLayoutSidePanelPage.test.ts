@@ -5,7 +5,6 @@ describe('isPageLayoutSidePanelPage', () => {
   const pageLayoutPages: SidePanelPages[] = [
     SidePanelPages.PageLayoutDashboardWidgetTypeSelect,
     SidePanelPages.PageLayoutTabSettings,
-    SidePanelPages.PageLayoutWidgetSettings,
     SidePanelPages.DashboardChartSettings,
     SidePanelPages.DashboardIframeSettings,
     SidePanelPages.DashboardRecordTableSettings,
@@ -24,7 +23,6 @@ describe('isPageLayoutSidePanelPage', () => {
   const nonPageLayoutPages: SidePanelPages[] = [
     SidePanelPages.ViewRecord,
     SidePanelPages.AskAI,
-    SidePanelPages.ComposeCalendarEvent,
     SidePanelPages.ComposeEmail,
     SidePanelPages.SearchRecords,
     SidePanelPages.ViewFrontComponent,

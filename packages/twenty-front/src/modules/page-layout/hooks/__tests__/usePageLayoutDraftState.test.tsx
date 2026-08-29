@@ -4,7 +4,6 @@ import {
   AggregateOperations,
   BarChartLayout,
   GraphOrderBy,
-  PageLayoutTabLayoutMode,
   PageLayoutType,
   WidgetConfigurationType,
   WidgetType,
@@ -109,14 +108,7 @@ describe('usePageLayoutDraftState', () => {
                 title: 'New Widget',
                 isActive: true,
                 type: WidgetType.GRAPH,
-                position: {
-                  __typename: 'PageLayoutWidgetGridPosition' as const,
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
-                  row: 2,
-                  column: 2,
-                  rowSpan: 2,
-                  columnSpan: 2,
-                },
+                gridPosition: { row: 2, column: 2, rowSpan: 2, columnSpan: 2 },
                 configuration: {
                   configurationType: WidgetConfigurationType.BAR_CHART,
                   layout: BarChartLayout.VERTICAL,

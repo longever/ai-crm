@@ -72,10 +72,6 @@ const StyledLinkContainer = styled.div`
   width: 100%;
 `;
 
-const StyledTextInputContainer = styled.div`
-  width: 100%;
-`;
-
 type AttachmentRowProps = {
   attachment: AttachmentWithFile;
   onPreview?: (attachment: AttachmentWithFile) => void;
@@ -101,7 +97,6 @@ export const AttachmentRow = ({
   const fileCategory = getFileCategoryFromExtension(attachment.file.extension);
 
   const fileUrl = attachment.file.url;
-  const safeFileUrl = getSafeUrl(fileUrl);
 
   const { destroyOneRecord: destroyOneAttachment } = useDestroyOneRecord({
     objectNameSingular: CoreObjectNameSingular.Attachment,
@@ -158,29 +153,14 @@ export const AttachmentRow = ({
     downloadFile(fileUrl, `${attachmentFileName}${attachmentFileExtension}`);
   };
 
-  const handleRowClick = () => {
-    if (isDefined(onPreview)) {
-      onPreview(attachment);
-      return;
-    }
-
-    if (!isDefined(safeFileUrl)) {
-      return;
-    }
-
-    window.open(safeFileUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleFileLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.stopPropagation();
-
+  const handleOpenDocument = (e: React.MouseEvent) => {
     // Cmd/Ctrl+click opens new tab, right click opens context menu
-    if (isNavigationModifierPressed(event) === true) {
+    if (isNavigationModifierPressed(e) === true) {
       return;
     }
 
     if (isDefined(onPreview)) {
-      event.preventDefault();
+      e.preventDefault();
       onPreview(attachment);
     }
   };
@@ -193,27 +173,23 @@ export const AttachmentRow = ({
         } as GenericFieldContextType
       }
     >
-      <ActivityRow onClick={handleRowClick} disabled={isEditing}>
+      <ActivityRow disabled>
         <StyledLeftContent>
           <FileIcon fileCategory={fileCategory} thumbnailUrl={fileUrl} />
           {isEditing ? (
-            <StyledTextInputContainer
-              onClick={(event) => event.stopPropagation()}
-            >
-              <SettingsTextInput
-                instanceId={`attachment-${attachment.id}-name`}
-                value={attachmentFileName}
-                onChange={handleOnChange}
-                onBlur={handleOnBlur}
-                autoFocus
-                onKeyDown={handleOnKeyDown}
-              />
-            </StyledTextInputContainer>
+            <SettingsTextInput
+              instanceId={`attachment-${attachment.id}-name`}
+              value={attachmentFileName}
+              onChange={handleOnChange}
+              onBlur={handleOnBlur}
+              autoFocus
+              onKeyDown={handleOnKeyDown}
+            />
           ) : (
             <StyledLinkContainer>
               <StyledLink
-                onClick={handleFileLinkClick}
-                href={safeFileUrl}
+                onClick={handleOpenDocument}
+                href={getSafeUrl(fileUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
               >

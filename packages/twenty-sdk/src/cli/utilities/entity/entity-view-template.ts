@@ -1,7 +1,6 @@
 import { kebabCase } from '@/cli/utilities/string/kebab-case';
 import { getFieldUniversalIdentifier } from 'twenty-shared/application';
-import { VIEW_TYPE_DEFAULT_ICONS } from 'twenty-shared/constants';
-import { ViewType } from 'twenty-shared/types';
+import { type ViewType } from 'twenty-shared/types';
 import { v4 } from 'uuid';
 
 type ViewFieldTemplateBase = {
@@ -94,7 +93,6 @@ ${fields
       : defaultFields;
 
   const typeBlock = type !== undefined ? `  type: '${type}',\n` : '';
-  const icon = VIEW_TYPE_DEFAULT_ICONS[type ?? ViewType.TABLE];
 
   const imports = `import { defineView } from 'twenty-sdk/define';`;
 
@@ -104,7 +102,7 @@ export default defineView({
   universalIdentifier: '${universalIdentifier}',
   name: '${kebabCaseName}',
   objectUniversalIdentifier: '${objectUniversalIdentifier}',
-${typeBlock}  icon: '${icon}',
+${typeBlock}  icon: 'IconList',
   position: 0,
 ${fieldsBlock}
   // filters: [

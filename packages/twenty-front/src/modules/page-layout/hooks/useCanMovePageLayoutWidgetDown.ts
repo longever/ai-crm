@@ -1,12 +1,10 @@
 import { PageLayoutComponentInstanceContext } from '@/page-layout/states/contexts/PageLayoutComponentInstanceContext';
 import { pageLayoutDraftComponentState } from '@/page-layout/states/pageLayoutDraftComponentState';
-import { getAdjacentFitContentWidgetIndex } from '@/page-layout/utils/getAdjacentFitContentWidgetIndex';
 import { sortWidgetsByVerticalListPosition } from '@/page-layout/utils/sortWidgetsByVerticalListPosition';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
 import { useAtomComponentStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateCallbackState';
 import { useStore } from 'jotai';
 import { useCallback } from 'react';
-import { isDefined } from 'twenty-shared/utils';
 import { PageLayoutTabLayoutMode } from '~/generated-metadata/graphql';
 
 export const useCanMovePageLayoutWidgetDown = (
@@ -42,13 +40,7 @@ export const useCanMovePageLayoutWidgetDown = (
         (widget) => widget.id === widgetId,
       );
 
-      return isDefined(
-        getAdjacentFitContentWidgetIndex({
-          widgets: sortedWidgets,
-          widgetIndex,
-          direction: 'down',
-        }),
-      );
+      return widgetIndex >= 0 && widgetIndex < sortedWidgets.length - 1;
     },
     [pageLayoutDraftState, store],
   );

@@ -10,7 +10,7 @@ const FIND_MANY_MARKETPLACE_APPS_QUERY = `
       description
       author
       category
-      logoUrl
+      logo
       sourcePackage
       isVetted
     }
@@ -23,7 +23,7 @@ type ApiMarketplaceApp = {
   description: string;
   author: string;
   category: string;
-  logoUrl?: string | null;
+  logo?: string | null;
   sourcePackage?: string | null;
   isVetted: boolean;
 };
@@ -39,7 +39,7 @@ const normalizeApp = (apiApp: ApiMarketplaceApp): MarketplaceApp => ({
   tagline: apiApp.description,
   author: apiApp.author,
   category: apiApp.category,
-  logoUrl: apiApp.logoUrl ?? undefined,
+  logoUrl: apiApp.logo ?? undefined,
   sourcePackage: apiApp.sourcePackage ?? undefined,
   isVetted: apiApp.isVetted,
 });

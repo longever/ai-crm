@@ -10,9 +10,7 @@ import { PendingFileCleanupCronCommand } from 'src/engine/core-modules/file/file
 import { PendingFileCleanupCronJob } from 'src/engine/core-modules/file/file-upload/crons/jobs/pending-file-cleanup.cron.job';
 import { FileUploadTokenGuard } from 'src/engine/core-modules/file/file-upload/guards/file-upload-token.guard';
 import { FileUploadResolver } from 'src/engine/core-modules/file/file-upload/resolvers/file-upload.resolver';
-import { FileUploadCompletionService } from 'src/engine/core-modules/file/file-upload/services/file-upload-completion.service';
 import { FileUploadService } from 'src/engine/core-modules/file/file-upload/services/file-upload.service';
-import { FileUploadTargetService } from 'src/engine/core-modules/file/file-upload/services/file-upload-target.service';
 import { PendingFileCleanupService } from 'src/engine/core-modules/file/file-upload/services/pending-file-cleanup.service';
 import { FileUrlModule } from 'src/engine/core-modules/file/file-url/file-url.module';
 import { JwtModule } from 'src/engine/core-modules/jwt/jwt.module';
@@ -35,8 +33,6 @@ import { provideWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspac
   ],
   providers: [
     FileUploadService,
-    FileUploadTargetService,
-    FileUploadCompletionService,
     FileUploadResolver,
     FileUploadTokenGuard,
     PendingFileCleanupService,
@@ -44,12 +40,7 @@ import { provideWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspac
     PendingFileCleanupCronCommand,
     provideWorkspaceScopedRepository(FileEntity),
   ],
-  exports: [
-    FileUploadService,
-    FileUploadTargetService,
-    FileUploadCompletionService,
-    PendingFileCleanupCronCommand,
-  ],
+  exports: [FileUploadService, PendingFileCleanupCronCommand],
   controllers: [FileUploadController],
 })
 export class FileUploadModule {}

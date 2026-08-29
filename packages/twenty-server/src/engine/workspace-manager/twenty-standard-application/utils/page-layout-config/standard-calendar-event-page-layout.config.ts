@@ -2,13 +2,12 @@ import {
   STANDARD_OBJECTS,
   STANDARD_PAGE_LAYOUT_UNIVERSAL_IDENTIFIERS,
 } from 'twenty-shared/metadata';
-import {
-  PageLayoutTabLayoutMode,
-  PageLayoutType,
-  WidgetType,
-} from 'twenty-shared/types';
+import { PageLayoutTabLayoutMode } from 'twenty-shared/types';
 
+import { WidgetType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-type.enum';
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 import {
+  GRID_POSITIONS,
   TAB_PROPS,
   VERTICAL_LIST_LAYOUT_POSITIONS,
   WIDGET_PROPS,
@@ -37,6 +36,7 @@ const CALENDAR_EVENT_PAGE_TABS = {
             .tabs.home.widgets.participants.universalIdentifier,
         title: 'Participants',
         type: WidgetType.FIELD,
+        gridPosition: GRID_POSITIONS.FULL_WIDTH,
         position: VERTICAL_LIST_LAYOUT_POSITIONS.SECOND,
         fieldUniversalIdentifier:
           STANDARD_OBJECTS.calendarEvent.fields.calendarEventParticipants
@@ -48,6 +48,7 @@ const CALENDAR_EVENT_PAGE_TABS = {
             .tabs.home.widgets.callRecordings.universalIdentifier,
         title: 'Call Recordings',
         type: WidgetType.FIELD,
+        gridPosition: GRID_POSITIONS.FULL_WIDTH,
         position: VERTICAL_LIST_LAYOUT_POSITIONS.THIRD,
         fieldUniversalIdentifier:
           STANDARD_OBJECTS.calendarEvent.fields.callRecordings
@@ -84,6 +85,7 @@ const CALENDAR_EVENT_PAGE_TABS = {
             .tabs.summary.widgets.summary.universalIdentifier,
         title: 'Summary',
         type: WidgetType.CALL_RECORDING_SUMMARY,
+        gridPosition: GRID_POSITIONS.FULL_WIDTH,
         position: VERTICAL_LIST_LAYOUT_POSITIONS.FIRST,
       },
     },
@@ -103,6 +105,7 @@ const CALENDAR_EVENT_PAGE_TABS = {
             .tabs.callRecording.widgets.transcript.universalIdentifier,
         title: 'Transcript',
         type: WidgetType.CALL_RECORDING_TRANSCRIPT,
+        gridPosition: GRID_POSITIONS.FULL_WIDTH,
         position: VERTICAL_LIST_LAYOUT_POSITIONS.FIRST,
       },
     },

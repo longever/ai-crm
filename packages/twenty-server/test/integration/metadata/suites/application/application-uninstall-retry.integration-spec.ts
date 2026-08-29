@@ -28,7 +28,6 @@ type InstalledApplication = {
 const SUCCESSFUL_EXECUTION_RESULT = {
   data: {},
   duration: 1,
-  billedDurationMs: 1,
   logs: '',
   status: LogicFunctionExecutionStatus.SUCCESS,
 };
@@ -36,7 +35,6 @@ const SUCCESSFUL_EXECUTION_RESULT = {
 const FAILED_EXECUTION_RESULT = {
   data: null,
   duration: 1,
-  billedDurationMs: 1,
   logs: '',
   status: LogicFunctionExecutionStatus.ERROR,
   error: {

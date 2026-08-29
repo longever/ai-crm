@@ -80,7 +80,6 @@ const ENTITY_TYPE_TO_SYNCABLE: Record<string, SyncableEntity | undefined> = {
   pageLayouts: SyncableEntity.PageLayout,
   pageLayoutTabs: SyncableEntity.PageLayoutTab,
   commandMenuItems: SyncableEntity.CommandMenuItem,
-  timelineActivityTypes: SyncableEntity.TimelineActivityType,
 };
 
 const MAX_EVENT_COUNT = 200;

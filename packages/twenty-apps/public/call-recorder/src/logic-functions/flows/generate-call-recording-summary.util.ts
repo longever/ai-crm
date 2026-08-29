@@ -5,11 +5,10 @@ import { CALL_RECORDING_SUMMARIZER_AGENT_UNIVERSAL_IDENTIFIER } from 'src/consta
 import { findCallRecordingForSummary } from 'src/logic-functions/data/find-call-recording-for-summary.util';
 import { updateCallRecording } from 'src/logic-functions/data/update-call-recording.util';
 import { buildCallRecordingSummaryPrompt } from 'src/logic-functions/domain/build-call-recording-summary-prompt.util';
+import { extractCallRecordingSummaryMarkdown } from 'src/logic-functions/domain/extract-call-recording-summary-markdown.util';
 import { isCallRecordingCreatedByCallRecorder } from 'src/logic-functions/domain/is-call-recording-created-by-call-recorder.util';
 import { isRealTranscript } from 'src/logic-functions/domain/is-real-transcript.util';
-import { parseCallRecordingSummaryAgentResponse } from 'src/logic-functions/domain/parse-call-recording-summary-agent-response.util';
 import { type GenerateCallRecordingSummaryResult } from 'src/logic-functions/flows/generate-call-recording-summary-result.type';
-import { buildStepFailure } from 'src/logic-functions/utils/build-step-failure.util';
 import { getCallRecorderAdditionalSummaryPrompt } from 'src/logic-functions/utils/get-call-recorder-additional-summary-prompt.util';
 import { isCallRecordingSummaryEnabled } from 'src/logic-functions/utils/is-call-recording-summary-enabled.util';
 
@@ -18,12 +17,7 @@ export const generateCallRecordingSummary = async (
   {
     callRecordingId,
     requireCreatedByCallRecorder = false,
-    shouldRegenerateExistingSummary = false,
-  }: {
-    callRecordingId: string;
-    requireCreatedByCallRecorder?: boolean;
-    shouldRegenerateExistingSummary?: boolean;
-  },
+  }: { callRecordingId: string; requireCreatedByCallRecorder?: boolean },
 ): Promise<GenerateCallRecordingSummaryResult> => {
   if (!isCallRecordingSummaryEnabled()) {
     return { outcome: 'disabled' };
@@ -47,10 +41,7 @@ export const generateCallRecordingSummary = async (
     return { outcome: 'not-app-recording' };
   }
 
-  if (
-    !shouldRegenerateExistingSummary &&
-    callRecording.summaryMarkdown !== undefined
-  ) {
+  if (callRecording.summaryMarkdown !== undefined) {
     return { outcome: 'already-summarized' };
   }
 
@@ -70,34 +61,16 @@ export const generateCallRecordingSummary = async (
     prompt,
   });
 
-  const parsedAgentResponse =
-    parseCallRecordingSummaryAgentResponse(agentResult);
+  const markdown = extractCallRecordingSummaryMarkdown(agentResult);
 
-  if (parsedAgentResponse === undefined) {
+  if (markdown === undefined) {
     return { outcome: 'empty-summary' };
   }
 
-  const summaryMarkdown =
-    parsedAgentResponse.outcome === 'not-summarizable'
-      ? `## Summary unavailable\n\n${parsedAgentResponse.reason}`
-      : parsedAgentResponse.markdown;
+  await updateCallRecording(client, {
+    id: callRecordingId,
+    data: { summary: { blocknote: null, markdown } },
+  });
 
-  try {
-    await updateCallRecording(client, {
-      id: callRecordingId,
-      data: { summary: { blocknote: null, markdown: summaryMarkdown } },
-    });
-  } catch (error) {
-    // Not rethrown: a redelivery would re-bill the agent run that already succeeded.
-    buildStepFailure('call recording summary save', error);
-
-    return { outcome: 'save-error' };
-  }
-
-  return {
-    outcome:
-      parsedAgentResponse.outcome === 'not-summarizable'
-        ? 'not-summarizable'
-        : 'generated',
-  };
+  return { outcome: 'generated' };
 };

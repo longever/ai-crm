@@ -1,5 +1,4 @@
 import { styled } from '@linaria/react';
-import { useRef } from 'react';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 import { ShowPageContainer } from '@/ui/layout/page/components/ShowPageContainer';
@@ -12,7 +11,6 @@ import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/use
 import { useMergeRecordsContainerTabs } from '@/object-record/record-merge/hooks/useMergeRecordsContainerTabs';
 import { useMergeRecordsSelectedRecords } from '@/object-record/record-merge/hooks/useMergeRecordsSelectedRecords';
 import { MergeRecordsTabId } from '@/object-record/record-merge/types/MergeRecordsTabId';
-import { MergeRecordsContentScrollResetEffect } from '@/object-record/record-merge/components/MergeRecordsContentScrollResetEffect';
 import { SidePanelPageComponentInstanceContext } from '@/side-panel/states/contexts/SidePanelPageComponentInstanceContext';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
 import { MergePreviewTab } from './MergePreviewTab';
@@ -59,8 +57,6 @@ export const MergeRecordsContainer = ({
     instanceId,
   );
 
-  const contentContainerRef = useRef<HTMLDivElement>(null);
-
   return (
     <SidePanelProvider value={{ isInSidePanel: true }}>
       <ShowPageContainer>
@@ -76,11 +72,7 @@ export const MergeRecordsContainer = ({
               />
             </StyledTabListContainer>
           </TabListComponentInstanceContext.Provider>
-          <MergeRecordsContentScrollResetEffect
-            activeTabId={activeTabId}
-            contentContainerRef={contentContainerRef}
-          />
-          <StyledContentContainer ref={contentContainerRef}>
+          <StyledContentContainer>
             {activeTabId === MergeRecordsTabId.MERGE_PREVIEW && (
               <MergePreviewTab objectNameSingular={objectNameSingular} />
             )}

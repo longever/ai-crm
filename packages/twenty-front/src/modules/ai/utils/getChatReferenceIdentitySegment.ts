@@ -10,8 +10,6 @@ export const getChatReferenceIdentitySegment = (
     case 'object':
       return identity.objectNameSingular;
     case 'field':
-      return `${identity.objectNameSingular}:${identity.fieldName}`;
-    case 'legacyFieldById':
       return identity.fieldMetadataItemId;
     case 'view':
       return identity.viewId;

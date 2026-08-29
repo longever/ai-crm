@@ -14,9 +14,6 @@ export class SendEmailInput {
   @Field(() => String)
   connectedAccountId: string;
 
-  @Field(() => String, { nullable: true })
-  fromHandle?: string;
-
   @Field(() => String)
   to: string;
 

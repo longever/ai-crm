@@ -54,7 +54,7 @@ export class UserEntity {
   }
 
   @Field()
-  @Column({ type: 'citext' })
+  @Column()
   email: string;
 
   @Field()

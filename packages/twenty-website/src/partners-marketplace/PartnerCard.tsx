@@ -16,12 +16,10 @@ import {
 } from '@/tokens';
 
 import { CardFrame, type PartnerCardIndexStyle } from './MarketplaceCardFrame';
-import { MARKETPLACE_COPY } from './marketplace-copy';
 import { type MarketplacePartner } from './marketplace-partner';
 import { PartnerAvatar } from './PartnerAvatar';
 import { resolvePartnerScopeCards } from './resolve-partner-scope-cards';
 import { richTextExcerpt } from './rich-text-excerpt';
-import { SuperPartnerMark } from './SuperPartnerMark';
 import { titleCaseFallback } from './title-case-fallback';
 
 const CardArticle = styled(CardFrame)`
@@ -167,9 +165,6 @@ export function PartnerCard({ partner, index }: PartnerCardProps) {
           profilePictureUrl={partner.profilePictureUrl}
         />
         <HeaderText>
-          {partner.superPartner ? (
-            <SuperPartnerMark label={i18n._(MARKETPLACE_COPY.superPartner)} />
-          ) : null}
           <PartnerName id={headingId}>
             <NameLink href={profileHref}>{partner.name}</NameLink>
           </PartnerName>

@@ -7,7 +7,7 @@ import { CardContent } from 'twenty-ui/surfaces';
 import { ThemeContext, themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledRowContainer = styled.div`
-  > div {
+  > * {
     align-items: center;
     box-sizing: border-box;
     display: flex;
@@ -91,15 +91,14 @@ export const SettingsListItemCardContent = ({
   to,
 }: SettingsListItemCardContentProps) => {
   const { theme } = useContext(ThemeContext);
-  const isInteractive = isDefined(onClick) || isDefined(to);
 
   const content = (
     <StyledRowContainer>
       <CardContent
         onClick={onClick}
         divider={divider}
-        isClickable={isInteractive}
-        hasHoverHighlight={isInteractive}
+        isClickable={!!onClick || !!to}
+        hasHoverHighlight={!!to}
       >
         {!!LeftIcon && (
           <LeftIcon

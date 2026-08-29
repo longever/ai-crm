@@ -4,15 +4,10 @@ import { type ReactNode } from 'react';
 import {
   PageLayoutTabLayoutMode,
   PageLayoutType,
-  WidgetType,
 } from '~/generated-metadata/graphql';
 
 let mockActiveTabId = 'hidden-transcript-tab-id';
-let mockPrerenderedTabIds: string[] = [];
-let mockTargetRecordId = 'calendar-event-id';
-let mockIsInSidePanel = false;
 const mockSetActiveTabId = jest.fn();
-const mockSetPrerenderedTabIds = jest.fn();
 
 const homeTab = {
   __typename: 'PageLayoutTab' as const,
@@ -28,25 +23,6 @@ const homeTab = {
   deletedAt: null,
 };
 
-const timelineTab = {
-  ...homeTab,
-  id: 'timeline-tab-id',
-  title: 'Timeline',
-  position: 1,
-  icon: 'IconTimeline',
-  layoutMode: PageLayoutTabLayoutMode.VERTICAL_LIST,
-};
-
-const frontComponentTab = {
-  ...homeTab,
-  id: 'front-component-tab-id',
-  title: 'App',
-  position: 2,
-  icon: 'IconApps',
-  layoutMode: PageLayoutTabLayoutMode.VERTICAL_LIST,
-  widgets: [{ id: 'front-component-widget', type: WidgetType.FRONT_COMPONENT }],
-};
-
 jest.mock('@/page-layout/components/dnd/PageLayoutWidgetDndProvider', () => ({
   PageLayoutWidgetDndProvider: ({ children }: { children: ReactNode }) => (
     <>{children}</>
@@ -55,10 +31,6 @@ jest.mock('@/page-layout/components/dnd/PageLayoutWidgetDndProvider', () => ({
 
 jest.mock('@/page-layout/components/PageLayoutLeftPanel', () => ({
   PageLayoutLeftPanel: () => null,
-}));
-
-jest.mock('@/page-layout/components/PageLayoutRecordIdentifierBar', () => ({
-  PageLayoutRecordIdentifierBar: () => null,
 }));
 
 jest.mock('@/page-layout/components/PageLayoutTabList', () => ({
@@ -86,7 +58,7 @@ jest.mock('@/page-layout/hooks/usePageLayoutAddTabStrategy', () => ({
 
 jest.mock('@/page-layout/hooks/usePageLayoutRenderableTabs', () => ({
   usePageLayoutRenderableTabs: () => ({
-    tabsToRenderInTabList: [homeTab, timelineTab, frontComponentTab],
+    tabsToRenderInTabList: [homeTab],
     pinnedLeftTab: undefined,
   }),
 }));
@@ -99,10 +71,10 @@ jest.mock('@/page-layout/PageLayoutMainContent', () => ({
 
 jest.mock('@/ui/layout/contexts/LayoutRenderingContext', () => ({
   useLayoutRenderingContext: () => ({
-    isInSidePanel: mockIsInSidePanel,
-    layoutType: PageLayoutType.RECORD_PAGE,
+    isInSidePanel: false,
+    layoutType: 'record-page',
     targetRecordIdentifier: {
-      id: mockTargetRecordId,
+      id: 'calendar-event-id',
       targetObjectNameSingular: 'calendarEvent',
     },
   }),
@@ -111,16 +83,9 @@ jest.mock('@/ui/layout/contexts/LayoutRenderingContext', () => ({
 jest.mock(
   '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue',
   () => ({
-    useAtomComponentStateValue: (componentState: { key: string }) =>
-      componentState.key === 'pageLayoutPrerenderedTabIdsComponentState'
-        ? mockPrerenderedTabIds
-        : mockActiveTabId,
+    useAtomComponentStateValue: () => mockActiveTabId,
   }),
 );
-
-jest.mock('@/ui/utilities/state/jotai/hooks/useSetAtomComponentState', () => ({
-  useSetAtomComponentState: () => mockSetPrerenderedTabIds,
-}));
 
 jest.mock('@/ui/utilities/state/jotai/hooks/useAtomComponentState', () => ({
   useAtomComponentState: () => [mockActiveTabId, mockSetActiveTabId],
@@ -131,29 +96,12 @@ jest.mock('@/ui/utilities/responsive/hooks/useIsMobile', () => ({
 }));
 
 jest.mock('@/ui/utilities/scroll/components/ScrollWrapper', () => ({
-  ScrollWrapper: ({
-    children,
-    componentInstanceId,
-  }: {
-    children: ReactNode;
-    componentInstanceId: string;
-  }) => (
-    <div
-      id={`scroll-wrapper-${componentInstanceId}`}
-      data-testid="scroll-wrapper"
-    >
-      {children}
-    </div>
-  ),
+  ScrollWrapper: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 
 describe('PageLayoutTabsRenderer', () => {
   beforeEach(() => {
-    mockPrerenderedTabIds = [];
-    mockTargetRecordId = 'calendar-event-id';
-    mockIsInSidePanel = false;
     mockSetActiveTabId.mockClear();
-    mockSetPrerenderedTabIds.mockClear();
   });
 
   it('does not render content for an active tab filtered out of the tab list', () => {
@@ -171,84 +119,5 @@ describe('PageLayoutTabsRenderer', () => {
     render(<PageLayoutTabsRenderer />);
 
     expect(screen.getByText('Rendered tab: home-tab-id')).toBeVisible();
-  });
-
-  it('mounts prerendered vertical-list tabs alongside the active tab', () => {
-    mockActiveTabId = 'home-tab-id';
-    mockPrerenderedTabIds = ['timeline-tab-id'];
-
-    render(<PageLayoutTabsRenderer />);
-
-    expect(screen.getByText('Rendered tab: home-tab-id')).toBeInTheDocument();
-    expect(
-      screen.getByText('Rendered tab: timeline-tab-id'),
-    ).toBeInTheDocument();
-  });
-
-  it('mounts prerendered application widget tabs offscreen alongside the active tab', () => {
-    mockActiveTabId = 'timeline-tab-id';
-    mockPrerenderedTabIds = ['front-component-tab-id'];
-
-    render(<PageLayoutTabsRenderer />);
-
-    expect(
-      screen.getByText('Rendered tab: timeline-tab-id'),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('Rendered tab: front-component-tab-id'),
-    ).toBeInTheDocument();
-  });
-
-  it('does not mount prerendered tabs that are not prerenderable', () => {
-    mockActiveTabId = 'timeline-tab-id';
-    mockPrerenderedTabIds = ['home-tab-id'];
-
-    render(<PageLayoutTabsRenderer />);
-
-    expect(
-      screen.getByText('Rendered tab: timeline-tab-id'),
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByText('Rendered tab: home-tab-id'),
-    ).not.toBeInTheDocument();
-  });
-
-  it('resets the scroll position when the target record changes', () => {
-    mockActiveTabId = 'home-tab-id';
-
-    const { rerender } = render(<PageLayoutTabsRenderer />);
-
-    const scrollWrapper = screen.getByTestId('scroll-wrapper');
-
-    scrollWrapper.scrollTop = 200;
-    mockTargetRecordId = 'another-calendar-event-id';
-
-    rerender(<PageLayoutTabsRenderer />);
-
-    expect(scrollWrapper.scrollTop).toBe(0);
-  });
-
-  it('resets the scroll wrapper owned by the current rendering context', () => {
-    mockActiveTabId = 'home-tab-id';
-
-    render(<PageLayoutTabsRenderer />);
-
-    const mainViewScrollWrapper = screen.getByTestId('scroll-wrapper');
-    mainViewScrollWrapper.scrollTop = 200;
-
-    mockIsInSidePanel = true;
-
-    const { rerender } = render(<PageLayoutTabsRenderer />);
-    const sidePanelScrollWrapper = screen.getAllByTestId('scroll-wrapper')[1];
-
-    expect(sidePanelScrollWrapper.id).not.toBe(mainViewScrollWrapper.id);
-
-    sidePanelScrollWrapper.scrollTop = 200;
-    mockActiveTabId = 'hidden-transcript-tab-id';
-
-    rerender(<PageLayoutTabsRenderer />);
-
-    expect(mainViewScrollWrapper.scrollTop).toBe(200);
-    expect(sidePanelScrollWrapper.scrollTop).toBe(0);
   });
 });

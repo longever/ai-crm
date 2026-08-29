@@ -3,7 +3,7 @@ import { generateDepthRecordGqlFieldsFromFields } from '@/object-record/graphql/
 
 export type GenerateDepthRecordGqlFields = {
   objectMetadataItems: EnrichedObjectMetadataItem[];
-  objectMetadataItem: Pick<EnrichedObjectMetadataItem, 'id' | 'fields'>;
+  objectMetadataItem: Pick<EnrichedObjectMetadataItem, 'fields'>;
   depth: 0 | 1;
   shouldOnlyLoadRelationIdentifiers?: boolean;
 };
@@ -16,7 +16,6 @@ export const generateDepthRecordGqlFieldsFromObject = ({
 }: GenerateDepthRecordGqlFields) => {
   return generateDepthRecordGqlFieldsFromFields({
     objectMetadataItems,
-    sourceObjectMetadataItem: objectMetadataItem,
     fields: objectMetadataItem.fields,
     depth,
     shouldOnlyLoadRelationIdentifiers,

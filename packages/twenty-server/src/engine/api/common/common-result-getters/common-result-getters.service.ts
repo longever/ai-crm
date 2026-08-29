@@ -17,17 +17,17 @@ import { getFlatFieldsFromFlatObjectMetadata } from 'src/engine/api/graphql/work
 import { FileUrlService } from 'src/engine/core-modules/file/file-url/file-url.service';
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { findFlatEntityByIdInFlatEntityMapsOrThrow } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps-or-throw.util';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 import { isFlatFieldMetadataOfType } from 'src/engine/metadata-modules/flat-field-metadata/utils/is-flat-field-metadata-of-type.util';
 import { type FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata.type';
 
 type ResultProcessingContext = {
   flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata>;
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
   workspaceId: string;
   fieldMetadataByNameByObjectMetadataId: Map<
     string,
-    ReadonlyMap<string, OrmFlatFieldMetadata>
+    ReadonlyMap<string, FlatFieldMetadata>
   >;
 };
 
@@ -76,7 +76,7 @@ export class CommonResultGettersService {
     recordArray: ObjectRecord[],
     flatObjectMetadata: FlatObjectMetadata,
     flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata>,
-    flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>,
+    flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
     workspaceId: string,
   ): Promise<ObjectRecord[]> {
     return this.processRecordArrayWithContext(recordArray, flatObjectMetadata, {
@@ -91,7 +91,7 @@ export class CommonResultGettersService {
     record: ObjectRecord,
     flatObjectMetadata: FlatObjectMetadata,
     flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata>,
-    flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>,
+    flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
     workspaceId: string,
   ): Promise<ObjectRecord> {
     return this.processRecordWithContext(record, flatObjectMetadata, {
@@ -201,7 +201,7 @@ export class CommonResultGettersService {
   private getOrBuildFieldMetadataByName(
     flatObjectMetadata: FlatObjectMetadata,
     context: ResultProcessingContext,
-  ): ReadonlyMap<string, OrmFlatFieldMetadata> {
+  ): ReadonlyMap<string, FlatFieldMetadata> {
     const cachedFieldMetadataByName =
       context.fieldMetadataByNameByObjectMetadataId.get(flatObjectMetadata.id);
 
@@ -228,7 +228,7 @@ export class CommonResultGettersService {
     record: ObjectRecord,
     workspaceId: string,
     handlers: QueryResultGetterHandlerInterface[],
-    fieldMetadata: OrmFlatFieldMetadata[],
+    fieldMetadata: FlatFieldMetadata[],
   ): Promise<ObjectRecord> {
     let processedRecord = record;
 

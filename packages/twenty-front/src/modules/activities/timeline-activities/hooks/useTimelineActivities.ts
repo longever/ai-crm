@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { useLinkedRecordsIdentifiers } from '@/activities/timeline-activities/hooks/useLinkedRecordsIdentifiers';
+import { useLinkedObjectsTitle } from '@/activities/timeline-activities/hooks/useLinkedObjectsTitle';
 import { type TimelineActivity } from '@/activities/timeline-activities/types/TimelineActivity';
 import { getTimelineActivityRecordGqlFields } from '@/activities/timeline-activities/utils/getTimelineActivityRecordGqlFields';
 import { type ActivityTargetableObject } from '@/activities/types/ActivityTargetableEntity';
@@ -39,6 +39,16 @@ export const useTimelineActivities = (
   const { objectMetadataItems: allObjectMetadataItems } =
     useObjectMetadataItems();
 
+  const noteObjectMetadataItem = objectMetadataItems.find(
+    (objectMetadataItem) =>
+      objectMetadataItem.nameSingular === CoreObjectNameSingular.Note,
+  );
+
+  const taskObjectMetadataItem = objectMetadataItems.find(
+    (objectMetadataItem) =>
+      objectMetadataItem.nameSingular === CoreObjectNameSingular.Task,
+  );
+
   const hasTimelineActivityField = timelineActivityMetadata.fields.some(
     (field) =>
       isDefined(field.morphRelations) &&
@@ -69,7 +79,7 @@ export const useTimelineActivities = (
     filter,
     orderBy: [
       {
-        happensAt: 'DescNullsFirst',
+        createdAt: 'DescNullsFirst',
       },
     ],
     recordGqlFields,
@@ -105,8 +115,24 @@ export const useTimelineActivities = (
     objectMetadataItemId: timelineActivityMetadata.id,
   });
 
-  const { result: linkedRecordsByObjectNamePlural } =
-    useLinkedRecordsIdentifiers({ timelineActivities, objectMetadataItems });
+  const noteAndTaskObjectMetadataIds = [
+    noteObjectMetadataItem?.id,
+    taskObjectMetadataItem?.id,
+  ].filter(isDefined);
+
+  // Notes and tasks expose a title that we resolve to label their timeline rows.
+  const noteAndTaskLinkedRecordIds = timelineActivities
+    .filter(
+      (timelineActivity) =>
+        isDefined(timelineActivity.linkedObjectMetadataId) &&
+        noteAndTaskObjectMetadataIds.includes(
+          timelineActivity.linkedObjectMetadataId,
+        ),
+    )
+    .map((timelineActivity) => timelineActivity.linkedRecordId)
+    .filter(isDefined);
+
+  useLinkedObjectsTitle(noteAndTaskLinkedRecordIds);
 
   const firstQueryLoading =
     loadingTimelineActivities && timelineActivities.length === 0;
@@ -119,6 +145,5 @@ export const useTimelineActivities = (
     firstQueryLoading,
     loadingMore,
     fetchMoreRecords,
-    linkedRecords: Object.values(linkedRecordsByObjectNamePlural).flat(),
   };
 };

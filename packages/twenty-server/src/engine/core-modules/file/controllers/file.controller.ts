@@ -15,7 +15,6 @@ import { type Readable } from 'stream';
 
 import { Request, Response } from 'express';
 import { ApiPath, FileFolder, ServerFileFolder } from 'twenty-shared/types';
-import { isDefined } from 'twenty-shared/utils';
 
 import {
   FileStorageException,
@@ -37,9 +36,6 @@ import { FileService } from 'src/engine/core-modules/file/services/file.service'
 import { setFileResponseHeaders } from 'src/engine/core-modules/file/utils/set-file-response-headers.utils';
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
 import { PublicEndpointGuard } from 'src/engine/guards/public-endpoint.guard';
-
-// workspaceId is bound onto the request by FileByIdGuard.
-type FileByIdRequest = Request & { workspaceId: string };
 
 @Controller()
 @UseFilters(FileApiExceptionFilter)
@@ -193,24 +189,20 @@ export class FileController {
   @UseGuards(FileByIdGuard, NoPermissionGuard)
   async getFileById(
     @Res() res: Response,
-    @Req() req: FileByIdRequest,
+    @Req() req: Request,
     @Param('fileFolder') fileFolder: SupportedFileFolder,
     @Param('id') fileId: string,
   ) {
-    const workspaceId = req.workspaceId;
+    // oxlint-disable-next-line typescript/no-explicit-any
+    const workspaceId = (req as any)?.workspaceId;
 
     const fileResponse = await this.fileService
       .getFilePresignedUrlOrStreamById({
         fileId,
         workspaceId,
         fileFolder,
-        rangeHeader: req.headers.range,
       })
       .catch((error) => {
-        if (error instanceof FileException) {
-          throw error;
-        }
-
         this.logger.error(
           'getFilePresignedUrlOrStreamById failed unexpectedly',
           {
@@ -236,18 +228,6 @@ export class FileController {
     }
 
     setFileResponseHeaders(res, fileResponse.mimeType, fileFolder);
-    res.setHeader('Accept-Ranges', 'bytes');
-
-    if (isDefined(fileResponse.contentRange)) {
-      const { startByte, endByte, fileSizeInBytes } = fileResponse.contentRange;
-
-      res.status(206);
-      res.setHeader(
-        'Content-Range',
-        `bytes ${startByte}-${endByte}/${fileSizeInBytes}`,
-      );
-      res.setHeader('Content-Length', String(endByte - startByte + 1));
-    }
 
     try {
       await pipeline(fileResponse.stream, res);

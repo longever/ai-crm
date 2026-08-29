@@ -46,13 +46,7 @@ export default definePageLayout({
           universalIdentifier: TEMPLATE_PAGE_LAYOUT_WIDGET_UNIVERSAL_IDENTIFIER,
           title: 'Template',
           type: 'FIELD',
-          position: {
-            layoutMode: PageLayoutTabLayoutMode.GRID,
-            row: 0,
-            column: 0,
-            rowSpan: 12,
-            columnSpan: 12,
-          },
+          gridPosition: { row: 0, column: 0, rowSpan: 12, columnSpan: 12 },
           configuration: {
             configurationType: 'FIELD',
             fieldMetadataId: TEMPLATE_BODY_FIELD_UNIVERSAL_IDENTIFIER,
@@ -66,7 +60,7 @@ export default definePageLayout({
       title: 'Timeline',
       position: 100,
       icon: 'IconTimelineEvent',
-      layoutMode: PageLayoutTabLayoutMode.VERTICAL_LIST,
+      layoutMode: PageLayoutTabLayoutMode.CANVAS,
       widgets: [
         {
           universalIdentifier: TIMELINE_PAGE_LAYOUT_WIDGET_UNIVERSAL_IDENTIFIER,

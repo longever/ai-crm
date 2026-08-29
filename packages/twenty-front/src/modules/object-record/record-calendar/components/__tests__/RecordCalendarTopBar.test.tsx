@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { enUS } from 'date-fns/locale';
 import { Temporal } from 'temporal-polyfill';
 
@@ -13,16 +12,16 @@ const mockSetRecordIndexCalendarLayout = jest.fn();
 const mockUpdateCurrentView = jest.fn();
 const mockUseAtomComponentState = jest.fn();
 const mockUseAtomStateValue = jest.fn();
-const mockUseRecordCalendarDaysRange = jest.fn();
+const mockUseRecordCalendarWeekDaysRange = jest.fn();
 
 jest.mock('@/localization/hooks/useDateTimeFormat', () => ({
   useDateTimeFormat: jest.fn(() => ({ timeZone: 'UTC' })),
 }));
 jest.mock(
-  '@/object-record/record-calendar/hooks/useRecordCalendarDaysRange',
+  '@/object-record/record-calendar/week/hooks/useRecordCalendarWeekDaysRange',
   () => ({
-    useRecordCalendarDaysRange: (...args: unknown[]) =>
-      mockUseRecordCalendarDaysRange(...args),
+    useRecordCalendarWeekDaysRange: (...args: unknown[]) =>
+      mockUseRecordCalendarWeekDaysRange(...args),
   }),
 );
 jest.mock(
@@ -36,20 +35,8 @@ jest.mock(
   }),
 );
 jest.mock('@/ui/input/components/Select', () => ({
-  Select: ({
-    options,
-    value,
-    onChange,
-  }: {
-    options: { label: string; value: ViewCalendarLayout }[];
-    value: ViewCalendarLayout;
-    onChange: (value: ViewCalendarLayout) => void;
-  }) => (
-    <select
-      data-testid="layout-select"
-      value={value}
-      onChange={(event) => onChange(event.target.value as ViewCalendarLayout)}
-    >
+  Select: ({ options }: { options: { label: string; value: string }[] }) => (
+    <select data-testid="layout-select">
       {options.map(({ label, value }) => (
         <option key={value} value={value}>
           {label}
@@ -90,6 +77,9 @@ jest.mock('@/views/hooks/useUpdateCurrentView', () => ({
     updateCurrentView: mockUpdateCurrentView,
   })),
 }));
+jest.mock('@/workspace/hooks/useIsFeatureEnabled', () => ({
+  useIsFeatureEnabled: jest.fn(() => true),
+}));
 jest.mock('twenty-ui/input', () => ({
   Button: ({
     ariaLabel,
@@ -127,9 +117,9 @@ describe('RecordCalendarTopBar', () => {
       locale: 'en-US',
       localeCatalog: enUS,
     });
-    mockUseRecordCalendarDaysRange.mockReturnValue({
-      firstDay: Temporal.PlainDate.from('2026-07-13'),
-      lastDay: Temporal.PlainDate.from('2026-07-19'),
+    mockUseRecordCalendarWeekDaysRange.mockReturnValue({
+      firstDayOfWeek: Temporal.PlainDate.from('2026-07-13'),
+      lastDayOfWeek: Temporal.PlainDate.from('2026-07-19'),
     });
   });
 
@@ -144,7 +134,7 @@ describe('RecordCalendarTopBar', () => {
         screen.getByTestId('layout-select').querySelectorAll('option'),
       ).map((option) => option.textContent),
     ).toEqual(['Day', 'Week', 'Month']);
-    expect(screen.getByTestId('time-zone')).toBeInTheDocument();
+    expect(screen.queryByTestId('time-zone')).not.toBeInTheDocument();
   });
 
   it('navigates the Day layout one day at a time', () => {
@@ -161,19 +151,5 @@ describe('RecordCalendarTopBar', () => {
       2,
       Temporal.PlainDate.from('2026-07-16'),
     );
-  });
-
-  it('persists a week selection from the top bar', async () => {
-    const user = userEvent.setup();
-    render(<RecordCalendarTopBar />);
-
-    await user.selectOptions(screen.getByRole('combobox'), 'WEEK');
-
-    expect(mockSetRecordIndexCalendarLayout).toHaveBeenCalledWith(
-      ViewCalendarLayout.WEEK,
-    );
-    expect(mockUpdateCurrentView).toHaveBeenCalledWith({
-      calendarLayout: ViewCalendarLayout.WEEK,
-    });
   });
 });

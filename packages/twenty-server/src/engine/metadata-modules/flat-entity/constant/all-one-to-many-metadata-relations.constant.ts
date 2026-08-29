@@ -125,17 +125,6 @@ export const ALL_ONE_TO_MANY_METADATA_RELATIONS = {
       universalFlatEntityForeignKeyAggregator:
         'searchFieldMetadataUniversalIdentifiers',
     },
-    pageLayouts: {
-      metadataName: 'pageLayout',
-      flatEntityForeignKeyAggregator: 'pageLayoutIds',
-      universalFlatEntityForeignKeyAggregator: 'pageLayoutUniversalIdentifiers',
-    },
-    commandMenuItems: {
-      metadataName: 'commandMenuItem',
-      flatEntityForeignKeyAggregator: 'commandMenuItemIds',
-      universalFlatEntityForeignKeyAggregator:
-        'commandMenuItemUniversalIdentifiers',
-    },
   },
   view: {
     viewFields: {

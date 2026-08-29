@@ -20,7 +20,7 @@ export const computeStandardCalendarEventParticipantViews = (
         type: ViewType.TABLE,
         key: ViewKey.INDEX,
         position: 0,
-        icon: 'IconTable',
+        icon: 'IconList',
       },
     }),
     calendarEventParticipantRecordPageFields: createStandardViewFlatMetadata({
@@ -32,7 +32,7 @@ export const computeStandardCalendarEventParticipantViews = (
         type: ViewType.FIELDS_WIDGET,
         key: null,
         position: 0,
-        icon: 'IconListDetails',
+        icon: 'IconList',
       },
     }),
   };

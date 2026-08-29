@@ -34,7 +34,6 @@ export const FRONT_COMPONENT_STORY_DEFAULT_ARGS: NonNullable<
     userId: null,
     recordId: null,
     selectedRecordIds: [],
-    timelineActivityId: null,
     colorScheme: 'light',
   },
   colorScheme: 'light',

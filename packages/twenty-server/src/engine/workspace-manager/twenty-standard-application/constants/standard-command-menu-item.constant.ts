@@ -1,7 +1,7 @@
 import { msg } from '@lingui/core/macro';
 import { STANDARD_OBJECTS } from 'twenty-shared/metadata';
 
-import { CommandMenuItemAvailabilityType } from 'twenty-shared/types';
+import { CommandMenuItemAvailabilityType } from 'src/engine/metadata-modules/command-menu-item/enums/command-menu-item-availability-type.enum';
 import { EngineComponentKey } from 'src/engine/metadata-modules/command-menu-item/enums/engine-component-key.enum';
 import { i18nLabel } from 'src/engine/workspace-manager/twenty-standard-application/utils/i18n-label.util';
 
@@ -376,9 +376,9 @@ export const STANDARD_COMMAND_MENU_ITEMS = {
     shortLabel: i18nLabel(
       msg({ message: `Edit Layout`, context: 'commandMenuItem.shortLabel' }),
     ),
-    availabilityType: CommandMenuItemAvailabilityType.GLOBAL,
+    availabilityType: CommandMenuItemAvailabilityType.RECORD_SELECTION,
     conditionalAvailabilityExpression:
-      'pageType != "SETTINGS_PAGE" and not isLayoutCustomizationModeEnabled and permissionFlags.LAYOUTS',
+      'pageType == "RECORD_PAGE" and not isLayoutCustomizationModeEnabled and noneDefined(selectedRecords, "deletedAt") and objectPermissions.canUpdateObjectRecords and objectMetadataItem.nameSingular != "dashboard"',
     availabilityObjectMetadataUniversalIdentifier: null,
     frontComponentUniversalIdentifier: null,
     engineComponentKey: EngineComponentKey.EDIT_RECORD_PAGE_LAYOUT,
@@ -1181,7 +1181,7 @@ export const STANDARD_COMMAND_MENU_ITEMS = {
         context: 'commandMenuItem.label',
       }),
     ),
-    icon: 'IconHierarchy',
+    icon: 'IconHierarchy2',
     isPinned: false,
     position: 53,
     shortLabel: i18nLabel(
@@ -1269,7 +1269,7 @@ export const STANDARD_COMMAND_MENU_ITEMS = {
         context: 'commandMenuItem.label',
       }),
     ),
-    icon: 'IconCreditCard',
+    icon: 'IconCurrencyDollar',
     isPinned: false,
     position: 57,
     shortLabel: i18nLabel(

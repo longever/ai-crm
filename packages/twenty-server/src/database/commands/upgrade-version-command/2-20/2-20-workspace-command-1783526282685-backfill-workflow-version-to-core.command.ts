@@ -1,5 +1,5 @@
 import { Command } from 'nest-commander';
-import { isWorkspaceObjectNotFoundError } from 'src/database/commands/upgrade-version-command/utils/is-workspace-object-not-found-error.util';
+import { EntityMetadataNotFoundError } from 'typeorm/error/EntityMetadataNotFoundError';
 
 import { ProvisionedWorkspaceCommandRunner } from 'src/database/commands/command-runners/provisioned-workspace.command-runner';
 import { WorkspaceIteratorService } from 'src/database/commands/command-runners/workspace-iterator.service';
@@ -7,7 +7,7 @@ import { type RunOnWorkspaceArgs } from 'src/database/commands/command-runners/w
 import { RegisteredWorkspaceCommand } from 'src/engine/core-modules/upgrade/decorators/registered-workspace-command.decorator';
 import { WorkflowVersionCoreSyncService } from 'src/engine/core-modules/workflow/services/workflow-version-core-sync.service';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
-import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { type WorkflowVersionWorkspaceEntity } from 'src/modules/workflow/common/standard-objects/workflow-version.workspace-entity';
 
 @RegisteredWorkspaceCommand('2.20.0', 1783526282685)
@@ -19,7 +19,7 @@ import { type WorkflowVersionWorkspaceEntity } from 'src/modules/workflow/common
 export class BackfillWorkflowVersionToCoreCommand extends ProvisionedWorkspaceCommandRunner {
   constructor(
     protected readonly workspaceIteratorService: WorkspaceIteratorService,
-    private readonly workspaceOrmManager: WorkspaceOrmManager,
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
     private readonly workflowVersionCoreSyncService: WorkflowVersionCoreSyncService,
   ) {
     super(workspaceIteratorService);
@@ -33,10 +33,12 @@ export class BackfillWorkflowVersionToCoreCommand extends ProvisionedWorkspaceCo
 
     try {
       workspaceWorkflowVersions =
-        await this.workspaceOrmManager.executeInWorkspaceContext(
+        await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
           async () => {
             const workflowVersionRepository =
-              this.workspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>('workflowVersion',
+              await this.globalWorkspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
+                workspaceId,
+                'workflowVersion',
                 { shouldBypassPermissionChecks: true },
               );
 
@@ -45,7 +47,7 @@ export class BackfillWorkflowVersionToCoreCommand extends ProvisionedWorkspaceCo
           buildSystemAuthContext(workspaceId),
         );
     } catch (error) {
-      if (isWorkspaceObjectNotFoundError(error)) {
+      if (error instanceof EntityMetadataNotFoundError) {
         this.logger.log(
           `workflowVersion object does not exist for workspace ${workspaceId}, skipping`,
         );

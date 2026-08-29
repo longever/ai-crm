@@ -1,18 +1,20 @@
-import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { styled } from '@linaria/react';
-import { Trans } from '@lingui/react/macro';
+
+import { type EmailThreadMessage } from '@/activities/emails/types/EmailThreadMessage';
+import { EventCardMessageBodyNotShared } from '@/activities/timeline-activities/rows/message/components/EventCardMessageBodyNotShared';
+import { EventCardMessageForbidden } from '@/activities/timeline-activities/rows/message/components/EventCardMessageForbidden';
+import { useOpenRecordInSidePanel } from '@/side-panel/hooks/useOpenRecordInSidePanel';
 import { CoreObjectNameSingular } from 'twenty-shared/types';
-import { isDefined, isFieldValueRestricted } from 'twenty-shared/utils';
+import { useFindOneRecord } from '@/object-record/hooks/useFindOneRecord';
+import { Trans, useLingui } from '@lingui/react/macro';
+import { FIELD_RESTRICTED_ADDITIONAL_PERMISSIONS_REQUIRED } from 'twenty-shared/constants';
+import { CombinedGraphQLErrors } from '@apollo/client/errors';
+import { isDefined } from 'twenty-shared/utils';
 import { OverflowingTextWithTooltip } from 'twenty-ui/surfaces';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
-import { type EmailThreadMessage } from '@/activities/emails/types/EmailThreadMessage';
-import { EventCardMessageForbidden } from '@/activities/timeline-activities/rows/message/components/EventCardMessageForbidden';
-import { useFindOneRecord } from '@/object-record/hooks/useFindOneRecord';
-import { useOpenRecordInSidePanel } from '@/side-panel/hooks/useOpenRecordInSidePanel';
-
-const StyledEventCardMessageContainer = styled.div`
-  cursor: pointer;
+const StyledEventCardMessageContainer = styled.div<{ canOpen?: boolean }>`
+  cursor: ${({ canOpen }) => (canOpen ? 'pointer' : 'not-allowed')};
   display: flex;
   flex-direction: column;
   max-width: 380px;
@@ -59,6 +61,7 @@ export const EventCardMessage = ({
   messageId: string;
   authorFullName: string;
 }) => {
+  const { t } = useLingui();
   const { openRecordInSidePanel } = useOpenRecordInSidePanel();
 
   const {
@@ -82,47 +85,54 @@ export const EventCardMessage = ({
 
   if (isDefined(error)) {
     if (CombinedGraphQLErrors.is(error)) {
-      if (
-        error.errors.some(
-          (graphQLError) => graphQLError.extensions?.code === 'FORBIDDEN',
-        )
-      ) {
+      const shouldHideMessageContent = error.errors.some(
+        (e) => e.extensions?.code === 'FORBIDDEN',
+      );
+
+      if (shouldHideMessageContent) {
         return (
           <EventCardMessageForbidden notSharedByFullName={authorFullName} />
         );
       }
 
-      if (
-        error.errors.some(
-          (graphQLError) => graphQLError.extensions?.code === 'NOT_FOUND',
-        )
-      ) {
-        return <Trans>Message not found</Trans>;
+      const shouldHandleNotFound = error.errors.some(
+        (e) => e.extensions?.code === 'NOT_FOUND',
+      );
+
+      if (shouldHandleNotFound) {
+        return (
+          <div>
+            <Trans>Message not found</Trans>
+          </div>
+        );
       }
     }
 
-    return <Trans>Error loading message</Trans>;
+    return (
+      <div>
+        <Trans>Error loading message</Trans>
+      </div>
+    );
   }
 
-  if (loading) {
-    return <Trans>Loading...</Trans>;
+  if (loading || !isDefined(message)) {
+    return (
+      <div>
+        <Trans>Loading...</Trans>
+      </div>
+    );
   }
 
-  if (!isDefined(message)) {
-    return <EventCardMessageForbidden notSharedByFullName={authorFullName} />;
-  }
-
-  if ([message.subject, message.text].some(isFieldValueRestricted)) {
-    return <EventCardMessageForbidden notSharedByFullName={authorFullName} />;
-  }
-
-  const participantHandles = message.messageParticipants
+  const messageParticipantHandles = message.messageParticipants
     .map((participant) => participant.handle)
     .filter((handle) => isDefined(handle) && handle !== '')
     .join(', ');
 
+  const canOpen =
+    message.subject !== FIELD_RESTRICTED_ADDITIONAL_PERMISSIONS_REQUIRED;
+
   const handleClick = () => {
-    if (isDefined(message.messageThreadId)) {
+    if (canOpen && isDefined(message.messageThreadId)) {
       openRecordInSidePanel({
         recordId: message.messageThreadId,
         objectNameSingular: CoreObjectNameSingular.MessageThread,
@@ -131,15 +141,24 @@ export const EventCardMessage = ({
   };
 
   return (
-    <StyledEventCardMessageContainer onClick={handleClick}>
+    <StyledEventCardMessageContainer canOpen={canOpen} onClick={handleClick}>
       <StyledEmailContent>
         <StyledEmailTop>
-          <StyledEmailTitle>{message.subject}</StyledEmailTitle>
+          <StyledEmailTitle>
+            {message.subject !==
+            FIELD_RESTRICTED_ADDITIONAL_PERMISSIONS_REQUIRED
+              ? message.subject
+              : t`Subject not shared`}
+          </StyledEmailTitle>
           <StyledEmailParticipants>
-            <OverflowingTextWithTooltip text={participantHandles} />
+            <OverflowingTextWithTooltip text={messageParticipantHandles} />
           </StyledEmailParticipants>
         </StyledEmailTop>
-        <StyledEmailBody>{message.text}</StyledEmailBody>
+        {message.text !== FIELD_RESTRICTED_ADDITIONAL_PERMISSIONS_REQUIRED ? (
+          <StyledEmailBody>{message.text}</StyledEmailBody>
+        ) : (
+          <EventCardMessageBodyNotShared notSharedByFullName={authorFullName} />
+        )}
       </StyledEmailContent>
     </StyledEventCardMessageContainer>
   );

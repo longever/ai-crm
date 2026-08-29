@@ -321,7 +321,7 @@ export const UpgradeFreeTrial = ({
             mode: 'subscription',
             amount: baseProductPrice.unitAmount,
             currency: 'usd',
-            paymentMethodTypes: ['card', 'link'],
+            paymentMethodTypes: ['card'],
             appearance,
           }}
         >

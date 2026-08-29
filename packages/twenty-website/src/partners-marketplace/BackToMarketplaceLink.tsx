@@ -5,7 +5,6 @@ import { useLingui } from '@lingui/react';
 import { styled } from '@linaria/react';
 
 import { LocalizedLink } from '@/platform/i18n/LocalizedLink';
-import { PARTNER_DIRECTORY_ANCHOR_ID } from '@/platform/routing/partner-directory-anchor-id';
 import { fontFamily, fontSize, semanticColor } from '@/tokens';
 
 const BackLink = styled(LocalizedLink)`
@@ -24,8 +23,6 @@ export function BackToMarketplaceLink() {
   const { i18n } = useLingui();
 
   return (
-    <BackLink href={`/partners#${PARTNER_DIRECTORY_ANCHOR_ID}`}>
-      {i18n._(msg`← Twenty partners`)}
-    </BackLink>
+    <BackLink href="/partners/list">{i18n._(msg`← Twenty partners`)}</BackLink>
   );
 }

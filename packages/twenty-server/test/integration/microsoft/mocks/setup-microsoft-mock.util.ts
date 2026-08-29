@@ -55,12 +55,10 @@ const microsoftGraphErrorResponse = ({
 
 export const setupMicrosoftMock = ({
   handle,
-  aliases = [],
   folders = DEFAULT_FOLDERS,
   messages = [],
 }: {
   handle: string;
-  aliases?: string[];
   folders?: MailFolder[];
   messages?: Array<Record<string, unknown>>;
 }): MicrosoftMock => {
@@ -76,7 +74,7 @@ export const setupMicrosoftMock = ({
   const createdCalendarEvents: Event[] = [];
 
   const httpMock = setupHttpMock(
-    ...microsoftAuthHandlers(handle, aliases),
+    ...microsoftAuthHandlers(handle),
     ...microsoftMailboxHandlers(folderStore, messages),
     ...microsoftWebhookSubscriptionHandlers(subscriptionStore),
     http.post('*/me/messages', async ({ request }) => {

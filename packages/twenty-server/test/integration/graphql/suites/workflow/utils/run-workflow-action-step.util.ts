@@ -24,7 +24,6 @@ export type WorkflowActionStepRun = {
   status?: WorkflowRunStatusType;
   stepStatus?: string;
   stepResult?: Record<string, unknown>;
-  stepError?: string;
 };
 
 const createWorkflow = async (name: string): Promise<string> => {
@@ -222,7 +221,6 @@ export const runWorkflowActionStep = async ({
       status: workflowRun?.status,
       stepStatus: stepInfo?.status,
       stepResult: stepInfo?.result,
-      stepError: stepInfo?.error,
     };
   } finally {
     if (isDefined(workflowRunId)) {

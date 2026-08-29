@@ -4,14 +4,15 @@ import { PageLayoutComponentInstanceContext } from '@/page-layout/states/context
 import { pageLayoutDraftComponentState } from '@/page-layout/states/pageLayoutDraftComponentState';
 import { pageLayoutEditingWidgetIdComponentState } from '@/page-layout/states/pageLayoutEditingWidgetIdComponentState';
 import { pageLayoutTabSettingsOpenTabIdComponentState } from '@/page-layout/states/pageLayoutTabSettingsOpenTabIdComponentState';
-import { getIsSingleWidgetTab } from '@/page-layout/utils/getIsSingleWidgetTab';
-import { isViewportFillingWidgetType } from '@/page-layout/widgets/utils/isViewportFillingWidgetType';
+import { getTabPresentation } from '@/page-layout/utils/getTabPresentation';
 import { useSidePanelMenu } from '@/side-panel/hooks/useSidePanelMenu';
 import { useIsDashboardPageLayout } from '@/side-panel/pages/page-layout/hooks/useIsDashboardPageLayout';
 import { useNavigatePageLayoutSidePanel } from '@/side-panel/pages/page-layout/hooks/useNavigatePageLayoutSidePanel';
+import { sidePanelPageState } from '@/side-panel/states/sidePanelPageState';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
+import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { t } from '@lingui/core/macro';
 import { SidePanelPages } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
@@ -37,6 +38,7 @@ export const useOpenWidgetSettingsInSidePanel = (
 
   const { navigatePageLayoutSidePanel } = useNavigatePageLayoutSidePanel();
   const { closeSidePanelMenu } = useSidePanelMenu();
+  const setSidePanelPage = useSetAtomState(sidePanelPageState);
 
   const pageLayoutDraft = useAtomComponentStateValue(
     pageLayoutDraftComponentState,
@@ -56,7 +58,11 @@ export const useOpenWidgetSettingsInSidePanel = (
       widgetId: string;
       widgetType: WidgetType;
     }) => {
-      if (widgetType === WidgetType.IFRAME && isDashboardPageLayout) {
+      if (widgetType === WidgetType.IFRAME) {
+        if (!isDashboardPageLayout) {
+          return;
+        }
+
         navigatePageLayoutSidePanel({
           sidePanelPage: SidePanelPages.DashboardIframeSettings,
           pageTitle: t`Edit iFrame`,
@@ -66,7 +72,11 @@ export const useOpenWidgetSettingsInSidePanel = (
         return;
       }
 
-      if (widgetType === WidgetType.GRAPH && isDashboardPageLayout) {
+      if (widgetType === WidgetType.GRAPH) {
+        if (!isDashboardPageLayout) {
+          return;
+        }
+
         navigatePageLayoutSidePanel({
           sidePanelPage: SidePanelPages.DashboardChartSettings,
           pageTitle: t`Edit Graph`,
@@ -100,7 +110,11 @@ export const useOpenWidgetSettingsInSidePanel = (
         return;
       }
 
-      if (widgetType === WidgetType.RECORD_TABLE && isDashboardPageLayout) {
+      if (widgetType === WidgetType.RECORD_TABLE) {
+        if (!isDashboardPageLayout) {
+          return;
+        }
+
         navigatePageLayoutSidePanel({
           sidePanelPage: SidePanelPages.DashboardRecordTableSettings,
           pageTitle: t`Edit Record Table`,
@@ -120,19 +134,15 @@ export const useOpenWidgetSettingsInSidePanel = (
         tab.widgets.some((w) => w.id === widgetId),
       );
 
-      const isContainingTabSingleWidget =
+      const isContainingTabSolo =
         isDefined(containingTab) &&
-        getIsSingleWidgetTab({ tab: containingTab });
+        getTabPresentation({
+          widgets: containingTab.widgets.filter((w) => w.isActive),
+          layoutMode:
+            containingTab.layoutMode ?? PageLayoutTabLayoutMode.VERTICAL_LIST,
+        }) === 'solo';
 
-      const isViewportFillingWidgetInVerticalList =
-        isDefined(containingTab) &&
-        containingTab.layoutMode === PageLayoutTabLayoutMode.VERTICAL_LIST &&
-        isViewportFillingWidgetType(widgetType);
-
-      if (
-        isContainingTabSingleWidget &&
-        !isViewportFillingWidgetInVerticalList
-      ) {
+      if (isContainingTabSolo) {
         setPageLayoutTabSettingsOpenTabId(containingTab.id);
         navigatePageLayoutSidePanel({
           sidePanelPage: SidePanelPages.PageLayoutTabSettings,
@@ -141,11 +151,8 @@ export const useOpenWidgetSettingsInSidePanel = (
         return;
       }
 
-      setPageLayoutEditingWidgetId(widgetId);
-      navigatePageLayoutSidePanel({
-        sidePanelPage: SidePanelPages.PageLayoutWidgetSettings,
-        resetNavigationStack: true,
-      });
+      setSidePanelPage(SidePanelPages.CommandMenuDisplay);
+      closeSidePanelMenu();
     },
     [
       isDashboardPageLayout,
@@ -154,6 +161,7 @@ export const useOpenWidgetSettingsInSidePanel = (
       setPageLayoutTabSettingsOpenTabId,
       navigatePageLayoutSidePanel,
       closeSidePanelMenu,
+      setSidePanelPage,
     ],
   );
 

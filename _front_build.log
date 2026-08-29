@@ -1,0 +1,1332 @@
+[36mvite v8.0.16 [32mbuilding client environment for production...[36m[39m
+[linaria/wyw] Starting CSS pre-build
+Browserslist: browsers data (caniuse-lite) is 12 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[linaria/wyw] Pre-warm: 1155ms ⚠️  slow
+[2Ktransforming...[33m[33m[PLUGIN_TIMINGS] [0mYour build spent significant time in plugin `vite:esbuild-transpile`. See https://rolldown.rs/options/checks#plugintimings for more details.
+[39m
+[33m[33m[PLUGIN_TIMINGS] [0mYour build spent significant time in plugin `vite:esbuild-transpile`. See https://rolldown.rs/options/checks#plugintimings for more details.
+[39m
+[33m[33m[PLUGIN_TIMINGS] [0mYour build spent significant time in plugin `vite:esbuild-transpile`. See https://rolldown.rs/options/checks#plugintimings for more details.
+[39m
+[33m[plugin rolldown:vite-resolve] Module "module" has been externalized for browser compatibility, imported by "D:/ai-hub/twenty/node_modules/typescript/lib/typescript.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+[33m[33m[PLUGIN_TIMINGS] [0mYour build spent significant time in plugins. Here is a breakdown:
+  - vite:css-post (31%)
+  - vite:asset (17%)
+See https://rolldown.rs/options/checks#plugintimings for more details.
+[39m
+✓ 27001 modules transformed.
+rendering chunks...
+computing gzip size...
+build/assets/vs-code-C_7wk1WI.svg                                                   4.45 kB │ gzip:     1.73 kB
+build/assets/inter-vietnamese-400-normal-DMkecbls.woff2                             4.97 kB
+build/assets/inter-vietnamese-600-normal-Cc8MFFhd.woff2                             5.10 kB
+build/assets/inter-vietnamese-700-normal-DlLaEgI2.woff2                             5.10 kB
+build/assets/inter-vietnamese-500-normal-DOriooB6.woff2                             5.11 kB
+build/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2                              5.26 kB
+build/assets/inter-greek-ext-500-normal-C4iEst2y.woff2                              5.42 kB
+build/assets/inter-greek-ext-600-normal-DRtmH8MT.woff2                              5.43 kB
+build/assets/inter-greek-ext-700-normal-qfdV9bQt.woff2                              5.44 kB
+build/assets/librechat-DN-YJLP0.svg                                                 5.77 kB │ gzip:     1.41 kB
+build/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff                              6.50 kB
+build/assets/inter-vietnamese-500-normal-mJboJaSs.woff                              6.59 kB
+build/assets/inter-vietnamese-700-normal-BZaoP0fm.woff                              6.63 kB
+build/assets/inter-vietnamese-600-normal-BuLX-rYi.woff                              6.64 kB
+build/assets/inter-greek-ext-400-normal-KugGGMne.woff                               7.06 kB
+build/assets/inter-greek-ext-500-normal-2j5mBUwD.woff                               7.19 kB
+build/assets/inter-greek-ext-600-normal-B8X0CLgF.woff                               7.21 kB
+build/assets/inter-greek-ext-700-normal-BoQ6DsYi.woff                               7.21 kB
+build/assets/dm-mono-latin-ext-500-normal-Dw3M13d8.woff                             7.48 kB
+build/assets/dm-mono-latin-ext-400-normal-1aZr6b2b.woff                             7.50 kB
+build/assets/inter-cyrillic-400-normal-obahsSVq.woff2                               7.71 kB
+build/assets/inter-greek-400-normal-B4URO6DV.woff2                                  7.77 kB
+build/assets/inter-cyrillic-500-normal-BasfLYem.woff2                               7.90 kB
+build/assets/inter-cyrillic-700-normal-CjBOestx.woff2                               7.90 kB
+build/assets/inter-greek-500-normal-BIZE56-Y.woff2                                  7.92 kB
+build/assets/inter-greek-700-normal-C3JjAnD8.woff2                                  7.92 kB
+build/assets/inter-greek-600-normal-plRanbMR.woff2                                  7.94 kB
+build/assets/inter-cyrillic-600-normal-CWCymEST.woff2                               7.97 kB
+build/assets/claude-color-Ekx6wd5U.png                                              9.33 kB
+build/assets/dm-mono-latin-ext-400-normal-C2zvOubV.woff2                            9.55 kB
+build/assets/dm-mono-latin-ext-500-normal-BtRyHRi6.woff2                            9.61 kB
+build/assets/inter-cyrillic-400-normal-HOLc17fK.woff                                9.78 kB
+build/assets/inter-cyrillic-700-normal-DrXBdSj3.woff                                9.91 kB
+build/assets/inter-greek-400-normal-q2sYcFCs.woff                                   9.92 kB
+build/assets/inter-cyrillic-600-normal-4D_pXhcN.woff                                9.93 kB
+build/assets/inter-cyrillic-500-normal-CxZf_p3X.woff                                9.94 kB
+build/assets/inter-greek-500-normal-Xzm54t5V.woff                                   9.98 kB
+build/assets/inter-greek-700-normal-BUv2fZ6O.woff                                   9.98 kB
+build/assets/inter-greek-600-normal-BZpKdvQh.woff                                  10.03 kB
+build/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2                          10.23 kB
+build/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2                          10.43 kB
+build/assets/inter-cyrillic-ext-600-normal-Dfes3d0z.woff2                          10.48 kB
+build/assets/inter-cyrillic-ext-700-normal-BjwYoWNd.woff2                          10.49 kB
+build/assets/dm-mono-latin-400-normal--0xN8mdc.woff                                11.21 kB
+build/assets/dm-mono-latin-500-normal-CN8Miw6E.woff                                11.24 kB
+build/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff                           13.33 kB
+build/assets/inter-cyrillic-ext-700-normal-LO58E6JB.woff                           13.40 kB
+build/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff                           13.45 kB
+build/assets/inter-cyrillic-ext-600-normal-Bcila6Z-.woff                           13.46 kB
+build/assets/dm-mono-latin-400-normal-4GdczIuU.woff2                               14.82 kB
+build/assets/dm-mono-latin-500-normal-DRMDZjhP.woff2                               14.98 kB
+build/assets/inter-latin-400-normal-C38fXH4l.woff2                                 23.66 kB
+build/assets/inter-latin-500-normal-Cerq10X2.woff2                                 24.27 kB
+build/assets/inter-latin-700-normal-Yt3aPRUw.woff2                                 24.35 kB
+build/assets/inter-latin-600-normal-LgqL8muc.woff2                                 24.45 kB
+build/assets/workflows-cAjWDAYz.webp                                               29.73 kB
+build/assets/inter-latin-400-normal-CyCys3Eg.woff                                  30.69 kB
+build/assets/inter-latin-600-normal-CiBQ2DWP.woff                                  31.26 kB
+build/assets/inter-latin-500-normal-BL9OpVg8.woff                                  31.28 kB
+build/assets/inter-latin-700-normal-BLAVimhd.woff                                  31.32 kB
+build/assets/dashboards-Kg038owN.webp                                              34.99 kB
+build/assets/inter-latin-ext-400-normal-C1nco2VV.woff2                             35.00 kB
+build/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2                             36.02 kB
+build/assets/inter-latin-ext-700-normal-Ca8adRJv.woff2                             36.24 kB
+build/assets/inter-latin-ext-600-normal-D2bJ5OIk.woff2                             36.26 kB
+build/assets/cover-dark-DKwlfFqi.png                                               39.92 kB
+build/index.html                                                                   40.81 kB │ gzip:     7.80 kB
+build/assets/cover-light-BaLykOqy.png                                              41.10 kB
+build/assets/custom-fields-and-objects-D-3S_85z.webp                               41.67 kB
+build/assets/people-and-companies-CbK5-KbH.webp                                    45.31 kB
+build/assets/cover-dark-DMW1DHDq.png                                               47.13 kB
+build/assets/inter-latin-ext-400-normal-77YHD8bZ.woff                              47.56 kB
+build/assets/inter-latin-ext-500-normal-BxGbmqWO.woff                              48.49 kB
+build/assets/inter-latin-ext-700-normal-TidjK2hL.woff                              48.63 kB
+build/assets/inter-latin-ext-600-normal-CIVaiw4L.woff                              48.66 kB
+build/assets/cover-light-DbGvN0P3.png                                              49.70 kB
+build/assets/kanbans-DpsgCPf-.webp                                                 51.83 kB
+build/assets/custom-layouts-DPMH0Col.webp                                          52.53 kB
+build/assets/mcp-cover-light-06eske6m.png                                          63.85 kB
+build/assets/record-page-layout-cover-light-C6ESZVTY.png                           66.87 kB
+build/assets/record-page-layout-cover-dark-D0swBL71.png                            74.52 kB
+build/assets/cover-dark-9kQbtMXt.png                                               75.38 kB
+build/assets/codicon-DCmgc-ay.ttf                                                  80.34 kB
+build/assets/cover-light-DSseOR1G.png                                              81.30 kB
+build/assets/cover-dark-xgbxYbSx.png                                               85.85 kB
+build/assets/cover-light-2aaWm5Ko.png                                              89.83 kB
+build/assets/cover-dark-D9c4ogWY.png                                               90.57 kB
+build/assets/cover-light-CXg7XDta.png                                              93.89 kB
+build/assets/cover-dark-D2CLPtG7.png                                              112.62 kB
+build/assets/cover-light-CrrNRd0J.png                                             112.65 kB
+build/assets/mcp-cover-dark-C7pd_mD6.png                                          122.04 kB
+build/assets/welcomeHalftone.worker-Bpv0Kiug.js                                   169.61 kB
+build/assets/editor.worker-C7PUjJRU.js                                            330.19 kB
+build/assets/json.worker-BuElyEKd.js                                              503.31 kB
+build/assets/cover-dark-MzsudIIe.png                                              556.57 kB
+build/assets/cover-light-DgCS0SMH.png                                             573.77 kB
+build/assets/graphql.worker-BA3HS-DL.js                                           786.29 kB
+build/assets/html.worker-3W-7owhK.js                                              853.77 kB
+build/assets/css.worker-DnTYTEXa.js                                             1,305.03 kB
+build/assets/ts.worker-wfr9M63x.js                                              7,077.42 kB
+build/assets/OnboardingStepAnimatedItem-JkDDt4tG.css                                0.02 kB │ gzip:     0.04 kB
+build/assets/DateTimeDisplay-Cub0mdEc.css                                           0.04 kB │ gzip:     0.06 kB
+build/assets/LightCopyIconButton-BMQSPvud.css                                       0.04 kB │ gzip:     0.06 kB
+build/assets/OnboardingAnimatedReveal-Dnl8mUbP.css                                  0.04 kB │ gzip:     0.06 kB
+build/assets/CommandMenuButton-eA710t0V.css                                         0.04 kB │ gzip:     0.05 kB
+build/assets/SettingsSubdomainPage-BAg8eX6K.css                                     0.04 kB │ gzip:     0.06 kB
+build/assets/WorkflowReadonlyActionCode-CXCJc9Mp.css                                0.04 kB │ gzip:     0.06 kB
+build/assets/SettingsObjectFieldEdit-BsX9Yg3e.css                                   0.04 kB │ gzip:     0.06 kB
+build/assets/PaymentSuccess-DqdhgQeD.css                                            0.05 kB │ gzip:     0.07 kB
+build/assets/SettingsAccountsListEmptyStateCard-DnQ4FeKJ.css                        0.06 kB │ gzip:     0.08 kB
+build/assets/SettingsAccountsEditImapSmtpCaldavConnection-W5t7coZN.css              0.07 kB │ gzip:     0.09 kB
+build/assets/SettingsSectionSkeletonLoader-DOyPFd8M.css                             0.07 kB │ gzip:     0.09 kB
+build/assets/DropdownMenuSeparator-B-JQyYS0.css                                     0.08 kB │ gzip:     0.09 kB
+build/assets/SettingsOptionCardContentSelect-Cb2H1IIQ.css                           0.08 kB │ gzip:     0.09 kB
+build/assets/TableBody-s38KwtY1.css                                                 0.08 kB │ gzip:     0.10 kB
+build/assets/SettingsExperience-DGjdGbnQ.css                                        0.08 kB │ gzip:     0.10 kB
+build/assets/SettingsAiTabs-B2nwUk9j.css                                            0.08 kB │ gzip:     0.09 kB
+build/assets/ApiKeyInput-DHe60KAS.css                                               0.09 kB │ gzip:     0.10 kB
+build/assets/SelectableListItem-C_JgT97b.css                                        0.09 kB │ gzip:     0.10 kB
+build/assets/SettingsEmptyPlaceholder-D8DE0jDg.css                                  0.09 kB │ gzip:     0.09 kB
+build/assets/useHandleImpersonate-B8ZaupYc.css                                      0.09 kB │ gzip:     0.09 kB
+build/assets/ApplicationDisplay-CA6xLymu.css                                        0.10 kB │ gzip:     0.09 kB
+build/assets/SortableTableHeader-Dy9xb_gf.css                                       0.10 kB │ gzip:     0.11 kB
+build/assets/passwordRegex-pPG6Jg6Z.css                                             0.10 kB │ gzip:     0.09 kB
+build/assets/SettingsAccountsCalendarChannelDetails-DuhgRJlz.css                    0.10 kB │ gzip:     0.10 kB
+build/assets/SettingsObjectItemTableRowStyledComponents-f9_Fwqkn.css                0.10 kB │ gzip:     0.11 kB
+build/assets/GraphWidgetLineChart-C3J8S6DW.css                                      0.11 kB │ gzip:     0.11 kB
+build/assets/SettingsAdminInferredVersion-BfNkBUDd.css                              0.11 kB │ gzip:     0.10 kB
+build/assets/SettingsLayoutItemTable-CxduiCxl.css                                   0.11 kB │ gzip:     0.11 kB
+build/assets/SettingsLegalDpa-BU0R9FVU.css                                          0.12 kB │ gzip:     0.12 kB
+build/assets/FavoritesSectionDispatcher-Bbmq3hM6.css                                0.13 kB │ gzip:     0.11 kB
+build/assets/SettingsAdminInstanceStatus-C7bnI6hj.css                               0.14 kB │ gzip:     0.12 kB
+build/assets/StandalonePageLayoutPage-CtTMnHyX.css                                  0.15 kB │ gzip:     0.13 kB
+build/assets/TimeZoneAbbreviation-Zhh8SH8z.css                                      0.15 kB │ gzip:     0.12 kB
+build/assets/SettingsWorkspaceCommunicationGroupChannelDetail-Yxr9IsiH.css          0.15 kB │ gzip:     0.13 kB
+build/assets/SettingsAiPrompts-0cBk1JwL.css                                         0.16 kB │ gzip:     0.12 kB
+build/assets/ScrollWrapper-so3jtMLa.css                                             0.17 kB │ gzip:     0.12 kB
+build/assets/SettingsApplicationCommandMenuItemDetail-D3MEY7Z4.css                  0.18 kB │ gzip:     0.14 kB
+build/assets/MultipleRecordPicker-hrwnMaHY.css                                      0.18 kB │ gzip:     0.15 kB
+build/assets/VariableChipStandalone-R9Uy9M2W.css                                    0.18 kB │ gzip:     0.14 kB
+build/assets/useCreditUpgradeAction-BVanqG-5.css                                    0.19 kB │ gzip:     0.15 kB
+build/assets/NavigationDrawerCollapseButton-C1Qw2PQM.css                            0.19 kB │ gzip:     0.14 kB
+build/assets/SettingsWorkspaceCommunications-C4emONw1.css                           0.19 kB │ gzip:     0.15 kB
+build/assets/shouldDisplayVariable-DeFFZSyF.css                                     0.19 kB │ gzip:     0.15 kB
+build/assets/SettingsTableListSection-BPi6klXd.css                                  0.20 kB │ gzip:     0.14 kB
+build/assets/WorkspaceActivation-C6CzKCz6.css                                       0.20 kB │ gzip:     0.16 kB
+build/assets/Dropdown-b7SuLN3o.css                                                  0.20 kB │ gzip:     0.15 kB
+build/assets/ExpandedFieldDisplay-YXRFT-w9.css                                      0.20 kB │ gzip:     0.16 kB
+build/assets/SettingsAdminNewAiModel-BnyGFM9A.css                                   0.21 kB │ gzip:     0.15 kB
+build/assets/AppChip-BrBhyqEl.css                                                   0.22 kB │ gzip:     0.16 kB
+build/assets/SettingsCustomDomainPage-CQCsSpYw.css                                  0.23 kB │ gzip:     0.16 kB
+build/assets/WorkspaceSectionListDndKit-D1NziSt3.css                                0.23 kB │ gzip:     0.15 kB
+build/assets/MobileHomePage-CyeTY0dN.css                                            0.24 kB │ gzip:     0.16 kB
+build/assets/WorkflowCoreIndexPage-_6A5vwJj.css                                     0.24 kB │ gzip:     0.18 kB
+build/assets/SettingsDatabaseEventsForm-2H_FQUXL.css                                0.25 kB │ gzip:     0.15 kB
+build/assets/FullScreenContainer-Cjn-HcXg.css                                       0.25 kB │ gzip:     0.17 kB
+build/assets/SubscriptionInfoContainer-C6Tdtehr.css                                 0.26 kB │ gzip:     0.17 kB
+build/assets/SettingsAdminChats-CyLON3zg.css                                        0.26 kB │ gzip:     0.18 kB
+build/assets/SettingsOptionCardContentCounter-CEgPlxCW.css                          0.26 kB │ gzip:     0.17 kB
+build/assets/SettingsToolParameterTable-uSd1n2vU.css                                0.27 kB │ gzip:     0.17 kB
+build/assets/PasswordReset-DWZTq7GV.css                                             0.28 kB │ gzip:     0.17 kB
+build/assets/InviteTeam-BngUIraS.css                                                0.28 kB │ gzip:     0.15 kB
+build/assets/SettingsDevelopersApiKeyDetail-DimJ8rOS.css                            0.29 kB │ gzip:     0.18 kB
+build/assets/SettingsApplicationDetails-BMTD9ZZx.css                                0.29 kB │ gzip:     0.21 kB
+build/assets/NotFound-B2eMOoU8.css                                                  0.30 kB │ gzip:     0.20 kB
+build/assets/NavigationMenuItemSection-BlNw0TT_.css                                 0.30 kB │ gzip:     0.17 kB
+build/assets/FieldRichTextWidget-BDk5UqBg.css                                       0.31 kB │ gzip:     0.18 kB
+build/assets/SkeletonLoader-BXS5BCKh.css                                            0.31 kB │ gzip:     0.19 kB
+build/assets/SettingsBillingPageLayout-C605qJMX.css                                 0.31 kB │ gzip:     0.20 kB
+build/assets/WorkspaceSectionDispatcher-BMUKc90i.css                                0.31 kB │ gzip:     0.17 kB
+build/assets/FileIcon-eUduEYoV.css                                                  0.32 kB │ gzip:     0.19 kB
+build/assets/SettingsOptionIconCustomizer-BkhLzO4c.css                              0.32 kB │ gzip:     0.13 kB
+build/assets/SidePanelToggleButton-fC6uY9yI.css                                     0.32 kB │ gzip:     0.16 kB
+build/assets/useDeleteOneObjectMetadataItem-DexYTjGA.css                            0.32 kB │ gzip:     0.22 kB
+build/assets/OnboardingSkipButton-Bk2vHsym.css                                      0.33 kB │ gzip:     0.19 kB
+build/assets/SettingsUsageUserDetail-Dv7diMEo.css                                   0.33 kB │ gzip:     0.19 kB
+build/assets/SettingsObjects-C2cCGraX.css                                           0.34 kB │ gzip:     0.25 kB
+build/assets/StyledOnboardingStepPage-CIe9mRXk.css                                  0.35 kB │ gzip:     0.22 kB
+build/assets/SettingsApplicationConnectionDetail-CRJ_cXnu.css                       0.35 kB │ gzip:     0.21 kB
+build/assets/StyledOnboardingStepTitle-DSwzDWGd.css                                 0.35 kB │ gzip:     0.20 kB
+build/assets/SettingsAdminUserDetail-BVBvsqAg.css                                   0.36 kB │ gzip:     0.18 kB
+build/assets/Table-Bszikloe.css                                                     0.36 kB │ gzip:     0.17 kB
+build/assets/GraphWidgetAggregateChart-UHS0KEaf.css                                 0.36 kB │ gzip:     0.21 kB
+build/assets/BookCall-B9r33Zfv.css                                                  0.36 kB │ gzip:     0.20 kB
+build/assets/WorkflowEditActionCode-OG_p5ak3.css                                    0.37 kB │ gzip:     0.21 kB
+build/assets/SettingsObjectNewFieldSelect-dIdVnFop.css                              0.37 kB │ gzip:     0.23 kB
+build/assets/useIsDropDisabledForSection-BABKs_eP.css                               0.38 kB │ gzip:     0.23 kB
+build/assets/SettingsSkillForm-jpKKA26-.css                                         0.40 kB │ gzip:     0.19 kB
+build/assets/SettingsObjectNewIndex-BVKUbfr0.css                                    0.40 kB │ gzip:     0.21 kB
+build/assets/SingleRecordPicker-DUBjGT1P.css                                        0.41 kB │ gzip:     0.22 kB
+build/assets/SettingsAgentTurnDetail-B6kaBSyh.css                                   0.42 kB │ gzip:     0.22 kB
+build/assets/ConfirmationModal-buUWXPoI.css                                         0.42 kB │ gzip:     0.22 kB
+build/assets/TableHeader-DPDAsnWF.css                                               0.44 kB │ gzip:     0.22 kB
+build/assets/isFieldSelect-BlMsJW2T.css                                             0.44 kB │ gzip:     0.24 kB
+build/assets/SettingsRoleAddObjectLevel-KkKgTe0v.css                                0.44 kB │ gzip:     0.27 kB
+build/assets/NavigationMenuItemFolderDnd-CwxQes82.css                               0.44 kB │ gzip:     0.25 kB
+build/assets/SettingsAI-Bk3chzgT.css                                                0.45 kB │ gzip:     0.18 kB
+build/assets/TableCell-ejyNoH_3.css                                                 0.46 kB │ gzip:     0.21 kB
+build/assets/SettingsRadioSettingsCard-BBEnAvwp.css                                 0.48 kB │ gzip:     0.26 kB
+build/assets/settingsDataModelObjectAboutFormSchema-eYINIH1v.css                    0.48 kB │ gzip:     0.22 kB
+build/assets/TopBar-7zitZd9u.css                                                    0.49 kB │ gzip:     0.27 kB
+build/assets/GraphWidgetBarChart-B2hu0GTe.css                                       0.53 kB │ gzip:     0.24 kB
+build/assets/SettingsWizardStepBar-DNo7gdVV.css                                     0.53 kB │ gzip:     0.26 kB
+build/assets/SettingsAiModelsTable-CJJM28Eb.css                                     0.54 kB │ gzip:     0.28 kB
+build/assets/SettingsWorkspaceMember-dlJMNEOb.css                                   0.54 kB │ gzip:     0.27 kB
+build/assets/OrganizationAdornment-EHXHtr6X.css                                     0.54 kB │ gzip:     0.28 kB
+build/assets/SettingsOptionCardContentToggle-C2v8J_pr.css                           0.54 kB │ gzip:     0.28 kB
+build/assets/WorkspaceMemberAvatarStack-BH_RUS3f.css                                0.54 kB │ gzip:     0.27 kB
+build/assets/SettingsAdminConfigVariableDetails-SncZyI5k.css                        0.55 kB │ gzip:     0.29 kB
+build/assets/ArrayDisplay-CexMtwso.css                                              0.56 kB │ gzip:     0.28 kB
+build/assets/SettingsProfile-AUTNKyDz.css                                           0.56 kB │ gzip:     0.26 kB
+build/assets/SettingsAccountsVisibilityIcon-Be0RLRSN.css                            0.58 kB │ gzip:     0.29 kB
+build/assets/SettingsObjectFieldDataType-UseHhvfD.css                               0.58 kB │ gzip:     0.28 kB
+build/assets/SettingsToolIcon-DUDjTs5n.css                                          0.60 kB │ gzip:     0.25 kB
+build/assets/SettingsCommunity-68zR7PRT.css                                         0.60 kB │ gzip:     0.29 kB
+build/assets/SettingsDatePickerInput-D6PgIqnQ.css                                   0.61 kB │ gzip:     0.31 kB
+build/assets/UsageDailyChartSection-BnYWt1my.css                                    0.61 kB │ gzip:     0.31 kB
+build/assets/Logo-CV0PLEKC.css                                                      0.62 kB │ gzip:     0.27 kB
+build/assets/OnboardingCreditsRewardTag-D_UWUcie.css                                0.64 kB │ gzip:     0.28 kB
+build/assets/SettingsAccountsConnectionForm-C0dtcaKk.css                            0.65 kB │ gzip:     0.28 kB
+build/assets/RecordShowPage-B4CW2vDO.css                                            0.66 kB │ gzip:     0.32 kB
+build/assets/TableSection-DmMZllfq.css                                              0.66 kB │ gzip:     0.29 kB
+build/assets/SettingsRestPlayground-BOA9IMBh.css                                    0.67 kB │ gzip:     0.28 kB
+build/assets/SettingsAdminWorkspaceDetail-hefDKhGY.css                              0.67 kB │ gzip:     0.29 kB
+build/assets/SettingsStatsGrid-C9dzVkMG.css                                         0.70 kB │ gzip:     0.34 kB
+build/assets/GraphWidgetPieChart-CZ0cAqbx.css                                       0.73 kB │ gzip:     0.36 kB
+build/assets/SettingsApplicationRegistrationGeneralTab-CQWv1H3J.css                 0.75 kB │ gzip:     0.31 kB
+build/assets/CronExpressionHelper-CHyQtmIS.css                                      0.79 kB │ gzip:     0.29 kB
+build/assets/TableRow-CJK8O3QP.css                                                  0.79 kB │ gzip:     0.30 kB
+build/assets/SettingsAccounts-BtE7obU0.css                                          0.80 kB │ gzip:     0.37 kB
+build/assets/SettingsCard-dygLNwh_.css                                              0.81 kB │ gzip:     0.35 kB
+build/assets/SettingsApplicationFrontComponentDetail-B2adJ72R.css                   0.85 kB │ gzip:     0.38 kB
+build/assets/SettingsTextLink-8uAsG3Bq.css                                          0.88 kB │ gzip:     0.29 kB
+build/assets/VariableChip-BtcfcmsS.css                                              0.88 kB │ gzip:     0.36 kB
+build/assets/CreateProfile-CDvcRMp4.css                                             0.89 kB │ gzip:     0.43 kB
+build/assets/ImageInput-CxHncKzO.css                                                0.92 kB │ gzip:     0.40 kB
+build/assets/getDpaPreview-D5QJSRmc.css                                             0.92 kB │ gzip:     0.37 kB
+build/assets/Select-DRZNQAki.css                                                    0.94 kB │ gzip:     0.38 kB
+build/assets/SettingsWorkspaceUnsubscribe-tgJfLaPI.css                              0.96 kB │ gzip:     0.36 kB
+build/assets/SettingsAdminIndicatorHealthStatus-CDQMI0a-.css                        0.98 kB │ gzip:     0.36 kB
+build/assets/PageHeader-B2Ehgwxl.css                                                1.00 kB │ gzip:     0.37 kB
+build/assets/SettingsCardContentBase-Cp4zZoEl.css                                   1.02 kB │ gzip:     0.41 kB
+build/assets/SettingsAdminWorkspacesStatus-D1XyLyhk.css                             1.03 kB │ gzip:     0.43 kB
+build/assets/SettingsDataModelFieldPreviewWidget-BfDFkIZ2.css                       1.05 kB │ gzip:     0.42 kB
+build/assets/SettingsTwoFactorAuthenticationMethod-DQCSmQSB.css                     1.06 kB │ gzip:     0.46 kB
+build/assets/TwoFactorAuthenticationVerificationCodeSlot-oktaKP2Z.css               1.07 kB │ gzip:     0.46 kB
+build/assets/OpenRecordInCardMedia-B_sQICdg.css                                     1.09 kB │ gzip:     0.41 kB
+build/assets/SettingsDiscoveryHeroCardFooter-Ji94wCLF.css                           1.11 kB │ gzip:     0.44 kB
+build/assets/DropdownMenuHeaderLeftComponent-BZvT_oxI.css                           1.12 kB │ gzip:     0.45 kB
+build/assets/AuthorizeActionButtons-BAW4ciT8.css                                    1.15 kB │ gzip:     0.40 kB
+build/assets/SettingsAgentForm-DA9X11qn.css                                         1.16 kB │ gzip:     0.36 kB
+build/assets/useSnackBar-DIHnUzgM.css                                               1.17 kB │ gzip:     0.49 kB
+build/assets/SettingsAdmin-C2b5fsJl.css                                             1.17 kB │ gzip:     0.43 kB
+build/assets/useTextVariableEditor-ycNQE8NL.css                                     1.20 kB │ gzip:     0.49 kB
+build/assets/DropdownMenuSearchInput-D6uPX0dz.css                                   1.21 kB │ gzip:     0.38 kB
+build/assets/useNavigateSettings-C8zKwuPQ.css                                       1.21 kB │ gzip:     0.37 kB
+build/assets/SettingsAdminWorkerMetricsGraph-BxT0jWts.css                           1.22 kB │ gzip:     0.44 kB
+build/assets/SortOrFilterChip-CTn_8Ujn.css                                          1.24 kB │ gzip:     0.44 kB
+build/assets/getMarketplaceAppDefaultRoleManifest-6oWg1i3g.css                      1.25 kB │ gzip:     0.45 kB
+build/assets/SettingsRolePermissions-BHXjt9Ey.css                                   1.33 kB │ gzip:     0.41 kB
+build/assets/InstallApps-n1krLg4N.css                                               1.33 kB │ gzip:     0.44 kB
+build/assets/VariableTag-LgtK7Ip_.css                                               1.35 kB │ gzip:     0.56 kB
+build/assets/SettingsLogicFunctionDetail-Bk6T_lWe.css                               1.38 kB │ gzip:     0.44 kB
+build/assets/SettingsListCard-Fv2yp89D.css                                          1.41 kB │ gzip:     0.49 kB
+build/assets/SettingsSecuritySSOIdentifyProvider-ODV-Zsyj.css                       1.47 kB │ gzip:     0.52 kB
+build/assets/SettingsRole-BZYeKrN9.css                                              1.48 kB │ gzip:     0.54 kB
+build/assets/recordIndexGroupAggregateOperationComponentState-D-AmBpoe.css          1.48 kB │ gzip:     0.45 kB
+build/assets/SettingsDiscoveryHeroCard-sNqhkE9C.css                                 1.51 kB │ gzip:     0.60 kB
+build/assets/SettingsAdminQueueDetail-Bpkag9j0.css                                  1.69 kB │ gzip:     0.48 kB
+build/assets/AiChatPage-BUynUOmp.css                                                1.72 kB │ gzip:     0.62 kB
+build/assets/DropdownMenuItemsContainer-CZr3YnZI.css                                1.78 kB │ gzip:     0.55 kB
+build/assets/Authorize-BylXuG2X.css                                                 1.87 kB │ gzip:     0.62 kB
+build/assets/SettingsApplications-zEKYOzBQ.css                                      1.92 kB │ gzip:     0.70 kB
+build/assets/SettingsObjectDetailPage-B0KZFELg.css                                  2.01 kB │ gzip:     0.63 kB
+build/assets/SettingsWorkspaceMembers-B_nTwQ4b.css                                  2.04 kB │ gzip:     0.63 kB
+build/assets/MultiItemBaseInput-DnSgoSiS.css                                        2.07 kB │ gzip:     0.43 kB
+build/assets/SettingsObjectOverview-CVRt9ahH.css                                    2.16 kB │ gzip:     0.66 kB
+build/assets/SettingsGeneral-BRpCVrEf.css                                           2.22 kB │ gzip:     0.79 kB
+build/assets/moveArrayItem-BrJmmwpm.css                                             2.22 kB │ gzip:     0.59 kB
+build/assets/SettingsEnterprise-wWIEcs4s.css                                        2.30 kB │ gzip:     0.68 kB
+build/assets/PageCardLayout-DmVJiEeQ.css                                            2.42 kB │ gzip:     0.76 kB
+build/assets/TextInput-DcSq7AZr.css                                                 2.48 kB │ gzip:     0.71 kB
+build/assets/SettingsApplicationPermissionsTab-B_ltmc2y.css                         2.62 kB │ gzip:     0.76 kB
+build/assets/SettingsBillingPlans-DNK2HMUn.css                                      2.77 kB │ gzip:     0.76 kB
+build/assets/ChooseYourPlan-Q7JDd5DB.css                                            2.81 kB │ gzip:     0.77 kB
+build/assets/SettingsApiWebhooks-CxK2RWiW.css                                       2.89 kB │ gzip:     0.88 kB
+build/assets/RichTextFieldEditor-xLBLDvV4.css                                       3.10 kB │ gzip:     0.98 kB
+build/assets/getColorScheme-CsK5xC0Y.css                                            3.26 kB │ gzip:     0.92 kB
+build/assets/BackgroundMockPage-UfzS3VqF.css                                        3.33 kB │ gzip:     0.71 kB
+build/assets/StandaloneRichTextWidget-BtujWIDg.css                                  3.76 kB │ gzip:     1.12 kB
+build/assets/SettingsAdminWorkspaceChatThread-1IK3ntJG.css                          4.12 kB │ gzip:     0.89 kB
+build/assets/settingsFieldFormSchema-DHDSdpYL.css                                   4.13 kB │ gzip:     1.01 kB
+build/assets/SettingsRoleObjectLevel-DDafNJfW.css                                   4.17 kB │ gzip:     1.05 kB
+build/assets/SyncEmails-D0du7Fq9.css                                                4.29 kB │ gzip:     1.08 kB
+build/assets/SettingsAccountsMessageChannelDetails-Dnvabq5v.css                     4.64 kB │ gzip:     1.17 kB
+build/assets/SettingsBilling-CIRhs0S_.css                                           7.26 kB │ gzip:     1.40 kB
+build/assets/RecordIndexPage-DObkUq26.css                                           7.30 kB │ gzip:     1.56 kB
+build/assets/SignInUp-GGMR1zla.css                                                  7.34 kB │ gzip:     1.65 kB
+build/assets/DocumentViewer-ZYE97T-R.css                                           10.45 kB │ gzip:     2.35 kB
+build/assets/SpreadsheetImport-CA7iMP78.css                                        19.40 kB │ gzip:     4.05 kB
+build/assets/DateTimePicker-dH8WAc16.css                                           32.43 kB │ gzip:     4.50 kB
+build/assets/PinnedCommandMenuItemButtons-BP0-vHTx.css                             81.66 kB │ gzip:     9.98 kB
+build/assets/edcore-B9WiNxkw.css                                                  132.84 kB │ gzip:    20.80 kB
+build/assets/style-B3s5wRrg.css                                                   209.19 kB │ gzip:    33.32 kB
+build/assets/style-CEnodQ1I.css                                                   245.42 kB │ gzip:    38.06 kB
+build/assets/index-CVMWttZV.css                                                   472.58 kB │ gzip:   108.90 kB
+build/assets/SettingsGraphQLPlayground-DrS09KDj.css                               627.03 kB │ gzip:   347.98 kB
+build/assets/empty-GlqisfcO-AO-Sj9lJ.js                                             0.03 kB │ gzip:     0.05 kB
+build/assets/SearchVectorFieldName-CsZ0njQs.js                                      0.03 kB │ gzip:     0.05 kB
+build/assets/logError-DhWz8OF-.js                                                   0.04 kB │ gzip:     0.06 kB
+build/assets/sortByAscString-Y_-QQGAG.js                                            0.04 kB │ gzip:     0.06 kB
+build/assets/turnIntoEmptyStringIfWhitespacesOnly-2dusg_vc.js                       0.04 kB │ gzip:     0.06 kB
+build/assets/AiProviderSource-Ds4NCv1f.js                                           0.05 kB │ gzip:     0.07 kB
+build/assets/getBasePathToShowPage-BFHeItlk.js                                      0.05 kB │ gzip:     0.07 kB
+build/assets/buildRecordFromKeysWithSameValue-JEVWpMvg.js                           0.06 kB │ gzip:     0.08 kB
+build/assets/toSpliced-rTiTcEpZ.js                                                  0.07 kB │ gzip:     0.09 kB
+build/assets/useAtomState-CyJyrSDV.js                                               0.07 kB │ gzip:     0.09 kB
+build/assets/useAtomStateValue-fOI3coSn.js                                          0.07 kB │ gzip:     0.08 kB
+build/assets/useSetAtomState-B2LR5crS.js                                            0.07 kB │ gzip:     0.09 kB
+build/assets/ZodNonEmptyString-D0u8NRlT.js                                          0.07 kB │ gzip:     0.09 kB
+build/assets/sleep-DxwODG3f.js                                                      0.07 kB │ gzip:     0.09 kB
+build/assets/getImageIdentifierFieldMetadataItem-ChjzAK6Z.js                        0.08 kB │ gzip:     0.09 kB
+build/assets/DefaultOpenRecordInPreference-DNi539pO.js                              0.08 kB │ gzip:     0.09 kB
+build/assets/isFieldUuid-BjNT6uLG.js                                                0.08 kB │ gzip:     0.09 kB
+build/assets/config-B1E7I59J.js                                                     0.08 kB │ gzip:     0.10 kB
+build/assets/SettingsUnsubscribeTabIds-B2P8ues4.js                                  0.08 kB │ gzip:     0.10 kB
+build/assets/useAtomFamilyStateValue-C93FaFzM.js                                    0.08 kB │ gzip:     0.10 kB
+build/assets/useSetAtomFamilyState-C9FPh-tj.js                                      0.08 kB │ gzip:     0.10 kB
+build/assets/__vite-browser-external-56mrcCg8.js                                    0.08 kB │ gzip:     0.10 kB
+build/assets/useAtomFamilySelectorState-DARkSOD3.js                                 0.09 kB │ gzip:     0.10 kB
+build/assets/useAtomFamilySelectorValue-2K7He9Ds.js                                 0.09 kB │ gzip:     0.10 kB
+build/assets/ChartMotionConfig-VuLHAnpt.js                                          0.09 kB │ gzip:     0.10 kB
+build/assets/isHiddenSystemField-C_ovQAmd.js                                        0.09 kB │ gzip:     0.11 kB
+build/assets/ContextStoreComponentInstanceContext-DInD7Gt9.js                       0.09 kB │ gzip:     0.11 kB
+build/assets/PageLayoutComponentInstanceContext-DInD7Gt9.js                         0.09 kB │ gzip:     0.11 kB
+build/assets/WidgetComponentInstanceContext-DInD7Gt9.js                             0.09 kB │ gzip:     0.11 kB
+build/assets/isCurrentPathAiChatPage-DN3SbxnW.js                                    0.10 kB │ gzip:     0.11 kB
+build/assets/AiOperationTypes-CK8P2N8z.js                                           0.10 kB │ gzip:     0.11 kB
+build/assets/getDefaultOptions-CA_Ttq1I.js                                          0.10 kB │ gzip:     0.11 kB
+build/assets/getForeignKeyNameFromRelationFieldName-Cld4dRle.js                     0.10 kB │ gzip:     0.11 kB
+build/assets/billingState-UOgp0ewh.js                                               0.10 kB │ gzip:     0.12 kB
+build/assets/isUndefinedOrNull-BgCnd9uY.js                                          0.10 kB │ gzip:     0.11 kB
+build/assets/apiConfigState-DPGslSXw.js                                             0.11 kB │ gzip:     0.12 kB
+build/assets/isDefined-Dtu5EYqP-_d6Dqdoe.js                                         0.11 kB │ gzip:     0.11 kB
+build/assets/returnToPathState-Io64dT3o.js                                          0.11 kB │ gzip:     0.12 kB
+build/assets/getOperationName-Ddz1PZ_Z.js                                           0.11 kB │ gzip:     0.12 kB
+build/assets/isMultiWorkspaceEnabledState-Dbbw9OaQ.js                               0.11 kB │ gzip:     0.13 kB
+build/assets/allowRequestsToTwentyIcons-CrnmDX0Y.js                                 0.12 kB │ gzip:     0.13 kB
+build/assets/SSOIdentitiesProvidersState-DbNKSOVz.js                                0.12 kB │ gzip:     0.13 kB
+build/assets/recordStoreFamilyState-CRjezABK.js                                     0.12 kB │ gzip:     0.13 kB
+build/assets/BillingCheckoutSessionDefaultValue-BMUWYV5Y.js                         0.12 kB │ gzip:     0.13 kB
+build/assets/SettingsApiWebhooksTabs-zlsxSANo.js                                    0.12 kB │ gzip:     0.13 kB
+build/assets/isAttachmentPreviewEnabledState-BAUpMHK0.js                            0.12 kB │ gzip:     0.13 kB
+build/assets/useRedirect-DMLV2ydH.js                                                0.12 kB │ gzip:     0.13 kB
+build/assets/currentWorkspaceMembersState-CjOM_Qmy.js                               0.12 kB │ gzip:     0.13 kB
+build/assets/isCompositeFieldType-CV-W8UWA.js                                       0.12 kB │ gzip:     0.13 kB
+build/assets/useIsMobile-BU79K72g.js                                                0.13 kB │ gzip:     0.14 kB
+build/assets/UserContext-B0GcY09c.js                                                0.13 kB │ gzip:     0.13 kB
+build/assets/isSameWeek-DWl7WDy-.js                                                 0.13 kB │ gzip:     0.13 kB
+build/assets/shouldNavigateBackToMemorizedUrlOnSaveState-DK5BXEDV.js                0.13 kB │ gzip:     0.14 kB
+build/assets/isAiChatPath-7klAHXA6.js                                               0.14 kB │ gzip:     0.13 kB
+build/assets/Table-C8Ys8tpH.js                                                      0.14 kB │ gzip:     0.15 kB
+build/assets/TableBody-DxThLgpT.js                                                  0.14 kB │ gzip:     0.15 kB
+build/assets/shouldOpenAiChatAfterOnboardingState-B_b57YP1.js                       0.15 kB │ gzip:     0.15 kB
+build/assets/isManyToOneRelationField-87Q0WkXd.js                                   0.15 kB │ gzip:     0.15 kB
+build/assets/StyledOnboardingStepPage-D8JUHii2.js                                   0.15 kB │ gzip:     0.16 kB
+build/assets/AiAdminPath-0iIYMl20.js                                                0.15 kB │ gzip:     0.14 kB
+build/assets/logDebug-z8OI3HHX.js                                                   0.15 kB │ gzip:     0.15 kB
+build/assets/IconCheck-DEmAE7hx.js                                                  0.15 kB │ gzip:     0.15 kB
+build/assets/IconChevronUp-BYd4X9G9.js                                              0.15 kB │ gzip:     0.16 kB
+build/assets/addDays-DWtXvICB.js                                                    0.16 kB │ gzip:     0.15 kB
+build/assets/SubscriptionInfoContainer-CVKOlpX3.js                                  0.16 kB │ gzip:     0.16 kB
+build/assets/is-record-object-schema-CwzshFdt-Cxshvyar.js                           0.16 kB │ gzip:     0.16 kB
+build/assets/IconChevronDown-CjyOCQkv.js                                            0.16 kB │ gzip:     0.16 kB
+build/assets/IconChevronLeft-B-BMfXDS.js                                            0.16 kB │ gzip:     0.16 kB
+build/assets/authProvidersState-7Gw8R9cF.js                                         0.16 kB │ gzip:     0.16 kB
+build/assets/currentUserState-COXd0PAx.js                                           0.16 kB │ gzip:     0.16 kB
+build/assets/IconChevronRight-6ZDzoOHp.js                                           0.16 kB │ gzip:     0.16 kB
+build/assets/useNavigateApp-DYokyJsa.js                                             0.17 kB │ gzip:     0.15 kB
+build/assets/currentWorkspaceState-CMyFKDun.js                                      0.17 kB │ gzip:     0.16 kB
+build/assets/guessSSOIdentityProviderIconByUrl-DFUQpmic.js                          0.17 kB │ gzip:     0.15 kB
+build/assets/IconBolt-BP60W6a8.js                                                   0.17 kB │ gzip:     0.17 kB
+build/assets/SettingsFieldTypeConfigs-G9eJO-5U.js                                   0.17 kB │ gzip:     0.13 kB
+build/assets/useObjectMetadataItems-CzIyk3u3.js                                     0.17 kB │ gzip:     0.15 kB
+build/assets/currentUserWorkspaceState-BWoM3K9A.js                                  0.17 kB │ gzip:     0.16 kB
+build/assets/dateLocaleState-9NiqFnzq.js                                            0.17 kB │ gzip:     0.16 kB
+build/assets/isNewerSemver-Bpke3dJb.js                                              0.17 kB │ gzip:     0.14 kB
+build/assets/domainConfigurationState-Ckmw_xfo.js                                   0.18 kB │ gzip:     0.16 kB
+build/assets/IconPlus-BifJD0Ir.js                                                   0.18 kB │ gzip:     0.16 kB
+build/assets/unsubscribeTopics-NME-HQGd.js                                          0.18 kB │ gzip:     0.14 kB
+build/assets/currentWorkspaceMemberState-BPbzijrP.js                                0.18 kB │ gzip:     0.17 kB
+build/assets/passwordRegex-yUjapveP.js                                              0.18 kB │ gzip:     0.18 kB
+build/assets/IconPrompt-DVS1WdUE.js                                                 0.18 kB │ gzip:     0.17 kB
+build/assets/AiInstructionsEditorProfile-CA0iDDDX.js                                0.18 kB │ gzip:     0.18 kB
+build/assets/isObjectMetadataReadOnly-DbfqD31H.js                                   0.19 kB │ gzip:     0.18 kB
+build/assets/downloadFile-Sco-AQ-M.js                                               0.19 kB │ gzip:     0.18 kB
+build/assets/activeTabIdComponentState-BijRLsKD.js                                  0.19 kB │ gzip:     0.17 kB
+build/assets/toOpenRecordInPreference-DJVbqyGT.js                                   0.19 kB │ gzip:     0.18 kB
+build/assets/flowComponentState-B-5kQiar.js                                         0.20 kB │ gzip:     0.17 kB
+build/assets/SettingsDevelopersWebhookNew-DadJ3PjJ.js                               0.20 kB │ gzip:     0.16 kB
+build/assets/useIsFeatureEnabled-3SyaSFrQ.js                                        0.20 kB │ gzip:     0.18 kB
+build/assets/objectMetadataItemsSelector-KcVxH0zZ.js                                0.20 kB │ gzip:     0.16 kB
+build/assets/SettingsTabBar-DDkOZ7ix.js                                             0.20 kB │ gzip:     0.16 kB
+build/assets/IconArrowUpRight-BX6cqEz-.js                                           0.20 kB │ gzip:     0.18 kB
+build/assets/isNonCompositeField-DkuoaR5c.js                                        0.21 kB │ gzip:     0.19 kB
+build/assets/IconForbid-CScSGe6F.js                                                 0.21 kB │ gzip:     0.18 kB
+build/assets/IconHistory-mbfCWXGZ.js                                                0.21 kB │ gzip:     0.18 kB
+build/assets/IconClock-KTIBv9S6.js                                                  0.21 kB │ gzip:     0.18 kB
+build/assets/IconHeart-DvILsd0j.js                                                  0.21 kB │ gzip:     0.18 kB
+build/assets/getAbsoluteImageUrl-B_XgiT4_.js                                        0.21 kB │ gzip:     0.18 kB
+build/assets/IconCommand-7bjq2d_y.js                                                0.21 kB │ gzip:     0.17 kB
+build/assets/navigationDrawerActiveTabState-E3pxcXLQ.js                             0.21 kB │ gzip:     0.19 kB
+build/assets/navigationMenuItemsSelector-WSOP423g.js                                0.21 kB │ gzip:     0.17 kB
+build/assets/IconArrowBackUp-CtyVpl0A.js                                            0.21 kB │ gzip:     0.19 kB
+build/assets/getAggregateQueryName-kpe30Uzf.js                                      0.22 kB │ gzip:     0.19 kB
+build/assets/useCombinedRefs-IBtw-F7_.js                                            0.22 kB │ gzip:     0.19 kB
+build/assets/filterWorkspaceNavigationMenuItems-BG1qeeWy.js                         0.23 kB │ gzip:     0.20 kB
+build/assets/IconArrowRight-Z0OJN07v.js                                             0.23 kB │ gzip:     0.18 kB
+build/assets/IconCode-CgJHWCXw.js                                                   0.23 kB │ gzip:     0.17 kB
+build/assets/IconArrowUp-BdIPvP2a.js                                                0.23 kB │ gzip:     0.18 kB
+build/assets/IconArrowDown-Bv1DIY7t.js                                              0.23 kB │ gzip:     0.18 kB
+build/assets/flattenedFieldMetadataItemsSelector-CXUoQlnR.js                        0.23 kB │ gzip:     0.18 kB
+build/assets/IconPencil-Bx9CUkw4.js                                                 0.23 kB │ gzip:     0.20 kB
+build/assets/isFieldFiles-dNXcl_Ub.js                                               0.23 kB │ gzip:     0.17 kB
+build/assets/IconPaperclip-CFyMHWiB.js                                              0.24 kB │ gzip:     0.19 kB
+build/assets/isTwentyStandardApplication-YmL3_CFQ.js                                0.24 kB │ gzip:     0.20 kB
+build/assets/IconRefresh-C-yTaP7q.js                                                0.24 kB │ gzip:     0.19 kB
+build/assets/useFieldMetadataItemById-BBxUk4NN.js                                   0.24 kB │ gzip:     0.17 kB
+build/assets/IconCheckbox-gx1hho3a.js                                               0.24 kB │ gzip:     0.19 kB
+build/assets/IconStar-mN69cpLN.js                                                   0.25 kB │ gzip:     0.21 kB
+build/assets/IconRepeat-zox9Twl9.js                                                 0.25 kB │ gzip:     0.19 kB
+build/assets/IconSend-T5A1yBDV.js                                                   0.25 kB │ gzip:     0.20 kB
+build/assets/IconMail-BOU3ofC8.js                                                   0.25 kB │ gzip:     0.19 kB
+build/assets/IconCircleOff-DIy7FmVk.js                                              0.25 kB │ gzip:     0.21 kB
+build/assets/IconFile-Oq0HPu5f.js                                                   0.25 kB │ gzip:     0.20 kB
+build/assets/pageLayoutEditingWidgetIdComponentState-BW2mh_xZ.js                    0.26 kB │ gzip:     0.19 kB
+build/assets/IconClockHour8-e5NyAjvJ.js                                             0.26 kB │ gzip:     0.20 kB
+build/assets/resolveOpenRecordIn-DQTGj6db.js                                        0.26 kB │ gzip:     0.21 kB
+build/assets/useObjectPermissionsForObject-Dkh29slX.js                              0.26 kB │ gzip:     0.21 kB
+build/assets/IconUpload-E0J0dwHM.js                                                 0.26 kB │ gzip:     0.19 kB
+build/assets/parseInitialBlocknote-CYKIN1uo.js                                      0.26 kB │ gzip:     0.22 kB
+build/assets/isMatchingPathname-CMhB2xYb.js                                         0.26 kB │ gzip:     0.22 kB
+build/assets/useListenToSidePanelClosing-5acrq5L0.js                                0.26 kB │ gzip:     0.21 kB
+build/assets/IconDownload-CR9alnE9.js                                               0.26 kB │ gzip:     0.20 kB
+build/assets/IconInbox-Cl_6sf0L.js                                                  0.26 kB │ gzip:     0.20 kB
+build/assets/IconEraser-BUI-hs3o.js                                                 0.27 kB │ gzip:     0.21 kB
+build/assets/contextStoreCurrentObjectMetadataItemIdComponentState-lT_m-1Fu.js      0.27 kB │ gzip:     0.20 kB
+build/assets/useMarketplaceApps-CoNOnwg0.js                                         0.27 kB │ gzip:     0.21 kB
+build/assets/IconCurrencyDollar-Ds1IVenp.js                                         0.28 kB │ gzip:     0.21 kB
+build/assets/IconArrowsDiagonal-yQYuAcHz.js                                         0.28 kB │ gzip:     0.20 kB
+build/assets/useListenToBrowserEvent-jgGQuwGK.js                                    0.28 kB │ gzip:     0.22 kB
+build/assets/IconSquareRoundedCheck-vX5HfQqQ.js                                     0.28 kB │ gzip:     0.22 kB
+build/assets/IconTable-CcBfFGdI.js                                                  0.29 kB │ gzip:     0.20 kB
+build/assets/IconExternalLink-ulJUGaAH.js                                           0.29 kB │ gzip:     0.21 kB
+build/assets/useApolloCoreClient-cYHBUwoT.js                                        0.29 kB │ gzip:     0.22 kB
+build/assets/IconAppWindow-ByForFJG.js                                              0.29 kB │ gzip:     0.20 kB
+build/assets/SettingsDevelopersWebhookDetail-DFHwGVWD.js                            0.29 kB │ gzip:     0.22 kB
+build/assets/normalizeSearchText-DAsnRK_I.js                                        0.29 kB │ gzip:     0.20 kB
+build/assets/IconBox-8fIKV1qQ.js                                                    0.29 kB │ gzip:     0.19 kB
+build/assets/buildGetHelper-COsfWD8o.js                                             0.29 kB │ gzip:     0.13 kB
+build/assets/IconUserPlus-BzPl7gMe.js                                               0.30 kB │ gzip:     0.21 kB
+build/assets/useAtomComponentState-Dswxhe9X.js                                      0.30 kB │ gzip:     0.24 kB
+build/assets/useAtomComponentStateValue-qxqyozUs.js                                 0.30 kB │ gzip:     0.24 kB
+build/assets/useSetAtomComponentState-D9S1uHP7.js                                   0.30 kB │ gzip:     0.24 kB
+build/assets/getWorkspacesUpgradeHealthText-B2QbmRFe.js                             0.30 kB │ gzip:     0.23 kB
+build/assets/useApolloAdminClient-BvgnM-8J.js                                       0.30 kB │ gzip:     0.23 kB
+build/assets/useSnackBarOnQueryError-ml6TnEy8.js                                    0.30 kB │ gzip:     0.23 kB
+build/assets/useAtomComponentSelectorValue-9dKYKYg0.js                              0.30 kB │ gzip:     0.24 kB
+build/assets/useSettingsAllRoles-C6qnyZAz.js                                        0.30 kB │ gzip:     0.23 kB
+build/assets/fileIconMappings-DRzUnp0T.js                                           0.30 kB │ gzip:     0.23 kB
+build/assets/IconWindow-Dyr2AcMQ.js                                                 0.31 kB │ gzip:     0.23 kB
+build/assets/useUserTimezone-1J9zmBXk.js                                            0.31 kB │ gzip:     0.23 kB
+build/assets/IconApi-D29BY8i6.js                                                    0.31 kB │ gzip:     0.22 kB
+build/assets/IconColumnInsertRight-D9yTrXoU.js                                      0.31 kB │ gzip:     0.21 kB
+build/assets/IconDotsVertical-B8pBwOxf.js                                           0.31 kB │ gzip:     0.19 kB
+build/assets/getAllEmailingDomains-BVOxmLya.js                                      0.31 kB │ gzip:     0.18 kB
+build/assets/PlaygroundSchemas-Boq8CivM.js                                          0.31 kB │ gzip:     0.26 kB
+build/assets/recordStoreFamilySelector-CTjEcHhT.js                                  0.31 kB │ gzip:     0.22 kB
+build/assets/useCreateWorkspaceInvitation-B0oqJuUk.js                               0.32 kB │ gzip:     0.25 kB
+build/assets/IconNotes-7bzP1tDG.js                                                  0.32 kB │ gzip:     0.20 kB
+build/assets/IconMaximize-CcwyEiPp.js                                               0.32 kB │ gzip:     0.21 kB
+build/assets/IconVariable-Bkwx2BRm.js                                               0.32 kB │ gzip:     0.24 kB
+build/assets/IconLock-EUqWnT1G.js                                                   0.33 kB │ gzip:     0.22 kB
+build/assets/IconFolderRoot-CWyXavj0.js                                             0.33 kB │ gzip:     0.22 kB
+build/assets/IconList-D_HH2IHz.js                                                   0.33 kB │ gzip:     0.18 kB
+build/assets/IconLink-DT7kFCkE.js                                                   0.33 kB │ gzip:     0.24 kB
+build/assets/IconPlug-G5RhaJp4.js                                                   0.33 kB │ gzip:     0.22 kB
+build/assets/createAtomSelector-CM7lGGNw.js                                         0.33 kB │ gzip:     0.26 kB
+build/assets/IconLayoutSidebarLeftExpand-BAdNVkgN.js                                0.33 kB │ gzip:     0.23 kB
+build/assets/IconDeviceDesktop-IQlv1KkX.js                                          0.34 kB │ gzip:     0.22 kB
+build/assets/IconBook-5kYeCwc_.js                                                   0.34 kB │ gzip:     0.19 kB
+build/assets/IconSparkles-DuCLe6KO.js                                               0.34 kB │ gzip:     0.20 kB
+build/assets/getLinkToShowPage-BehGh08E.js                                          0.34 kB │ gzip:     0.24 kB
+build/assets/useGetIsMetadataItemCustom-DhjUuZjV.js                                 0.34 kB │ gzip:     0.25 kB
+build/assets/getSubdomainValidationSchema-DoMcHK6o.js                               0.35 kB │ gzip:     0.24 kB
+build/assets/IconWebhook-BK6xlbkq.js                                                0.35 kB │ gzip:     0.25 kB
+build/assets/PageFocusId-DQGxGbFs.js                                                0.35 kB │ gzip:     0.24 kB
+build/assets/getUpgradeHealthStatusBadge-Bi9Tk_FB.js                                0.35 kB │ gzip:     0.24 kB
+build/assets/useReadCaptchaToken-BquMvewH.js                                        0.35 kB │ gzip:     0.25 kB
+build/assets/useSettingsActiveTabId-CdMm5CbU.js                                     0.35 kB │ gzip:     0.26 kB
+build/assets/IconWorld-CODI8pRS.js                                                  0.35 kB │ gzip:     0.22 kB
+build/assets/AggregateOperations-CGrsqTLa.js                                        0.36 kB │ gzip:     0.19 kB
+build/assets/ObjectMetadataIcon-D0GGxWPx.js                                         0.36 kB │ gzip:     0.26 kB
+build/assets/ApplicationDisplay-QxfFR2he.js                                         0.36 kB │ gzip:     0.27 kB
+build/assets/CommandMenuAddToNavDroppableDndKit-DXiDtzli.js                         0.36 kB │ gzip:     0.27 kB
+build/assets/useDateTimeFormat-DRosC92V.js                                          0.36 kB │ gzip:     0.25 kB
+build/assets/IconTrash-h0izILIX.js                                                  0.36 kB │ gzip:     0.23 kB
+build/assets/useHasPermissionFlag-CLpsRga2.js                                       0.36 kB │ gzip:     0.28 kB
+build/assets/useGetAddedRelativeDateDescription-C1SNhgBq.js                         0.37 kB │ gzip:     0.27 kB
+build/assets/IconClick-BxsSej1A.js                                                  0.37 kB │ gzip:     0.22 kB
+build/assets/clsx-DWz4Q8_5.js                                                       0.37 kB │ gzip:     0.23 kB
+build/assets/useAtomComponentStateCallbackState-DjzzMKwX.js                         0.37 kB │ gzip:     0.28 kB
+build/assets/CommandMenuItemWithAddToNavigationDragDndKit-DAH2pdM6.js               0.37 kB │ gzip:     0.28 kB
+build/assets/OnboardingSkipButton-Dbyfm8Uu.js                                       0.37 kB │ gzip:     0.28 kB
+build/assets/IconBriefcase-CHLZ3BZG.js                                              0.38 kB │ gzip:     0.23 kB
+build/assets/NavigationMenuItemSectionDroppableConfig-BONLvvcR.js                   0.38 kB │ gzip:     0.21 kB
+build/assets/useResolvedApplicationDescription-GRL54Pbu.js                          0.38 kB │ gzip:     0.27 kB
+build/assets/getFieldMetadataTypeLabel-D8xI_8D8.js                                  0.38 kB │ gzip:     0.23 kB
+build/assets/IconListCheck-BXhSokKZ.js                                              0.39 kB │ gzip:     0.21 kB
+build/assets/IconShare-B69SV1Xz.js                                                  0.39 kB │ gzip:     0.21 kB
+build/assets/IconPhoto-i9PAz0UY.js                                                  0.39 kB │ gzip:     0.24 kB
+build/assets/basic-shape-primary-circle-ellipse-round.svg-BR6X7d7i.js               0.39 kB │ gzip:     0.30 kB
+build/assets/createRequiredContext-BbPIa0pn.js                                      0.39 kB │ gzip:     0.28 kB
+build/assets/IconCalendarX-CBW9uizG.js                                              0.39 kB │ gzip:     0.23 kB
+build/assets/IconCalendar-B3PIUt0-.js                                               0.40 kB │ gzip:     0.23 kB
+build/assets/IconCalendarDue-max1AVV4.js                                            0.40 kB │ gzip:     0.23 kB
+build/assets/IconBookmark-BY7D5PGM.js                                               0.40 kB │ gzip:     0.24 kB
+build/assets/SettingsNewAccountSection-p9cK7rbU.js                                  0.40 kB │ gzip:     0.28 kB
+build/assets/getPeriodOptions-D4hzc1kG.js                                           0.40 kB │ gzip:     0.28 kB
+build/assets/cast-as-number-or-null-COXWSyDI.js                                     0.40 kB │ gzip:     0.25 kB
+build/assets/IconNumber123-CJrL6gMN.js                                              0.40 kB │ gzip:     0.24 kB
+build/assets/IconLanguage-CkbI1mXN.js                                               0.40 kB │ gzip:     0.25 kB
+build/assets/IconLayoutKanban-BA1ErXm8.js                                           0.41 kB │ gzip:     0.22 kB
+build/assets/openNavigationMenuItemFolderIdsState-DVN1lQ9a.js                       0.41 kB │ gzip:     0.27 kB
+build/assets/DataResidencyConfig-CR8Ex9GA.js                                        0.41 kB │ gzip:     0.24 kB
+build/assets/money-currency-dollar-pay.svg-CNXA4RkT.js                              0.41 kB │ gzip:     0.31 kB
+build/assets/useObjectMetadataItemById-MHKmUhP8.js                                  0.41 kB │ gzip:     0.30 kB
+build/assets/StyledOnboardingStepTitle-DfNZTfAd.js                                  0.41 kB │ gzip:     0.25 kB
+build/assets/toDate-ChgK9jKT.js                                                     0.41 kB │ gzip:     0.30 kB
+build/assets/NodeDimensionEffect-C12AwcAD.js                                        0.41 kB │ gzip:     0.30 kB
+build/assets/DropdownMenuSeparator-CgBbrtsb.js                                      0.42 kB │ gzip:     0.30 kB
+build/assets/SettingsAdminHealthStatusRightContainer-ClrDKCJU.js                    0.42 kB │ gzip:     0.28 kB
+build/assets/IconEyeShare-CSqIRONr.js                                               0.42 kB │ gzip:     0.28 kB
+build/assets/endOfMonth-DjjnL41L.js                                                 0.42 kB │ gzip:     0.25 kB
+build/assets/endOfWeek-DoXRjR9C.js                                                  0.42 kB │ gzip:     0.28 kB
+build/assets/jsx-runtime-BmDUFisN.js                                                0.42 kB │ gzip:     0.30 kB
+build/assets/startOfWeek-Dd-DRPd0.js                                                0.42 kB │ gzip:     0.27 kB
+build/assets/interface-search.svg-aFWj5KX0.js                                       0.43 kB │ gzip:     0.32 kB
+build/assets/NodeDimension-C3UzWgbh.js                                              0.43 kB │ gzip:     0.28 kB
+build/assets/getAvatarType-C2_SnItS.js                                              0.43 kB │ gzip:     0.30 kB
+build/assets/getIconColorForObjectType-DlFB86Mr.js                                  0.44 kB │ gzip:     0.28 kB
+build/assets/getDndKitDropTargetId-DOz7ycm8.js                                      0.44 kB │ gzip:     0.33 kB
+build/assets/useContextStoreObjectMetadataItemOrThrow-CBcbVpEx.js                   0.44 kB │ gzip:     0.27 kB
+build/assets/VariableChipStandalone-Cz7rpIlH.js                                     0.44 kB │ gzip:     0.29 kB
+build/assets/SettingsEmptyPlaceholder-B2tRtvuJ.js                                   0.45 kB │ gzip:     0.30 kB
+build/assets/accessibility-DqRb9dOq-He5PvdtZ.js                                     0.45 kB │ gzip:     0.29 kB
+build/assets/is-graphql-error-of-type.util-5ejdBnR2.js                              0.45 kB │ gzip:     0.28 kB
+build/assets/IconSettings2-K0Y6HyU2.js                                              0.45 kB │ gzip:     0.30 kB
+build/assets/monaco-editor-D2NqFzJi.js                                              0.45 kB │ gzip:     0.29 kB
+build/assets/useGenerateDepthRecordGqlFieldsFromObject-BjpqQW1W.js                  0.46 kB │ gzip:     0.26 kB
+build/assets/IconCalendarRepeat-Blp2taHS.js                                         0.46 kB │ gzip:     0.25 kB
+build/assets/interface-bookmark-tag.svg-3xZ_YfC3.js                                 0.46 kB │ gzip:     0.35 kB
+build/assets/interface-bookmark.svg-3xZ_YfC3.js                                     0.46 kB │ gzip:     0.35 kB
+build/assets/programming-cloud.svg-BGZLeX_7.js                                      0.46 kB │ gzip:     0.35 kB
+build/assets/interface-time-clock-circle.svg-DjD03Nf3.js                            0.47 kB │ gzip:     0.33 kB
+build/assets/IconChartBar-B6Jn00D8.js                                               0.47 kB │ gzip:     0.23 kB
+build/assets/IconPhotoUp-VPdWTlnw.js                                                0.47 kB │ gzip:     0.28 kB
+build/assets/SettingsObjectItemTableRowStyledComponents-CgRt3T9C.js                 0.47 kB │ gzip:     0.34 kB
+build/assets/IconListDetails-_rMTV9Jn.js                                            0.47 kB │ gzip:     0.23 kB
+build/assets/interface-content-file.svg-C3tptns0.js                                 0.47 kB │ gzip:     0.35 kB
+build/assets/createAtomFamilySelector-CrV2uZ40.js                                   0.48 kB │ gzip:     0.35 kB
+build/assets/computer-device-mobile-tablet.svg-Dohb6Xa_.js                          0.49 kB │ gzip:     0.34 kB
+build/assets/IconPhone-CpSPlElW.js                                                  0.49 kB │ gzip:     0.30 kB
+build/assets/tokenPairState-BVwv_AN9.js                                             0.49 kB │ gzip:     0.28 kB
+build/assets/IconRobot-DuR3E_8F.js                                                  0.50 kB │ gzip:     0.24 kB
+build/assets/NavigationMenuItemOrphanDropTarget-DitlZenF.js                         0.50 kB │ gzip:     0.34 kB
+build/assets/interface-lock-closed.svg-DIQMCbPK.js                                  0.50 kB │ gzip:     0.36 kB
+build/assets/mail-chat-bubble-square.svg-BX_NKwyv.js                                0.50 kB │ gzip:     0.37 kB
+build/assets/tag-new-circle.svg-B7td7fOD.js                                         0.51 kB │ gzip:     0.39 kB
+build/assets/SettingsTextLink-qXl1Fhr2.js                                           0.51 kB │ gzip:     0.33 kB
+build/assets/IconProgressCheck-C80eJN9U.js                                          0.52 kB │ gzip:     0.31 kB
+build/assets/mail-send-envelope.svg-D9AMTSSS.js                                     0.52 kB │ gzip:     0.38 kB
+build/assets/createAtomFamilyState-BxaZM3Pa.js                                      0.52 kB │ gzip:     0.37 kB
+build/assets/interface-alert-information-circle.svg-BeqIAb-Z.js                     0.52 kB │ gzip:     0.35 kB
+build/assets/interface-signal-square.svg-B_wT6Z5a.js                                0.53 kB │ gzip:     0.37 kB
+build/assets/basic-shape-hexagon.svg-B_3ymuMs.js                                    0.54 kB │ gzip:     0.36 kB
+build/assets/interface-home-house.svg-xgfg9Na8.js                                   0.54 kB │ gzip:     0.37 kB
+build/assets/formatExpiration-CVj5QuNR.js                                           0.55 kB │ gzip:     0.34 kB
+build/assets/IconNorthStar-DSoOucO4.js                                              0.55 kB │ gzip:     0.29 kB
+build/assets/createAtomWritableFamilySelector-Be7U0Qq6.js                           0.55 kB │ gzip:     0.38 kB
+build/assets/programming-script-code.svg-BO9E0nm9.js                                0.55 kB │ gzip:     0.37 kB
+build/assets/computer-device-mobile-phone-android-samsung.svg-kbgVvxP2.js           0.56 kB │ gzip:     0.33 kB
+build/assets/image-flash-lightning.svg-DH6t8Ogk.js                                  0.56 kB │ gzip:     0.39 kB
+build/assets/interface-edit-tool-paint-roller.svg-DughFkAG.js                       0.56 kB │ gzip:     0.38 kB
+build/assets/useCurrentUserWorkspaceTwoFactorAuthentication-VaV6-qrV.js             0.56 kB │ gzip:     0.34 kB
+build/assets/computer-device-mobile-tablet-touch.svg-D1ufQeHd.js                    0.56 kB │ gzip:     0.40 kB
+build/assets/SettingsNewAccount-DKpz6Xm3.js                                         0.56 kB │ gzip:     0.33 kB
+build/assets/interface-copy-clipboard.svg-D8c6MRlK.js                               0.56 kB │ gzip:     0.38 kB
+build/assets/interface-lock-open-unlock.svg-D_5HBCUs.js                             0.57 kB │ gzip:     0.40 kB
+build/assets/useNavigationDrawerExpanded-BrsXaZ2o.js                                0.57 kB │ gzip:     0.36 kB
+build/assets/computer-device-laptop.svg-kwHpXiFk.js                                 0.57 kB │ gzip:     0.37 kB
+build/assets/IconCoins-B0r0Kos5.js                                                  0.57 kB │ gzip:     0.31 kB
+build/assets/interface-content-book-open-pages.svg-Cej9Hln9.js                      0.57 kB │ gzip:     0.38 kB
+build/assets/interface-edit-attachment.svg-CIQChNNW.js                              0.58 kB │ gzip:     0.41 kB
+build/assets/computer-device-mobile-phone-iphone-x.svg-w8vhF1zi.js                  0.58 kB │ gzip:     0.39 kB
+build/assets/SettingsItemTypeTag-toHxbhof.js                                        0.58 kB │ gzip:     0.37 kB
+build/assets/money-graph-arrow-increase.svg-BOnCZ7Cl.js                             0.58 kB │ gzip:     0.38 kB
+build/assets/LightCopyIconButton-DE-DunPA.js                                        0.58 kB │ gzip:     0.40 kB
+build/assets/interface-alert-exclamation-diamond.svg-LZjWauKR.js                    0.58 kB │ gzip:     0.38 kB
+build/assets/programming-module.svg-yLP8N_z7.js                                     0.58 kB │ gzip:     0.40 kB
+build/assets/OnboardingStepAnimatedItem-BpL7RVXP.js                                 0.58 kB │ gzip:     0.40 kB
+build/assets/TopBar-Chfly7AM.js                                                     0.58 kB │ gzip:     0.32 kB
+build/assets/interface-share.svg-GXeVn4EJ.js                                        0.58 kB │ gzip:     0.37 kB
+build/assets/commandMenuItemsSelector-C-UCcVaR.js                                   0.59 kB │ gzip:     0.35 kB
+build/assets/OnboardingAnimatedReveal-CWpOAr5N.js                                   0.59 kB │ gzip:     0.38 kB
+build/assets/basic-shape-diamond.svg-DsiJWH0j.js                                    0.59 kB │ gzip:     0.42 kB
+build/assets/IconMailCog-BiS_OA7l.js                                                0.59 kB │ gzip:     0.29 kB
+build/assets/programming-computer-database-server.svg-b2ZdHJ2g.js                   0.59 kB │ gzip:     0.34 kB
+build/assets/mail-send-email-paper-airplane.svg-XzknGmPO.js                         0.59 kB │ gzip:     0.42 kB
+build/assets/computer-device-desktop-monitor.svg-V9dxQGHk.js                        0.60 kB │ gzip:     0.39 kB
+build/assets/interface-content-book-page.svg-K3qK9uUb.js                            0.60 kB │ gzip:     0.40 kB
+build/assets/programming-module-three.svg-B6V5513g.js                               0.60 kB │ gzip:     0.34 kB
+build/assets/IconCircleDashed-BorBUCL2.js                                           0.60 kB │ gzip:     0.27 kB
+build/assets/SettingsOptionIconCustomizer-DK0yXlAN.js                               0.60 kB │ gzip:     0.41 kB
+build/assets/getEmailingDomainStatusText-ChudFxB0.js                                0.60 kB │ gzip:     0.35 kB
+build/assets/IconBrandGraphql-StB3h3sH.js                                           0.61 kB │ gzip:     0.26 kB
+build/assets/getAiProviders-BPsawQk8.js                                             0.61 kB │ gzip:     0.29 kB
+build/assets/IconLayoutSidebarRightCollapse-cflx0ole.js                             0.61 kB │ gzip:     0.27 kB
+build/assets/useNavigationMenuItemsData-xQwjyF-N.js                                 0.61 kB │ gzip:     0.35 kB
+build/assets/interface-time-hour-glass.svg-BD0Y57k_.js                              0.61 kB │ gzip:     0.42 kB
+build/assets/shopping-cart.svg-0cssAxkC.js                                          0.62 kB │ gzip:     0.40 kB
+build/assets/computer-device-mobile-phone-iphone-x-back.svg-B2XVyY6v.js             0.62 kB │ gzip:     0.42 kB
+build/assets/IconExclamationCircle-Dw4W48pk.js                                      0.62 kB │ gzip:     0.32 kB
+build/assets/SettingsSectionSkeletonLoader-BnCzBKix.js                              0.62 kB │ gzip:     0.41 kB
+build/assets/useSortedArray-D6EVamdS.js                                             0.63 kB │ gzip:     0.40 kB
+build/assets/apiKeyTokenFamilyState-BA15fTt6.js                                     0.63 kB │ gzip:     0.43 kB
+build/assets/money-graph-bar-chart-increase.svg-Mvw2cw2D.js                         0.64 kB │ gzip:     0.40 kB
+build/assets/TableHeader-q-afZFD8.js                                                0.64 kB │ gzip:     0.43 kB
+build/assets/application-C6qNke1U.js                                                0.64 kB │ gzip:     0.40 kB
+build/assets/initialComputedColumnsState-ibf_OqR1.js                                0.64 kB │ gzip:     0.39 kB
+build/assets/interface-weather-moon.svg-D0YRIAp9.js                                 0.64 kB │ gzip:     0.42 kB
+build/assets/ClickOutsideListenerContext-CCk42M30.js                                0.65 kB │ gzip:     0.36 kB
+build/assets/CommonChartConstants-DZ_gxrvl.js                                       0.65 kB │ gzip:     0.32 kB
+build/assets/IconEye-DFGvtrOp.js                                                    0.65 kB │ gzip:     0.36 kB
+build/assets/computer-device-network-wifi-connection.svg-2HpRZ5CJ.js                0.65 kB │ gzip:     0.42 kB
+build/assets/objectMetadataItemFamilySelector-BbJfBJqM.js                           0.65 kB │ gzip:     0.32 kB
+build/assets/interface-favorite-award.svg-ItWwnLDp.js                               0.65 kB │ gzip:     0.44 kB
+build/assets/IconServer2-1YenHSOi.js                                                0.65 kB │ gzip:     0.29 kB
+build/assets/useObjectMetadataItem-BN38cgBD.js                                      0.65 kB │ gzip:     0.40 kB
+build/assets/pageLayoutsWithRelationsSelector-BK0LWXBi.js                           0.66 kB │ gzip:     0.37 kB
+build/assets/getFieldMetadataItemById-BoB-UjfD.js                                   0.66 kB │ gzip:     0.34 kB
+build/assets/isNonTextWritingKey-DmQOqC-_.js                                        0.66 kB │ gzip:     0.39 kB
+build/assets/shopping-shipping-box-parcel-package.svg-Cd0odmS2.js                   0.66 kB │ gzip:     0.44 kB
+build/assets/interface-favorite-heart.svg-CYOtx76z.js                               0.67 kB │ gzip:     0.45 kB
+build/assets/useGetRelationMetadata-dJglgYNe.js                                     0.68 kB │ gzip:     0.39 kB
+build/assets/SettingsTranslationsButton-wL-E4FNe.js                                 0.68 kB │ gzip:     0.44 kB
+build/assets/SettingsWizardStepBar-DG61TQ0T.js                                      0.68 kB │ gzip:     0.39 kB
+build/assets/getObjectColorWithFallback-CwA1Kem9.js                                 0.68 kB │ gzip:     0.43 kB
+build/assets/interface-favorite-flag.svg-Cq6uOlUx.js                                0.68 kB │ gzip:     0.46 kB
+build/assets/interface-users-multiple.svg-CyxAIMG8.js                               0.69 kB │ gzip:     0.43 kB
+build/assets/use-isomorphic-effect-Bb29YnyU.js                                      0.69 kB │ gzip:     0.42 kB
+build/assets/ViewType-26UbGv6K.js                                                   0.69 kB │ gzip:     0.38 kB
+build/assets/ecology-science-erlenmeyer-flask.svg-DJadvvnH.js                       0.69 kB │ gzip:     0.47 kB
+build/assets/interface-share-megaphone-bullhorn.svg-Dw5XvBqO.js                     0.69 kB │ gzip:     0.46 kB
+build/assets/SettingsCardContentBase-Bt-AnDr_.js                                    0.70 kB │ gzip:     0.35 kB
+build/assets/computer-device-desktop.svg-CeTWr7EZ.js                                0.70 kB │ gzip:     0.39 kB
+build/assets/computer-device-mobile-phone-android-samsung-back.svg-Cd7EwcLm.js      0.70 kB │ gzip:     0.46 kB
+build/assets/useBaseLicensedPriceByPlanKeyAndInterval-Cq6qk0DO.js                   0.70 kB │ gzip:     0.38 kB
+build/assets/interface-hierarchy-flowchart.svg-Dsy0Up47.js                          0.71 kB │ gzip:     0.39 kB
+build/assets/FullScreenContainer-DF5kKg7Z.js                                        0.71 kB │ gzip:     0.40 kB
+build/assets/getFileCategoryFromExtension-CTDQhYcg.js                               0.71 kB │ gzip:     0.45 kB
+build/assets/IconSortDescending-ShqZ7TFv.js                                         0.71 kB │ gzip:     0.36 kB
+build/assets/interface-alert-exclamation-triangle-warning.svg-Bn5Zqjf-.js           0.72 kB │ gzip:     0.45 kB
+build/assets/programming-module-four-layout.svg-BxaoLaTN.js                         0.72 kB │ gzip:     0.34 kB
+build/assets/TimeZoneAbbreviation-BDKJ8ZwK.js                                       0.72 kB │ gzip:     0.48 kB
+build/assets/IconSettings-NZg-Y0-x.js                                               0.73 kB │ gzip:     0.35 kB
+build/assets/IconSettingsAutomation-B6ahrEFA.js                                     0.73 kB │ gzip:     0.35 kB
+build/assets/basic-shape-shield.svg-Cfd-TTn5.js                                     0.73 kB │ gzip:     0.50 kB
+build/assets/IconSquareKey-D14gjZbk.js                                              0.73 kB │ gzip:     0.32 kB
+build/assets/OnboardingCreditsRewardTag-CmtoZkPt.js                                 0.74 kB │ gzip:     0.43 kB
+build/assets/useRegisterInputEvents-CjqjfNGz.js                                     0.74 kB │ gzip:     0.39 kB
+build/assets/useObjectMetadataItemsThatCanHavePermission-DQkUiAIa.js                0.75 kB │ gzip:     0.40 kB
+build/assets/nature-ecology-leaf.svg-7D7wFQyd.js                                    0.75 kB │ gzip:     0.51 kB
+build/assets/getWrongExportedFunctionMarkers-DMol_X5n.js                            0.75 kB │ gzip:     0.43 kB
+build/assets/interface-calendar-date-one.svg-FONiQ7JD.js                            0.76 kB │ gzip:     0.47 kB
+build/assets/azcli-SWUWtsHe.js                                                      0.76 kB │ gzip:     0.33 kB
+build/assets/interface-content-folder.svg-Cf6t94G2.js                               0.77 kB │ gzip:     0.54 kB
+build/assets/interface-edit-binocular.svg-Bf4WbN2o.js                               0.78 kB │ gzip:     0.47 kB
+build/assets/ApiKeyInput--K10zQnN.js                                                0.78 kB │ gzip:     0.49 kB
+build/assets/interface-edit-magic-wand.svg-CSrw2BOw.js                              0.78 kB │ gzip:     0.46 kB
+build/assets/basic-shape-primary-square-rectangle.svg-CCReerKp.js                   0.79 kB │ gzip:     0.40 kB
+build/assets/formatDateTimeString-Dee5VB9s.js                                       0.79 kB │ gzip:     0.38 kB
+build/assets/search-B1V2lrWE.js                                                     0.80 kB │ gzip:     0.32 kB
+build/assets/IconHttpPut-tUN2E09f.js                                                0.80 kB │ gzip:     0.32 kB
+build/assets/useHandleCheckoutSession-CiMH3Lc2.js                                   0.80 kB │ gzip:     0.46 kB
+build/assets/IconSun-CTvOyQrD.js                                                    0.80 kB │ gzip:     0.40 kB
+build/assets/prop-types-CCKhkpVq.js                                                 0.81 kB │ gzip:     0.51 kB
+build/assets/SettingsOptionCardContentSelect-CCT2snbh.js                            0.82 kB │ gzip:     0.46 kB
+build/assets/interface-login-key.svg-CGVHCU6i.js                                    0.82 kB │ gzip:     0.51 kB
+build/assets/DndKitSensors-CXUmp05j.js                                              0.82 kB │ gzip:     0.51 kB
+build/assets/interface-award-crown.svg-Crujh_s5.js                                  0.82 kB │ gzip:     0.49 kB
+build/assets/programming-bug.svg-DmoXBxZT.js                                        0.83 kB │ gzip:     0.47 kB
+build/assets/formatDateString-B61udFZD.js                                           0.84 kB │ gzip:     0.42 kB
+build/assets/DropdownMenuSearchInput-BqFPBOY2.js                                    0.84 kB │ gzip:     0.52 kB
+build/assets/javascript-C8qYeWxs.js                                                 0.84 kB │ gzip:     0.47 kB
+build/assets/useOpenSettings-DHwAvVZW.js                                            0.84 kB │ gzip:     0.49 kB
+build/assets/interface-favorite-stars-sparkles.svg-DTwBBSI7.js                      0.85 kB │ gzip:     0.48 kB
+build/assets/isValidReturnToPath-COEaoteo.js                                        0.85 kB │ gzip:     0.52 kB
+build/assets/TableCell-DcW3gKKP.js                                                  0.85 kB │ gzip:     0.46 kB
+build/assets/interface-lighting-brightness.svg-BfUzKWWr.js                          0.85 kB │ gzip:     0.46 kB
+build/assets/useScrollWrapperHTMLElement-l4GpKUvb.js                                0.85 kB │ gzip:     0.49 kB
+build/assets/useDirectFileUpload-wBo0kmWJ.js                                        0.86 kB │ gzip:     0.49 kB
+build/assets/createReactComponent-CmedsHsX.js                                       0.86 kB │ gzip:     0.48 kB
+build/assets/phone-telephone.svg-DdO5JOVu.js                                        0.86 kB │ gzip:     0.54 kB
+build/assets/interface-hyperlink.svg-C048m_C6.js                                    0.86 kB │ gzip:     0.51 kB
+build/assets/useAtomComponentFamilySelectorValue-KPewFA4d.js                        0.87 kB │ gzip:     0.54 kB
+build/assets/IconGripVertical-C-67rhkt.js                                           0.87 kB │ gzip:     0.37 kB
+build/assets/computer-device-network-wifi-router.svg-zNfITi0P.js                    0.88 kB │ gzip:     0.50 kB
+build/assets/useGetRecordFromCache-Dnfiqdbl.js                                      0.88 kB │ gzip:     0.43 kB
+build/assets/IconLego-FsdH4mfm.js                                                   0.88 kB │ gzip:     0.38 kB
+build/assets/useCopyToClipboard-ED0ugWu4.js                                         0.89 kB │ gzip:     0.51 kB
+build/assets/IconPuzzle-jbNa07Kc.js                                                 0.89 kB │ gzip:     0.31 kB
+build/assets/SettingsAccountsVisibilityIcon-mYjFhqNs.js                             0.90 kB │ gzip:     0.42 kB
+build/assets/money-cashier-receipt.svg-BLY0oPtH.js                                  0.90 kB │ gzip:     0.53 kB
+build/assets/WorkspaceSectionAddMenuItemButton-B6YPJTeD.js                          0.91 kB │ gzip:     0.54 kB
+build/assets/ExpandedFieldDisplay-CYMztN4x.js                                       0.92 kB │ gzip:     0.54 kB
+build/assets/interface-edit-tool-pencil.svg-CmuTkKej.js                             0.93 kB │ gzip:     0.60 kB
+build/assets/useFilteredObjectMetadataItems-9twBHB47.js                             0.94 kB │ gzip:     0.42 kB
+build/assets/index-rMqNZYyA-Cz8XPIRW.js                                             0.94 kB │ gzip:     0.55 kB
+build/assets/SettingsEnterpriseFeatureGateCard-DMj7e5Jr.js                          0.94 kB │ gzip:     0.56 kB
+build/assets/NavigationDrawerCollapseButton-2A-8Pk27.js                             0.96 kB │ gzip:     0.58 kB
+build/assets/useGetLogicFunctionHttpUrl-DeaSppBJ.js                                 0.98 kB │ gzip:     0.47 kB
+build/assets/interface-favorite-star.svg-CfvgSWAx.js                                0.98 kB │ gzip:     0.59 kB
+build/assets/programming-computer-database.svg-CniQY13-.js                          0.98 kB │ gzip:     0.54 kB
+build/assets/computer-device-network-lan-www.svg-CHUTZjiI.js                        0.99 kB │ gzip:     0.51 kB
+build/assets/interface-share-rocket.svg-O-8plF1Z.js                                 0.99 kB │ gzip:     0.61 kB
+build/assets/useModal-DsNRiUr-.js                                                   1.01 kB │ gzip:     0.52 kB
+build/assets/SettingsAccountsNewImapSmtpCaldavConnection-CHMHzl9E.js                1.02 kB │ gzip:     0.56 kB
+build/assets/ini-CA6PZqaE.js                                                        1.02 kB │ gzip:     0.53 kB
+build/assets/useAvailableComponentInstanceIdOrThrow-BJxWokO_.js                     1.03 kB │ gzip:     0.54 kB
+build/assets/SettingsStatsGrid-DQqMeI_i.js                                          1.03 kB │ gzip:     0.51 kB
+build/assets/IconTypography-BBlYRKSn.js                                             1.03 kB │ gzip:     0.46 kB
+build/assets/WorkspaceMemberAvatarStack-CGDU-AjL.js                                 1.05 kB │ gzip:     0.61 kB
+build/assets/useConfigVariableActions-BmsbGCs_.js                                   1.05 kB │ gzip:     0.53 kB
+build/assets/TwoFactorAuthenticationVerificationCodeSlot-DdgqI79k.js                1.06 kB │ gzip:     0.49 kB
+build/assets/DateTimeDisplay-l0vQCZat.js                                            1.07 kB │ gzip:     0.58 kB
+build/assets/shopping-gift-present.svg-BwxvS_FQ.js                                  1.07 kB │ gzip:     0.60 kB
+build/assets/interface-share-satellite.svg-D2Wox4ie.js                              1.08 kB │ gzip:     0.67 kB
+build/assets/useTriggerApiOAuth-CXvM0cYL.js                                         1.08 kB │ gzip:     0.65 kB
+build/assets/computer-device-network-ethernet-cat6.svg-CKgUd5C2.js                  1.11 kB │ gzip:     0.57 kB
+build/assets/WorkflowReadonlyActionCode-BQlayOji.js                                 1.11 kB │ gzip:     0.66 kB
+build/assets/useNumberFormat-4BcwBuGj.js                                            1.11 kB │ gzip:     0.61 kB
+build/assets/travel-map-earth-globe.svg-BJdAXhO1.js                                 1.13 kB │ gzip:     0.67 kB
+build/assets/useHandleResetPassword-Dxne3a13.js                                     1.13 kB │ gzip:     0.64 kB
+build/assets/SettingsTableCard-C3pZcJ-M.js                                          1.13 kB │ gzip:     0.62 kB
+build/assets/GraphWidgetAggregateChart-B6c_JVKF.js                                  1.13 kB │ gzip:     0.62 kB
+build/assets/OpenRecordInCardMedia-C3ps743o.js                                      1.16 kB │ gzip:     0.50 kB
+build/assets/useSyncExternalStore-Bi2682iQ.js                                       1.16 kB │ gzip:     0.64 kB
+build/assets/SortableTableHeader-DuocKUZz.js                                        1.19 kB │ gzip:     0.60 kB
+build/assets/interface-share-space-ship.svg-CYN9H2Hy.js                             1.20 kB │ gzip:     0.70 kB
+build/assets/SettingsDiscoveryHeroCardFooter-W87JtTXD.js                            1.21 kB │ gzip:     0.56 kB
+build/assets/chunk-ChpBd9eV.js                                                      1.21 kB │ gzip:     0.67 kB
+build/assets/useObjectPermissions-D7ohHxW1.js                                       1.23 kB │ gzip:     0.50 kB
+build/assets/react-wOwwdvfc.js                                                      1.23 kB │ gzip:     0.51 kB
+build/assets/useHotkeysOnFocusedElement-B0zjZAMu.js                                 1.25 kB │ gzip:     0.67 kB
+build/assets/TableSection-CdHruWKK.js                                               1.26 kB │ gzip:     0.62 kB
+build/assets/useObjectRecordSearchRecords-BvodokbD.js                               1.26 kB │ gzip:     0.70 kB
+build/assets/SettingsObjectFieldDataType-C4vLpd_C.js                                1.27 kB │ gzip:     0.67 kB
+build/assets/useSortedNavigationMenuItems-Dsk3AU8M.js                               1.28 kB │ gzip:     0.61 kB
+build/assets/SettingsRoleCreate-D4Wa_n3m.js                                         1.28 kB │ gzip:     0.69 kB
+build/assets/preload-helper-CcgcQsTF.js                                             1.28 kB │ gzip:     0.75 kB
+build/assets/useCloseDropdown-Dy3MXQtr.js                                           1.29 kB │ gzip:     0.67 kB
+build/assets/SettingsAccountsListEmptyStateCard-DX0QyTth.js                         1.29 kB │ gzip:     0.72 kB
+build/assets/IconX-DS8MLpvA.js                                                      1.30 kB │ gzip:     0.54 kB
+build/assets/MobileHomePage-DwtNrmij.js                                             1.30 kB │ gzip:     0.72 kB
+build/assets/SettingsRoleEdit-BEJ1ud-p.js                                           1.30 kB │ gzip:     0.72 kB
+build/assets/useSelectableList-Ct9Ei0xN.js                                          1.31 kB │ gzip:     0.60 kB
+build/assets/useDeleteOneObjectMetadataItem-CDq4fJmV.js                             1.31 kB │ gzip:     0.76 kB
+build/assets/IconGitBranch-B-x-Bn2O.js                                              1.32 kB │ gzip:     0.53 kB
+build/assets/csp-DeA3LteH.js                                                        1.34 kB │ gzip:     0.53 kB
+build/assets/IconTextWrap-5BYK-QIN.js                                               1.35 kB │ gzip:     0.51 kB
+build/assets/SettingsTextInput-Dxi1B5Fu.js                                          1.37 kB │ gzip:     0.74 kB
+build/assets/OrganizationAdornment-vsvK_Jq7.js                                      1.37 kB │ gzip:     0.73 kB
+build/assets/SkeletonLoader-DUOQ_-ZJ.js                                             1.39 kB │ gzip:     0.62 kB
+build/assets/TableRow-CiwQAmHU.js                                                   1.40 kB │ gzip:     0.63 kB
+build/assets/viewsFromObjectMetadataItemFamilySelector-DB7qI1xW.js                  1.40 kB │ gzip:     0.58 kB
+build/assets/buildMatchPatternFn-C3Jdf5g3.js                                        1.41 kB │ gzip:     0.57 kB
+build/assets/IconTimelineEvent-CP7sW874.js                                          1.41 kB │ gzip:     0.48 kB
+build/assets/getSettingsFieldTypeConfig-DuW6uEJG.js                                 1.42 kB │ gzip:     0.58 kB
+build/assets/generateEmptyFieldValue-Bttgy7sX.js                                    1.44 kB │ gzip:     0.69 kB
+build/assets/base64-js-CETVHNCg.js                                                  1.44 kB │ gzip:     0.79 kB
+build/assets/Logo-CwU33-Cj.js                                                       1.44 kB │ gzip:     0.75 kB
+build/assets/es2015-CG07N5yf.js                                                     1.45 kB │ gzip:     0.73 kB
+build/assets/DropdownMenuHeaderLeftComponent-BXV1Zya-.js                            1.45 kB │ gzip:     0.73 kB
+build/assets/w3c-keyname-DZP5W5Nf.js                                                1.48 kB │ gzip:     0.81 kB
+build/assets/SettingsAccountsEditImapSmtpCaldavConnection-CayYuV3X.js               1.50 kB │ gzip:     0.80 kB
+build/assets/react-error-boundary.esm-LxXF4g-F.js                                   1.53 kB │ gzip:     0.72 kB
+build/assets/DropdownMenuItemsContainer-CvxYcCK0.js                                 1.53 kB │ gzip:     0.73 kB
+build/assets/formatFieldMetadataItemAsFieldDefinition-B0gqcnkQ.js                   1.54 kB │ gzip:     0.72 kB
+build/assets/FocusComponentType-Bso_A7YP.js                                         1.55 kB │ gzip:     0.79 kB
+build/assets/SettingsOptionCardContentToggle-mxInevCG.js                            1.58 kB │ gzip:     0.80 kB
+build/assets/image-picture-flower.svg-DCEIhA_d.js                                   1.59 kB │ gzip:     0.80 kB
+build/assets/viewsSelector-BGBPfzh4.js                                              1.59 kB │ gzip:     0.60 kB
+build/assets/SettingsAccountsCalendars-Bu5X_LgS.js                                  1.59 kB │ gzip:     0.81 kB
+build/assets/SettingsRadioSettingsCard-Bj4WgYqG.js                                  1.59 kB │ gzip:     0.77 kB
+build/assets/pla-C70EiT7N.js                                                        1.60 kB │ gzip:     0.65 kB
+build/assets/useOpenComposeEmailInSidePanel-C2cZeMnv.js                             1.60 kB │ gzip:     0.67 kB
+build/assets/IconPilcrow-BLa0PKFU.js                                                1.62 kB │ gzip:     0.47 kB
+build/assets/SettingsRolesQueryEffect-B0hvOy1D.js                                   1.62 kB │ gzip:     0.80 kB
+build/assets/FileIcon-SJ4js1Q9.js                                                   1.64 kB │ gzip:     0.92 kB
+build/assets/utils-D1Kbz2PN.js                                                      1.65 kB │ gzip:     0.82 kB
+build/assets/with-selector-8mBuXR0z.js                                              1.66 kB │ gzip:     0.79 kB
+build/assets/scheme-DsSbngAj.js                                                     1.68 kB │ gzip:     0.82 kB
+build/assets/useTriggerAppOAuth-CO6Ju2wQ.js                                         1.69 kB │ gzip:     0.82 kB
+build/assets/IconMoodSmile-vlVmHlQH.js                                              1.72 kB │ gzip:     0.48 kB
+build/assets/IconVideo-tUr6qfzK.js                                                  1.72 kB │ gzip:     0.55 kB
+build/assets/flow9-Bua7SI4d.js                                                      1.73 kB │ gzip:     0.85 kB
+build/assets/dist-D9hGmAiQ.js                                                       1.74 kB │ gzip:     0.93 kB
+build/assets/sb-_lO3OB_0.js                                                         1.75 kB │ gzip:     0.83 kB
+build/assets/AuthorizeActionButtons-CCuWEMK_.js                                     1.75 kB │ gzip:     0.87 kB
+build/assets/SettingsAiUsageUserDetail-BuBfRP88.js                                  1.76 kB │ gzip:     0.81 kB
+build/assets/bat-_p9ZWdET.js                                                        1.76 kB │ gzip:     0.87 kB
+build/assets/SettingsAdminInferredVersion-Cy-XhcwR.js                               1.77 kB │ gzip:     0.95 kB
+build/assets/useMutation-BKdjtPjp.js                                                1.77 kB │ gzip:     0.76 kB
+build/assets/dockerfile-D9kAhyUH.js                                                 1.79 kB │ gzip:     0.67 kB
+build/assets/SettingsOptionCardContentCounter-BVjHcEbi.js                           1.79 kB │ gzip:     0.88 kB
+build/assets/formatDateISOStringToRelativeDate-D-oMHfa0.js                          1.80 kB │ gzip:     0.93 kB
+build/assets/objectMetadataItemsWithFieldsSelector-ChQqOa8X.js                      1.81 kB │ gzip:     0.69 kB
+build/assets/SettingsLayoutPageLayoutDetail-irA4ECkj.js                             1.85 kB │ gzip:     0.92 kB
+build/assets/useListenClickOutside-7M24NcaU.js                                      1.86 kB │ gzip:     0.76 kB
+build/assets/useIsDropDisabledForSection-DashazKW.js                                1.87 kB │ gzip:     0.94 kB
+build/assets/PageHeader-Dt7OLech.js                                                 1.87 kB │ gzip:     0.91 kB
+build/assets/SettingsAccountsEmails-BXmF8kD0.js                                     1.87 kB │ gzip:     0.94 kB
+build/assets/getDpaPreview-S1ySmFjx.js                                              1.88 kB │ gzip:     0.80 kB
+build/assets/pascaligo-C-xjlC4w.js                                                  1.92 kB │ gzip:     0.91 kB
+build/assets/IconUnderline-WiwyA8JY.js                                              1.94 kB │ gzip:     0.64 kB
+build/assets/SettingsCard-BoL0UfoS.js                                               1.94 kB │ gzip:     0.87 kB
+build/assets/SortOrFilterChip-Big4P0n8.js                                           1.94 kB │ gzip:     0.86 kB
+build/assets/ScrollWrapper-Ci3iveFH.js                                              1.95 kB │ gzip:     0.81 kB
+build/assets/lib-C3IpGLsk.js                                                        1.96 kB │ gzip:     0.97 kB
+build/assets/SettingsTableListSection-futjkNhQ.js                                   1.98 kB │ gzip:     0.96 kB
+build/assets/typography-9wP9xzZa-SmcifGNH.js                                        1.98 kB │ gzip:     0.79 kB
+build/assets/useFindOneRecord-DjPxsNfU.js                                           1.99 kB │ gzip:     0.86 kB
+build/assets/SettingsApplicationRegistrationDetails-BnkVOFBW.js                     2.00 kB │ gzip:     0.97 kB
+build/assets/SettingsAdminApplicationRegistrationDetail-CjNI2xvI.js                 2.03 kB │ gzip:     0.98 kB
+build/assets/lua-MbAhEs1M.js                                                        2.04 kB │ gzip:     0.93 kB
+build/assets/interface-setting-cog.svg-DLk6um26.js                                  2.05 kB │ gzip:     0.87 kB
+build/assets/IconWorldWww-Dmm96d6q.js                                               2.05 kB │ gzip:     0.64 kB
+build/assets/PaymentSuccess-D5uloYYq.js                                             2.06 kB │ gzip:     1.10 kB
+build/assets/formatDistance-CjN0vM6T.js                                             2.10 kB │ gzip:     0.90 kB
+build/assets/cameligo--Xqm7ziN.js                                                   2.10 kB │ gzip:     0.96 kB
+build/assets/SettingsAccountsCalendarChannelDetails-CUCoPATQ.js                     2.10 kB │ gzip:     0.95 kB
+build/assets/useOpenAskAiPageInSidePanel-DZ6XDaRW.js                                2.11 kB │ gzip:     1.05 kB
+build/assets/useGetObjectPermissionDerivedStates-CZ1FQ4C_.js                        2.12 kB │ gzip:     0.80 kB
+build/assets/index.module-BcHbo21h.js                                               2.13 kB │ gzip:     0.94 kB
+build/assets/ModalStatefulWrapper-te46_HUB.js                                       2.13 kB │ gzip:     1.06 kB
+build/assets/useApolloClient-zMx7IuLG.js                                            2.14 kB │ gzip:     1.16 kB
+build/assets/WorkspaceActivation-BpVv00Gp.js                                        2.16 kB │ gzip:     1.12 kB
+build/assets/graphql-DrERBcNS.js                                                    2.18 kB │ gzip:     1.03 kB
+build/assets/path-DzsJ3dw6.js                                                       2.19 kB │ gzip:     1.06 kB
+build/assets/WorkspaceSectionListDndKit-DmqNlu7T.js                                 2.21 kB │ gzip:     0.99 kB
+build/assets/useSetNextOnboardingStatus-a9clkew7.js                                 2.21 kB │ gzip:     0.96 kB
+build/assets/useNavigateSettings-BDgVaHxO.js                                        2.23 kB │ gzip:     1.00 kB
+build/assets/SettingsUsage-BTsPiWFo.js                                              2.23 kB │ gzip:     1.03 kB
+build/assets/getNavigationMenuItemComputedLink-DuwLX29t.js                          2.26 kB │ gzip:     0.98 kB
+build/assets/ConfirmationModal-BKKRZdaQ.js                                          2.27 kB │ gzip:     1.14 kB
+build/assets/useLazyQuery-DeBfH_NB.js                                               2.28 kB │ gzip:     1.08 kB
+build/assets/objective-c-_9xkzDhR.js                                                2.32 kB │ gzip:     1.07 kB
+build/assets/SettingsToolIcon-DSqEXqhD.js                                           2.33 kB │ gzip:     1.06 kB
+build/assets/lexon-Mxc7-fX1.js                                                      2.35 kB │ gzip:     0.93 kB
+build/assets/SettingsListCard-BVA1DhSl.js                                           2.36 kB │ gzip:     1.02 kB
+build/assets/xml-DaAOPY_D.js                                                        2.39 kB │ gzip:     0.98 kB
+build/assets/CronExpressionHelper-Dc4_ro0Q.js                                       2.41 kB │ gzip:     1.18 kB
+build/assets/SettingsDatePickerInput-B_mstR_j.js                                    2.41 kB │ gzip:     1.24 kB
+build/assets/bicep-DJ4SJyWD.js                                                      2.45 kB │ gzip:     0.97 kB
+build/assets/build-CngeiE9P.js                                                      2.47 kB │ gzip:     0.89 kB
+build/assets/sparql-o-g87IgO.js                                                     2.47 kB │ gzip:     1.18 kB
+build/assets/RecordChip-bqOBF43j.js                                                 2.49 kB │ gzip:     1.16 kB
+build/assets/ImageInput-k65B6ahW.js                                                 2.49 kB │ gzip:     1.18 kB
+build/assets/filterUserFacingFieldMetadataItems-3JrJt_EP.js                         2.49 kB │ gzip:     0.82 kB
+build/assets/SidePanelToggleButton-C4APjEcB.js                                      2.49 kB │ gzip:     1.25 kB
+build/assets/mips-Cv4roltj.js                                                       2.50 kB │ gzip:     1.08 kB
+build/assets/useTextVariableEditor-BbjnIWs8.js                                      2.52 kB │ gzip:     1.31 kB
+build/assets/WorkspaceMemberPictureUploader-DRrhDRqq.js                             2.52 kB │ gzip:     1.29 kB
+build/assets/SettingsNonCompositeFieldTypeConfigs-C2M81iyh.js                       2.52 kB │ gzip:     0.96 kB
+build/assets/go-DHKKCaxZ.js                                                         2.57 kB │ gzip:     1.15 kB
+build/assets/useUpdateMetadataStoreDraft-Br2Ob4kN.js                                2.60 kB │ gzip:     0.97 kB
+build/assets/SettingsAiTabs-BSQkT-D9.js                                             2.62 kB │ gzip:     1.34 kB
+build/assets/workspaceMemberFormatPreferencesState-C2Sre_Jx.js                      2.65 kB │ gzip:     1.14 kB
+build/assets/SettingsLayoutViewDetail-DoagQ1y1.js                                   2.67 kB │ gzip:     1.11 kB
+build/assets/SettingsSecurityApprovedAccessDomain-DPdt1IpB.js                       2.68 kB │ gzip:     1.23 kB
+build/assets/SettingsUsageUserDetail-C34uYIbc.js                                    2.68 kB │ gzip:     1.22 kB
+build/assets/sophia-DJKiD_R5.js                                                     2.68 kB │ gzip:     1.21 kB
+build/assets/FileSaver.min-D8cZh_RN.js                                              2.68 kB │ gzip:     1.29 kB
+build/assets/typespec-Cxb32IJY.js                                                   2.71 kB │ gzip:     1.08 kB
+build/assets/lodash.isempty-BzY-G0Uq.js                                             2.72 kB │ gzip:     1.31 kB
+build/assets/SettingsAiPrompts-epOIzneG.js                                          2.72 kB │ gzip:     1.28 kB
+build/assets/dist-C0k9q2wC.js                                                       2.72 kB │ gzip:     1.36 kB
+build/assets/SettingsAccountsNewEmailGroupChannel-B6h-Mpnz.js                       2.73 kB │ gzip:     1.29 kB
+build/assets/m3-BGS3KIvY.js                                                         2.73 kB │ gzip:     1.34 kB
+build/assets/SettingsLayout--xynv4JB.js                                             2.78 kB │ gzip:     1.31 kB
+build/assets/MultiSelectInput-CiddTqrQ.js                                           2.84 kB │ gzip:     1.40 kB
+build/assets/zod-CE-D-jgF.js                                                        2.84 kB │ gzip:     1.03 kB
+build/assets/SettingsDiscoveryHeroCard-3tNg2enJ.js                                  2.86 kB │ gzip:     1.36 kB
+build/assets/useOpenRichTextInSidePanel-DAyX9jzY.js                                 2.87 kB │ gzip:     1.31 kB
+build/assets/useQuery-BC4nwFZk.js                                                   2.88 kB │ gzip:     1.30 kB
+build/assets/useMetadataErrorHandler-C3F42iOO.js                                    2.90 kB │ gzip:     1.33 kB
+build/assets/fsharp-x9EVvioN.js                                                     2.90 kB │ gzip:     1.33 kB
+build/assets/VariableTag-BYrjlHTv.js                                                2.91 kB │ gzip:     1.31 kB
+build/assets/pascal-C5f45Pzm.js                                                     2.91 kB │ gzip:     1.41 kB
+build/assets/metadataStoreState-DBJES_Hf.js                                         2.92 kB │ gzip:     1.40 kB
+build/assets/shell-DWWpLXsk.js                                                      2.99 kB │ gzip:     1.22 kB
+build/assets/SettingsLayoutItemTable-DGPJ_fdM.js                                    2.99 kB │ gzip:     1.29 kB
+build/assets/date-utils-QiIgo8Dx.js                                                 2.99 kB │ gzip:     1.38 kB
+build/assets/SettingsToolParameterTable-BD5_DNDR.js                                 3.00 kB │ gzip:     1.47 kB
+build/assets/SettingsAdminInstanceStatus-Dk5OW75b.js                                3.05 kB │ gzip:     1.50 kB
+build/assets/r-CT8mpuqx.js                                                          3.05 kB │ gzip:     1.30 kB
+build/assets/AppChip-C4gPX-G3.js                                                    3.07 kB │ gzip:     1.82 kB
+build/assets/SettingsAccountsConfiguration-DiijL16B.js                              3.09 kB │ gzip:     1.28 kB
+build/assets/qsharp-DTFgstSd.js                                                     3.11 kB │ gzip:     1.44 kB
+build/assets/useDeleteOneRecord-BMM8AC1Y.js                                         3.11 kB │ gzip:     1.21 kB
+build/assets/AnimatePresence-D_rqIjXe.js                                            3.13 kB │ gzip:     1.50 kB
+build/assets/java-B5mY8FuH.js                                                       3.14 kB │ gzip:     1.41 kB
+build/assets/lite-CgYCM8HE.js                                                       3.17 kB │ gzip:     1.11 kB
+build/assets/SettingsSubdomainPage-DwBeL1vP.js                                      3.17 kB │ gzip:     1.58 kB
+build/assets/powershell-B2OSIDDG.js                                                 3.19 kB │ gzip:     1.39 kB
+build/assets/SettingsWorkspaceNewUnsubscribeTopic-CHBBY1Qn.js                       3.19 kB │ gzip:     1.42 kB
+build/assets/SettingsLegalDpaNew-DmFYo8Dq.js                                        3.19 kB │ gzip:     1.47 kB
+build/assets/shouldDisplayVariable-DXOdGUXV.js                                      3.20 kB │ gzip:     1.39 kB
+build/assets/SettingsRestPlayground-Ci07g8fv.js                                     3.24 kB │ gzip:     1.61 kB
+build/assets/SettingsDevelopersApiKeysNew-CH32MkHs.js                               3.25 kB │ gzip:     1.56 kB
+build/assets/cypher-DoB1w-4C.js                                                     3.30 kB │ gzip:     1.46 kB
+build/assets/FavoritesSectionDispatcher-Bf5YENl0.js                                 3.30 kB │ gzip:     1.49 kB
+build/assets/SettingsWorkspaceCommunications-8SYkjCC-.js                            3.31 kB │ gzip:     1.63 kB
+build/assets/ArrayDisplay-2SnvumZu.js                                               3.32 kB │ gzip:     1.57 kB
+build/assets/IconUnlink-BvRsfDd5.js                                                 3.32 kB │ gzip:     0.97 kB
+build/assets/parseISO-DdIaygTh.js                                                   3.33 kB │ gzip:     1.46 kB
+build/assets/kotlin-WpPCm-_w.js                                                     3.36 kB │ gzip:     1.49 kB
+build/assets/SettingsLegalDpa-C4b9_-De.js                                           3.45 kB │ gzip:     1.57 kB
+build/assets/react-textarea-autosize.browser.esm-BIIK4wjG.js                        3.47 kB │ gzip:     1.56 kB
+build/assets/redis-Dg7MHJnj.js                                                      3.47 kB │ gzip:     1.50 kB
+build/assets/BookCall-BdIP4HvA.js                                                   3.49 kB │ gzip:     1.65 kB
+build/assets/tcl-CBmF8gve.js                                                        3.49 kB │ gzip:     1.39 kB
+build/assets/coffee-DgSDBdMj.js                                                     3.51 kB │ gzip:     1.31 kB
+build/assets/hcl-Bk7BA1hK.js                                                        3.51 kB │ gzip:     1.49 kB
+build/assets/SettingsApplicationCommandMenuItemDetail-CxnxUg-5.js                   3.54 kB │ gzip:     1.46 kB
+build/assets/react-dom-CZ8aPE8M.js                                                  3.58 kB │ gzip:     1.36 kB
+build/assets/useLoadCurrentUser-Bq57DHMX.js                                         3.60 kB │ gzip:     1.49 kB
+build/assets/Authorize-Cn8HH_2j.js                                                  3.69 kB │ gzip:     1.72 kB
+build/assets/markdown-BTtDd-ZC.js                                                   3.70 kB │ gzip:     1.40 kB
+build/assets/SettingsAdminWorkerMetricsGraph-B3NcrzWu.js                            3.74 kB │ gzip:     1.77 kB
+build/assets/SelectableListItem-Cua80JfW.js                                         3.74 kB │ gzip:     1.68 kB
+build/assets/dist-BFpHfCSz.js                                                       3.80 kB │ gzip:     1.60 kB
+build/assets/useCreateManyRecords-Bl0vuBSC.js                                       3.81 kB │ gzip:     1.49 kB
+build/assets/restructuredtext-D3dESEqn.js                                           3.81 kB │ gzip:     1.37 kB
+build/assets/less-Cm1vK3vF.js                                                       3.81 kB │ gzip:     1.43 kB
+build/assets/StandalonePageLayoutPage-Bal_LYds.js                                   3.83 kB │ gzip:     1.75 kB
+build/assets/apex-mnfyyea4.js                                                       3.87 kB │ gzip:     1.79 kB
+build/assets/SettingsAgentTurnDetail-BN9Q1rod.js                                    3.93 kB │ gzip:     1.46 kB
+build/assets/liquid-4mSaWeCT.js                                                     3.94 kB │ gzip:     1.68 kB
+build/assets/SettingsRoleAddObjectLevel-BECp2Nw5.js                                 3.97 kB │ gzip:     1.63 kB
+build/assets/VariableChip-D7KnFgTT.js                                               3.98 kB │ gzip:     1.77 kB
+build/assets/yaml-DKMwQR_Z.js                                                       3.98 kB │ gzip:     1.54 kB
+build/assets/SettingsNewObject-CJaoItE6.js                                          4.07 kB │ gzip:     1.90 kB
+build/assets/rust-CkWy2x4V.js                                                       4.08 kB │ gzip:     1.85 kB
+build/assets/SettingsCustomDomainPage-BBoGs5JZ.js                                   4.10 kB │ gzip:     1.80 kB
+build/assets/moveArrayItem-Cxte0RME.js                                              4.12 kB │ gzip:     1.95 kB
+build/assets/useUpdateOneRecord-0Iz2qSKL.js                                         4.13 kB │ gzip:     1.44 kB
+build/assets/SettingsToolDetail-Hf5AUcYm.js                                         4.13 kB │ gzip:     1.87 kB
+build/assets/dart-C2YhL1eF.js                                                       4.17 kB │ gzip:     1.66 kB
+build/assets/python-CLo3NyTM.js                                                     4.17 kB │ gzip:     1.71 kB
+build/assets/dynamicActivate-BHywJTdR.js                                            4.25 kB │ gzip:     1.49 kB
+build/assets/lib--1K9erId.js                                                        4.26 kB │ gzip:     1.88 kB
+build/assets/SettingsWorkspaceUnsubscribeTopicDetail-CWqZdHn1.js                    4.29 kB │ gzip:     1.82 kB
+build/assets/get-system-view-universal-identifier.util-MgHxFZCo-Dy0klX39.js         4.29 kB │ gzip:     1.60 kB
+build/assets/useHandleImpersonate-DorxZ3nY.js                                       4.40 kB │ gzip:     2.03 kB
+build/assets/SettingsObjectNewFieldConfigure-BecYUm2i.js                            4.42 kB │ gzip:     2.05 kB
+build/assets/css-BRHSciDd.js                                                        4.43 kB │ gzip:     1.39 kB
+build/assets/csharp-CKPv-u3o.js                                                     4.44 kB │ gzip:     1.73 kB
+build/assets/SettingsAdminWorkspacesStatus-DjrW7adR.js                              4.62 kB │ gzip:     1.98 kB
+build/assets/hasObjectMetadataItemFieldCreatedBy-DtbDk1yZ.js                        4.67 kB │ gzip:     1.96 kB
+build/assets/SettingsCommunity-SFagVvmw.js                                          4.70 kB │ gzip:     1.93 kB
+build/assets/UsageDailyChartSection-DWmjqKZf.js                                     4.71 kB │ gzip:     1.97 kB
+build/assets/pug-C-Ujk1rc.js                                                        4.74 kB │ gzip:     1.67 kB
+build/assets/SettingsDatabaseEventsForm-DDXCXKqm.js                                 4.81 kB │ gzip:     2.00 kB
+build/assets/msdax-DTma6D5O.js                                                      4.83 kB │ gzip:     1.97 kB
+build/assets/swift-CMzkjxUz.js                                                      4.83 kB │ gzip:     2.05 kB
+build/assets/mdx-BorLLF5A.js                                                        4.84 kB │ gzip:     1.47 kB
+build/assets/PasswordReset-BDzgjlom.js                                              4.93 kB │ gzip:     2.17 kB
+build/assets/html-vB2wrTbL.js                                                       4.98 kB │ gzip:     1.41 kB
+build/assets/updateRecordFromCache-CVUlV6J6.js                                      5.00 kB │ gzip:     1.58 kB
+build/assets/tslib.es6-DJJDqIeD.js                                                  5.00 kB │ gzip:     2.02 kB
+build/assets/WorkflowCoreIndexPage-DN9OjE2P.js                                      5.02 kB │ gzip:     2.13 kB
+build/assets/SettingsAiModelsTable-CnSWjwwX.js                                      5.04 kB │ gzip:     2.17 kB
+build/assets/nl-CGYAefN6.js                                                         5.08 kB │ gzip:     1.90 kB
+build/assets/SettingsAvailableApplicationDetails-CwF7rYDT.js                        5.12 kB │ gzip:     2.15 kB
+build/assets/AiChatPage-CwZPAJQT.js                                                 5.15 kB │ gzip:     2.22 kB
+build/assets/nb-BP3ViB8n.js                                                         5.17 kB │ gzip:     1.90 kB
+build/assets/cpp-BPPWCy8W.js                                                        5.22 kB │ gzip:     2.12 kB
+build/assets/MultiItemBaseInput-5v2BR6bZ.js                                         5.23 kB │ gzip:     2.16 kB
+build/assets/ko-CG8zBEjn.js                                                         5.24 kB │ gzip:     1.87 kB
+build/assets/ecl-C9D3BEkn.js                                                        5.26 kB │ gzip:     2.26 kB
+build/assets/InviteTeam-BbGRjhR0.js                                                 5.36 kB │ gzip:     2.54 kB
+build/assets/TextInput-CO5Mh7_g.js                                                  5.37 kB │ gzip:     2.05 kB
+build/assets/typescript-DjhFa2IZ.js                                                 5.38 kB │ gzip:     2.19 kB
+build/assets/InstallApps-Dt4d_DLz.js                                                5.41 kB │ gzip:     2.25 kB
+build/assets/index.esm-DJhvgBaz.js                                                  5.42 kB │ gzip:     2.17 kB
+build/assets/dist-Cg5OofxW.js                                                       5.42 kB │ gzip:     2.22 kB
+build/assets/useNavigateSidePanel-DSccox2k.js                                       5.49 kB │ gzip:     2.02 kB
+build/assets/json-visualizer-CtHJRkib-Ctb3GhOe.js                                   5.50 kB │ gzip:     1.93 kB
+build/assets/Select-C0dJm8Yp.js                                                     5.51 kB │ gzip:     2.23 kB
+build/assets/fr-B8IM8Nkw.js                                                         5.53 kB │ gzip:     2.12 kB
+build/assets/hu-cMUtAAgU.js                                                         5.60 kB │ gzip:     2.21 kB
+build/assets/af-BmrlQMIl.js                                                         5.62 kB │ gzip:     2.00 kB
+build/assets/da-DYlYTgFX.js                                                         5.66 kB │ gzip:     1.97 kB
+build/assets/getRecordFromRecordNode-CW53H83z.js                                    5.69 kB │ gzip:     1.81 kB
+build/assets/vb-Chp6dD1I.js                                                         5.71 kB │ gzip:     2.09 kB
+build/assets/SettingsWorkspaceCommunicationGroupChannelDetail-BHAjaPuU.js           5.71 kB │ gzip:     2.43 kB
+build/assets/ja-hmk-i1Xa.js                                                         5.74 kB │ gzip:     2.09 kB
+build/assets/en-US-BS0nznGI.js                                                      5.75 kB │ gzip:     2.05 kB
+build/assets/transformAggregateRawValueIntoAggregateDisplayValue-SsnAZWSA.js        5.75 kB │ gzip:     2.24 kB
+build/assets/ro-Bw3LECKm.js                                                         5.76 kB │ gzip:     2.03 kB
+build/assets/zh-TW-DJ6hS1oK.js                                                      5.78 kB │ gzip:     2.09 kB
+build/assets/sv-CXJZy2rj.js                                                         5.78 kB │ gzip:     2.10 kB
+build/assets/CreateProfile-CJKhc9hK.js                                              5.81 kB │ gzip:     2.44 kB
+build/assets/pluralize-BNZdTTnl.js                                                  5.87 kB │ gzip:     2.44 kB
+build/assets/twig-CWOHlxr5.js                                                       5.89 kB │ gzip:     1.53 kB
+build/assets/tr-DgEZE4Sa.js                                                         5.89 kB │ gzip:     2.17 kB
+build/assets/SettingsApplicationConnectionDetail-CEI_oXZY.js                        5.94 kB │ gzip:     2.32 kB
+build/assets/useFindManyRecords-IcsRmxLU.js                                         5.98 kB │ gzip:     2.21 kB
+build/assets/useSidePanelMenu-DPac4GzR.js                                           5.99 kB │ gzip:     2.40 kB
+build/assets/es-6uEJOWuG.js                                                         6.00 kB │ gzip:     2.08 kB
+build/assets/zh-CN-D9C-vOF_.js                                                      6.02 kB │ gzip:     2.18 kB
+build/assets/pt-WLNf090x.js                                                         6.03 kB │ gzip:     2.04 kB
+build/assets/SettingsAdminAiProviderDetail-CCYy18oq.js                              6.09 kB │ gzip:     2.47 kB
+build/assets/WorkflowEditActionCode-CAe0rT4T.js                                     6.10 kB │ gzip:     2.52 kB
+build/assets/SettingsObjectNewFieldSelect-B_plDLm9.js                               6.13 kB │ gzip:     2.56 kB
+build/assets/it-DAxcrkbn.js                                                         6.16 kB │ gzip:     2.08 kB
+build/assets/SettingsDevelopersApiKeyDetail-CcdWqvO2.js                             6.16 kB │ gzip:     2.54 kB
+build/assets/Dropdown-DpJypSHw.js                                                   6.29 kB │ gzip:     2.55 kB
+build/assets/scss-asFkHsol.js                                                       6.33 kB │ gzip:     1.76 kB
+build/assets/graphqlMode-CMc3ZILG.js                                                6.37 kB │ gzip:     2.45 kB
+build/assets/SettingsObjectFieldEdit-loUXYd0c.js                                    6.38 kB │ gzip:     2.72 kB
+build/assets/fi-XJq890Rh.js                                                         6.40 kB │ gzip:     2.15 kB
+build/assets/isFieldSelect-DeRXyuAS.js                                              6.45 kB │ gzip:     2.08 kB
+build/assets/SettingsObjectNewIndex-wmU-OqTP.js                                     6.46 kB │ gzip:     2.92 kB
+build/assets/getRecordFromCache-DP8YPBCs.js                                         6.47 kB │ gzip:     2.26 kB
+build/assets/SettingsAdminNewAiProvider-oafoKpAP.js                                 6.56 kB │ gzip:     2.33 kB
+build/assets/SettingsTwoFactorAuthenticationMethod-ERwBlde4.js                      6.67 kB │ gzip:     2.66 kB
+build/assets/ca-BTuaJlgW.js                                                         6.73 kB │ gzip:     2.27 kB
+build/assets/settingsDataModelObjectAboutFormSchema-C14MgnVQ.js                     6.74 kB │ gzip:     2.59 kB
+build/assets/handlebars-CmkVySPB.js                                                 6.74 kB │ gzip:     1.63 kB
+build/assets/computeEffectiveValueRange-mcvlrKVq.js                                 6.84 kB │ gzip:     2.87 kB
+build/assets/SettingsAdminUserDetail-Bx_ysXas.js                                    7.03 kB │ gzip:     2.98 kB
+build/assets/SettingsDevelopersWebhookForm-DdXIBPhM.js                              7.04 kB │ gzip:     2.81 kB
+build/assets/julia-C6LtNBD6.js                                                      7.07 kB │ gzip:     2.68 kB
+build/assets/de-Cb7jxqcI.js                                                         7.11 kB │ gzip:     2.12 kB
+build/assets/getMarketplaceAppDefaultRoleManifest-D2xLlG5_.js                       7.12 kB │ gzip:     2.65 kB
+build/assets/scala-DKub3pgF.js                                                      7.23 kB │ gzip:     2.11 kB
+build/assets/wgsl-DjpI8MTo.js                                                       7.28 kB │ gzip:     2.82 kB
+build/assets/react-BWmhvO0Y.js                                                      7.30 kB │ gzip:     3.21 kB
+build/assets/st-CoHbwdaN.js                                                         7.32 kB │ gzip:     2.27 kB
+build/assets/vi-3zHl0DaY.js                                                         7.48 kB │ gzip:     2.50 kB
+build/assets/systemverilog-IbXrTCfb.js                                              7.52 kB │ gzip:     2.77 kB
+build/assets/react-M6yZRsSc.js                                                      7.55 kB │ gzip:     2.91 kB
+build/assets/el-DWPOGy1j.js                                                         7.56 kB │ gzip:     2.61 kB
+build/assets/SettingsAdminConfigVariableDetails-CA1LxgDg.js                         7.62 kB │ gzip:     3.13 kB
+build/assets/he-CZPFLnZT.js                                                         7.63 kB │ gzip:     2.42 kB
+build/assets/RecordShowPage-OlR42aiT.js                                             7.72 kB │ gzip:     2.97 kB
+build/assets/postiats-eW1tZ3Vf.js                                                   7.77 kB │ gzip:     2.46 kB
+build/assets/SettingsSkillForm-2tlkfBNO.js                                          7.84 kB │ gzip:     3.07 kB
+build/assets/SettingsWorkspaceMember-4l49wNdK.js                                    7.85 kB │ gzip:     3.19 kB
+build/assets/php-YB_zTIIN.js                                                        7.94 kB │ gzip:     2.09 kB
+build/assets/ActivityRichTextEditor-DdeEFmyd.js                                     7.95 kB │ gzip:     3.03 kB
+build/assets/useSnackBar-BTttXWaR.js                                                7.95 kB │ gzip:     3.03 kB
+build/assets/SettingsCompositeFieldTypeConfigs-CWy94aEI.js                          8.07 kB │ gzip:     1.71 kB
+build/assets/SettingsAdminChats-COGdqtMM.js                                         8.09 kB │ gzip:     3.03 kB
+build/assets/perl-ND38itPo.js                                                       8.17 kB │ gzip:     3.20 kB
+build/assets/SettingsBillingPageLayout-Di8xu4VP.js                                  8.19 kB │ gzip:     3.30 kB
+build/assets/graphql-I-6Awo9B.js                                                    8.29 kB │ gzip:     1.01 kB
+build/assets/SettingsObjectOverview-DaTl2Dta.js                                     8.32 kB │ gzip:     3.20 kB
+build/assets/ar-CZJ2vLLa.js                                                         8.32 kB │ gzip:     2.29 kB
+build/assets/pl-CMm-CQ7Y.js                                                         8.36 kB │ gzip:     2.73 kB
+build/assets/ruby-Chtr-0-O.js                                                       8.42 kB │ gzip:     2.60 kB
+build/assets/useCreditUpgradeAction-B0VSzdvj.js                                     8.43 kB │ gzip:     3.46 kB
+build/assets/NavigationMenuItemFolderDnd-BG0xQbiD.js                                8.47 kB │ gzip:     3.44 kB
+build/assets/GraphWidgetPieChart-BVsimrX9.js                                        8.66 kB │ gzip:     3.64 kB
+build/assets/SettingsObjects-BnHeWQy0.js                                            8.69 kB │ gzip:     3.30 kB
+build/assets/formatInTimeZone-GqDEI5Up.js                                           8.71 kB │ gzip:     3.23 kB
+build/assets/ChooseYourPlan-BViMlVhq.js                                             8.71 kB │ gzip:     3.29 kB
+build/assets/razor-CwAmEAUO.js                                                      8.75 kB │ gzip:     2.32 kB
+build/assets/floating-ui.react.esm-D0WbQCNc.js                                      8.78 kB │ gzip:     3.62 kB
+build/assets/SettingsAdminNewAiModel-DxvH7Pmd.js                                    8.90 kB │ gzip:     2.82 kB
+build/assets/protobuf-DxRtJHoR.js                                                   8.96 kB │ gzip:     2.09 kB
+build/assets/dist-2SK0QQk5.js                                                       9.42 kB │ gzip:     3.28 kB
+build/assets/dist-D4Fqkr2o.js                                                       9.47 kB │ gzip:     3.84 kB
+build/assets/clojure-BT1gW0ic.js                                                    9.56 kB │ gzip:     3.70 kB
+build/assets/SettingsAccountsConnectionForm-C-wX_jqr.js                             9.58 kB │ gzip:     3.10 kB
+build/assets/SettingsWorkspaceUnsubscribe-BwraJSWV.js                               9.62 kB │ gzip:     3.68 kB
+build/assets/sr-6FeN1ovO.js                                                         9.70 kB │ gzip:     2.59 kB
+build/assets/createAtomState-6gI79rwg.js                                            9.71 kB │ gzip:     3.99 kB
+build/assets/SingleRecordPicker-7BOkYHeW.js                                         9.88 kB │ gzip:     3.65 kB
+build/assets/SyncEmails-CfunPhgm.js                                                 9.91 kB │ gzip:     3.77 kB
+build/assets/layout-o1bRtzpS-BCsKMNTv.js                                            9.99 kB │ gzip:     3.79 kB
+build/assets/getColorScheme-YEljTYuW.js                                            10.09 kB │ gzip:     4.10 kB
+build/assets/elixir-Exeiwkbu.js                                                    10.17 kB │ gzip:     2.55 kB
+build/assets/sql-BAeWiCJL.js                                                       10.21 kB │ gzip:     3.92 kB
+build/assets/value-DB5XbQpi.js                                                     10.26 kB │ gzip:     4.37 kB
+build/assets/StandaloneRichTextWidget-BRRtf4uC.js                                  10.29 kB │ gzip:     4.14 kB
+build/assets/getActivityTargetObjectFieldIdName-CLQ8SUKO.js                        10.30 kB │ gzip:     3.52 kB
+build/assets/SettingsExperience-DqhnTwkC.js                                        10.42 kB │ gzip:     3.53 kB
+build/assets/NavigationMenuItemDndKitProvider-Bs5zPcKq.js                          10.51 kB │ gzip:     3.90 kB
+build/assets/cs-Cu1vUAZK.js                                                        10.64 kB │ gzip:     2.71 kB
+build/assets/CommandMenuButton-DqHCteP3.js                                         10.87 kB │ gzip:     4.08 kB
+build/assets/BackgroundMockPage-DM8xHssg.js                                        10.88 kB │ gzip:     2.99 kB
+build/assets/SettingsProfile-v2NuilMe.js                                           11.01 kB │ gzip:     4.28 kB
+build/assets/floating-ui.core-Bo8bPmlz.js                                          11.11 kB │ gzip:     4.32 kB
+build/assets/mysql-CzCMUh4W.js                                                     11.19 kB │ gzip:     4.16 kB
+build/assets/redshift-k-2GCDaK.js                                                  11.72 kB │ gzip:     4.41 kB
+build/assets/SettingsAdminWorkspaceChatThread-DRV9Sf33.js                          11.77 kB │ gzip:     4.00 kB
+build/assets/IconCurrencyZloty-BfPRtssj.js                                         11.87 kB │ gzip:     2.98 kB
+build/assets/SettingsSecuritySSOIdentifyProvider-BB5B9caW.js                       12.12 kB │ gzip:     4.36 kB
+build/assets/SettingsAdminQueueDetail-C_OjmxPR.js                                  12.15 kB │ gzip:     4.37 kB
+build/assets/SettingsAccounts-CoXRF5b-.js                                          12.20 kB │ gzip:     4.62 kB
+build/assets/format-COSipZUl.js                                                    12.22 kB │ gzip:     3.35 kB
+build/assets/useSaveDraftRoleToDB-Dbhtf5DT.js                                      12.42 kB │ gzip:     3.17 kB
+build/assets/SettingsDataModelFieldPreviewWidget-OGr-nXMB.js                       12.59 kB │ gzip:     4.29 kB
+build/assets/uk-6fPXbRsA.js                                                        12.60 kB │ gzip:     3.24 kB
+build/assets/ru-XmQvyxvN.js                                                        12.63 kB │ gzip:     3.18 kB
+build/assets/main-C5Lyy25B.js                                                      13.14 kB │ gzip:     4.53 kB
+build/assets/floating-ui.react-dom-BsxAYkC9.js                                     13.19 kB │ gzip:     5.37 kB
+build/assets/pgsql-bwZJ7lqP.js                                                     13.38 kB │ gzip:     4.57 kB
+build/assets/SettingsBillingPlans-DPIa_xfw.js                                      14.04 kB │ gzip:     3.79 kB
+build/assets/abap-B-pu5qNa.js                                                      14.08 kB │ gzip:     5.47 kB
+build/assets/GraphWidgetLineChart-jYt8iElZ.js                                      14.29 kB │ gzip:     5.74 kB
+build/assets/Key.enum-DYYocqm5.js                                                  14.41 kB │ gzip:     4.98 kB
+build/assets/PageCardLayout-BtB3uzeN.js                                            14.44 kB │ gzip:     5.04 kB
+build/assets/SettingsAccountsMessageChannelDetails-CDhjAYE5.js                     14.73 kB │ gzip:     4.95 kB
+build/assets/MultipleRecordPicker-DvUGUMER.js                                      14.77 kB │ gzip:     5.15 kB
+build/assets/SettingsApplications-DpeKcn_I.js                                      14.95 kB │ gzip:     5.70 kB
+build/assets/url-Bs332b_7-DEoacRfL.js                                              15.04 kB │ gzip:     6.02 kB
+build/assets/SettingsLogicFunctionDetail-r158LKae.js                               15.04 kB │ gzip:     5.39 kB
+build/assets/usePlans-DJogWXPx.js                                                  15.69 kB │ gzip:     5.98 kB
+build/assets/sortable-DUyJFq__.js                                                  15.83 kB │ gzip:     5.61 kB
+build/assets/SettingsEnterprise-CN4YlMyh.js                                        16.06 kB │ gzip:     4.83 kB
+build/assets/freemarker2-Cu3k13JO.js                                               16.09 kB │ gzip:     4.30 kB
+build/assets/SettingsRolePermissions-KbKWEn1K.js                                   16.12 kB │ gzip:     4.70 kB
+build/assets/navigation-e-MCDFSP-DiFnMgOF.js                                       16.62 kB │ gzip:     4.90 kB
+build/assets/powerquery-CxBEV8wy.js                                                16.86 kB │ gzip:     4.89 kB
+build/assets/resolveCjsModuleDefaultExport-CINVcF_6.js                             16.91 kB │ gzip:     5.81 kB
+build/assets/RichTextFieldEditor-CjBEpbho.js                                       17.01 kB │ gzip:     6.71 kB
+build/assets/fuse-BRCBnkx6.js                                                      18.22 kB │ gzip:     6.67 kB
+build/assets/solidity-DXc4J2-r.js                                                  18.51 kB │ gzip:     4.53 kB
+build/assets/SettingsRole-YgfD92Ia.js                                              18.75 kB │ gzip:     6.62 kB
+build/assets/useOpenRecordInSidePanel-DJ9rLoXB.js                                  19.77 kB │ gzip:     6.34 kB
+build/assets/i18n-C6qCzGnL.js                                                      20.22 kB │ gzip:     7.58 kB
+build/assets/SettingsWorkspaceMembers-BRe32QCU.js                                  20.30 kB │ gzip:     7.06 kB
+build/assets/SettingsAdminWorkspaceDetail-BCdUzCwF.js                              20.34 kB │ gzip:     7.36 kB
+build/assets/parse-BAinBFPq.js                                                     20.38 kB │ gzip:     4.45 kB
+build/assets/SettingsAI-BRv1KFch.js                                                20.43 kB │ gzip:     7.21 kB
+build/assets/NotFound-eA6gLt2B.js                                                  20.54 kB │ gzip:     8.55 kB
+build/assets/FieldRichTextWidget-Ds4f1tPL.js                                       21.12 kB │ gzip:     8.76 kB
+build/assets/SettingsAgentForm-26oycrk3.js                                         21.34 kB │ gzip:     7.53 kB
+build/assets/workflow-Dgyj0u4L.js                                                  21.52 kB │ gzip:     7.24 kB
+build/assets/floating-ui.dom-g2--21Rl.js                                           21.54 kB │ gzip:     8.32 kB
+build/assets/SettingsApplicationPermissionsTab-1siB1-iP.js                         22.58 kB │ gzip:     6.89 kB
+build/assets/tsMode-BZB9Z_oP.js                                                    22.97 kB │ gzip:     6.45 kB
+build/assets/DocumentViewer-0kUujHA4.js                                            23.50 kB │ gzip:     8.94 kB
+build/assets/SettingsApplicationFrontComponentDetail-Cn5sYjNk.js                   24.10 kB │ gzip:     9.73 kB
+build/assets/surfaces-tKBeFdWy-BBBZ_TXm.js                                         24.62 kB │ gzip:     9.23 kB
+build/assets/types-C6rmvVia-J1kUcJA4.js                                            24.98 kB │ gzip:     7.78 kB
+build/assets/isDeeplyEqual-_UoxMPyL.js                                             25.05 kB │ gzip:     7.85 kB
+build/assets/SettingsAdminIndicatorHealthStatus-BT0L0kxl.js                        25.78 kB │ gzip:    10.27 kB
+build/assets/index.esm-CmL5Wk9A.js                                                 27.78 kB │ gzip:    10.40 kB
+build/assets/WorkspaceSectionDispatcher-DlLVEdEh.js                                29.13 kB │ gzip:    10.40 kB
+build/assets/NavigationMenuItemSection-DDZ3No4D.js                                 29.33 kB │ gzip:    11.26 kB
+build/assets/editor.main-DJkxCgxr.js                                               30.02 kB │ gzip:     7.86 kB
+build/assets/cssMode-hcyOurXg.js                                                   31.77 kB │ gzip:     8.63 kB
+build/assets/SettingsGeneral-dEJyuhY3.js                                           32.09 kB │ gzip:    10.83 kB
+build/assets/SettingsBilling-CvV9MMj8.js                                           32.18 kB │ gzip:     9.96 kB
+build/assets/htmlMode-Xn6d3GGO.js                                                  32.32 kB │ gzip:     8.75 kB
+build/assets/SignInUp-BHKFeZ4H.js                                                  32.62 kB │ gzip:    10.91 kB
+build/assets/SettingsRoleObjectLevel-BIomQKxi.js                                   32.86 kB │ gzip:    10.33 kB
+build/assets/nivo-pie-3xTZ_0DP.js                                                  33.01 kB │ gzip:     9.94 kB
+build/assets/SettingsApplicationDetails-DU12-dLy.js                                34.06 kB │ gzip:    13.29 kB
+build/assets/lib-VWcl21gg.js                                                       36.15 kB │ gzip:     8.94 kB
+build/assets/SettingsApiWebhooks-DJ1n4hun.js                                       36.31 kB │ gzip:    13.23 kB
+build/assets/SettingsObjectDetailPage-DL_tmNas.js                                  36.55 kB │ gzip:    11.72 kB
+build/assets/utils-D_qi8xpK.js                                                     37.25 kB │ gzip:    11.13 kB
+build/assets/GraphWidgetBarChart-D1hXyNi6.js                                       37.73 kB │ gzip:    11.55 kB
+build/assets/SettingsApplicationRegistrationGeneralTab-BFIBTVik.js                 37.91 kB │ gzip:    14.38 kB
+build/assets/remark-gfm-D3mc_wkj.js                                                39.09 kB │ gzip:    11.89 kB
+build/assets/dagre-CSJhUs1A.js                                                     40.79 kB │ gzip:    14.61 kB
+build/assets/jsonMode-CtnDE3O7.js                                                  41.21 kB │ gzip:    12.01 kB
+build/assets/graphql-DHYHim7v.js                                                   43.82 kB │ gzip:    12.05 kB
+build/assets/graphql-BdF5QCFx.js                                                   44.54 kB │ gzip:    12.35 kB
+build/assets/react-spring_web.modern-BpF7E7ae.js                                   44.90 kB │ gzip:    18.39 kB
+build/assets/theme-constants-C0dRLi4g-DPr6G-vE.js                                  44.95 kB │ gzip:     9.98 kB
+build/assets/triggerUpdateRecordOptimisticEffect-DCMDEsMW.js                       49.78 kB │ gzip:    15.27 kB
+build/assets/settingsFieldFormSchema-qGWC8bi5.js                                   50.89 kB │ gzip:    15.15 kB
+build/assets/metadata-BlS5cf1F.js                                                  55.60 kB │ gzip:    12.48 kB
+build/assets/SettingsAdmin-DHKi9oLv.js                                             55.67 kB │ gzip:    18.92 kB
+build/assets/types-Bcwy4qQk.js                                                     57.19 kB │ gzip:    13.33 kB
+build/assets/index.production-l19v2irr.js                                          57.34 kB │ gzip:    18.69 kB
+build/assets/ai-eV2psptR.js                                                        59.85 kB │ gzip:    16.08 kB
+build/assets/useSpreadsheetImportInternal-B-2AeBSL.js                              61.20 kB │ gzip:    16.79 kB
+build/assets/OverflowingTextWithTooltip-tvaH_y1n-D7s7QXLz.js                       65.82 kB │ gzip:    23.12 kB
+build/assets/recordIndexGroupAggregateOperationComponentState-tReAyXik.js          66.37 kB │ gzip:    19.32 kB
+build/assets/module-CYN-VVQ2.js                                                    77.20 kB │ gzip:    27.92 kB
+build/assets/runtime-core.esm-bundler-0CTmiY6o.js                                  84.99 kB │ gzip:    34.18 kB
+build/assets/index-B0Gk_P0t-BDtc7Zc3.js                                            86.08 kB │ gzip:    27.63 kB
+build/assets/undo-redo-D5RCrOZ-.js                                                 88.06 kB │ gzip:    27.95 kB
+build/assets/standalone-Cs_8gE1x.js                                                90.99 kB │ gzip:    33.83 kB
+build/assets/nivo-line-BuEWvttN.js                                                 94.59 kB │ gzip:    31.08 kB
+build/assets/feedback-Dcne2COx-BuSDQxsF.js                                         97.87 kB │ gzip:    30.59 kB
+build/assets/react-Bt7Je5DD.js                                                    100.24 kB │ gzip:    33.51 kB
+build/assets/comments-CV8eSFoS.js                                                 103.78 kB │ gzip:    35.47 kB
+build/assets/browser-BPZMszFC.js                                                  104.60 kB │ gzip:    32.53 kB
+build/assets/DateTimePicker-rzYPi3jL.js                                           104.77 kB │ gzip:    32.09 kB
+build/assets/editorBaseApi-DO9TKFmo.js                                            109.79 kB │ gzip:    35.73 kB
+build/assets/proxy-YBbAKe9R.js                                                    112.05 kB │ gzip:    37.44 kB
+build/assets/react-markdown-C1eaoCh0.js                                           113.48 kB │ gzip:    35.00 kB
+build/assets/icon-BGCXENYc-ay8FTSIE.js                                            118.41 kB │ gzip:    34.15 kB
+build/assets/nivo-legends-Dp6ZZ0_-.js                                             139.57 kB │ gzip:    44.99 kB
+build/assets/client-D_YueYkJ.js                                                   139.98 kB │ gzip:    39.62 kB
+build/assets/GeistMono-Regular-D2zmhEYE-76UYCSOF.js                               155.05 kB │ gzip:    73.29 kB
+build/assets/zh-CN-Z4EqoCl0.js                                                    158.05 kB │ gzip:    70.83 kB
+build/assets/zh-TW-Dm5aFqgh.js                                                    159.05 kB │ gzip:    71.80 kB
+build/assets/RecordIndexPage-BCgnQpYz.js                                          159.17 kB │ gzip:    45.88 kB
+build/assets/en-D0qYcN_X.js                                                       162.56 kB │ gzip:    66.30 kB
+build/assets/modal-BKhwvjpa.js                                                    164.03 kB │ gzip:    48.57 kB
+build/assets/esm-DrGH0l6f.js                                                      167.35 kB │ gzip:    54.02 kB
+build/assets/graphql-BHyXhidl.js                                                  170.58 kB │ gzip:    44.25 kB
+build/assets/da-DK-CrGYaq57.js                                                    174.28 kB │ gzip:    69.64 kB
+build/assets/no-NO-DMKuwAHz.js                                                    174.38 kB │ gzip:    69.40 kB
+build/assets/af-ZA-j-wtDogE.js                                                    175.88 kB │ gzip:    71.26 kB
+build/assets/sv-SE-BsRNAufJ.js                                                    177.67 kB │ gzip:    70.44 kB
+build/assets/nl-NL-CQ12MAWE.js                                                    180.38 kB │ gzip:    71.74 kB
+build/assets/tr-TR-CAdeVbOa.js                                                    183.72 kB │ gzip:    72.11 kB
+build/assets/it-IT-CUFxWD0m.js                                                    186.10 kB │ gzip:    71.40 kB
+build/assets/pt-PT-DRsddK4q.js                                                    187.06 kB │ gzip:    72.17 kB
+build/assets/pt-BR-C0NrQJr4.js                                                    187.06 kB │ gzip:    71.25 kB
+build/assets/ca-ES-DltnXA4y.js                                                    189.26 kB │ gzip:    72.55 kB
+build/assets/es-ES-sEzxangv.js                                                    189.27 kB │ gzip:    71.84 kB
+build/assets/cs-CZ-C6DBMW0P.js                                                    189.47 kB │ gzip:    75.41 kB
+build/assets/ko-KR-UpIX-aB4.js                                                    190.42 kB │ gzip:    72.64 kB
+build/assets/pl-PL-BRzhrAg-.js                                                    190.57 kB │ gzip:    75.07 kB
+build/assets/de-DE-Cfn5IXxu.js                                                    191.45 kB │ gzip:    73.84 kB
+build/assets/ro-RO-Cpa6RblS.js                                                    193.05 kB │ gzip:    74.03 kB
+build/assets/useControlled-Ch-5c9D1.js                                            195.81 kB │ gzip:    61.81 kB
+build/assets/fr-FR-gB2m6iU8.js                                                    195.95 kB │ gzip:    73.60 kB
+build/assets/hu-HU-B9xafXfP.js                                                    196.61 kB │ gzip:    75.82 kB
+build/assets/estree-CVeq5jr0.js                                                   204.60 kB │ gzip:    59.86 kB
+build/assets/AgentScalarChatInterface.vue-Br5NPV3T.js                             206.24 kB │ gzip:    60.17 kB
+build/assets/dist-B5TnI0ZT.js                                                     208.27 kB │ gzip:    65.14 kB
+build/assets/vi-VN-BZAxWlkJ.js                                                    211.21 kB │ gzip:    72.46 kB
+build/assets/he-IL-CZE8FAly.js                                                    213.48 kB │ gzip:    74.04 kB
+build/assets/fi-FI-k194sBzu.js                                                    218.73 kB │ gzip:    74.30 kB
+build/assets/ja-JP-Y26veG_6.js                                                    219.00 kB │ gzip:    75.12 kB
+build/assets/schemas-pe6acdm4.js                                                  231.39 kB │ gzip:    52.95 kB
+build/assets/Currencies-DjbwQIr1.js                                               232.27 kB │ gzip:    54.21 kB
+build/assets/ar-SA-VRnAX87m.js                                                    245.13 kB │ gzip:    78.19 kB
+build/assets/pseudo-en-BPNFdHKh.js                                                245.42 kB │ gzip:    76.08 kB
+build/assets/sr-Cyrl-z5zGKWv4.js                                                  263.61 kB │ gzip:    82.21 kB
+build/assets/index.es-xv_oXr3_.js                                                 270.45 kB │ gzip:    60.01 kB
+build/assets/uk-UA-CJpqTFAh.js                                                    279.22 kB │ gzip:    85.32 kB
+build/assets/ru-RU-CwgPd0DR.js                                                    285.59 kB │ gzip:    85.51 kB
+build/assets/el-GR-DzZXDFmn.js                                                    292.84 kB │ gzip:    87.26 kB
+build/assets/style-B_ZU49YI.js                                                    305.41 kB │ gzip:    87.62 kB
+build/assets/babel-rjRw22f0.js                                                    317.25 kB │ gzip:    84.70 kB
+build/assets/mouseTarget-Dn4dWFWG.js                                              352.58 kB │ gzip:   103.17 kB
+build/assets/dist-DgfSvL_W.js                                                     381.83 kB │ gzip:    99.65 kB
+build/assets/native-C8mLxbrq.js                                                   432.70 kB │ gzip:    82.49 kB
+build/assets/graphql-C3JgQo7g.js                                                  447.63 kB │ gzip:    25.17 kB
+build/assets/SpreadsheetImport-B-DWcxJr.js                                        448.03 kB │ gzip:   154.72 kB
+build/assets/src-Bcud0PIg-DhRQMJpy.js                                             449.46 kB │ gzip:   139.58 kB
+build/assets/Inter_18pt-Regular-DjtEslHp-D2B4KVpu.js                              456.96 kB │ gzip:   207.86 kB
+build/assets/Inter_18pt-Bold-CAT0xCdm-DArkyn5Y.js                                 458.92 kB │ gzip:   211.03 kB
+build/assets/Inter_18pt-Italic-B09-NoiJ-BrLHiKnm.js                               462.02 kB │ gzip:   215.26 kB
+build/assets/Inter_18pt-BoldItalic-CUvI6MuN-BdVgljCU.js                           464.29 kB │ gzip:   218.88 kB
+build/assets/esm-DN_UMCSZ.js                                                      477.61 kB │ gzip:   159.23 kB
+build/assets/PinnedCommandMenuItemButtons-CK4q1jip.js                             495.80 kB │ gzip:   147.32 kB
+build/assets/index-H9peu68I-DnnUjr3n.js                                           510.98 kB │ gzip:   162.46 kB
+build/assets/SettingsGraphQLPlayground-CrAnszz_.js                                597.54 kB │ gzip:   206.12 kB
+build/assets/utils-CeNsCqSt-D0d9ldmr.js                                           759.25 kB │ gzip:   226.96 kB
+build/assets/AllIcons-j91B3IiB-BwwuTNor.js                                      1,342.10 kB │ gzip:   269.52 kB
+build/assets/exportBlockNoteEditorToPdf-DF1jib5a.js                             1,503.91 kB │ gzip:   503.33 kB
+build/assets/bus-mKEljvg8.js                                                    2,209.62 kB │ gzip:   696.75 kB
+build/assets/index-CikwkoBz.js                                                  2,473.43 kB │ gzip:   726.95 kB
+build/assets/edcore.main-DiFKRzAo.js                                            2,881.00 kB │ gzip:   741.15 kB
+build/assets/FrontComponentRenderer-CxpYxYhD.js                                 3,044.58 kB │ gzip:   825.08 kB
+build/assets/get-function-input-schema-GNk3NRLJ-CvasUf51.js                     3,585.00 kB │ gzip: 1,036.08 kB
+
+[33m[33m[INEFFECTIVE_DYNAMIC_IMPORT] [0m../../node_modules/cron-parser/dist/index.js is dynamically imported by src/modules/workflow/workflow-trigger/components/WorkflowEditTriggerCronForm.tsx but also statically imported by src/modules/workflow/workflow-trigger/components/CronExpressionHelper.tsx, src/modules/workflow/workflow-trigger/utils/cron-to-human/utils/parseCronExpression.ts, dynamic import will not move module into another chunk.
+[39m
+[33m[33m[PLUGIN_TIMINGS] [0mYour build spent significant time in plugins. Here is a breakdown:
+  - vite-plugin-lingui-report-macro-error (49%)
+  - wyw-in-js (33%)
+  - vite:react-swc (6%)
+  - vite-plugin-svgr (6%)
+See https://rolldown.rs/options/checks#plugintimings for more details.
+[39m
+[32m✓ built in 56.70s[39m
+
+[linaria/wyw] ===== CSS PRE-BUILD SUMMARY =====
+[linaria/wyw] Files transformed: 1139
+[linaria/wyw] Files skipped (no @linaria): 25862
+[linaria/wyw] Transform time: 1946837ms
+[linaria/wyw] Avg per transformed file: 1709.3ms
+[linaria/wyw] ==========================================
+

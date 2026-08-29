@@ -43,11 +43,11 @@ export const moveWidgetToGridTabInDraft = (
 
   const destinationBottomRow = destinationTab.widgets.reduce(
     (bottomRow, destinationWidget) => {
-      const position = getWidgetGridPosition(destinationWidget);
+      const gridPosition = getWidgetGridPosition(destinationWidget);
 
       return Math.max(
         bottomRow,
-        (position?.row ?? 0) + (position?.rowSpan ?? 0),
+        (gridPosition?.row ?? 0) + (gridPosition?.rowSpan ?? 0),
       );
     },
     0,
@@ -60,6 +60,12 @@ export const moveWidgetToGridTabInDraft = (
   const movedWidget: PageLayoutWidget = {
     ...widget,
     pageLayoutTabId: destinationTabId,
+    gridPosition: {
+      row: destinationBottomRow,
+      column: 0,
+      rowSpan,
+      columnSpan,
+    },
     position: {
       __typename: 'PageLayoutWidgetGridPosition' as const,
       layoutMode: PageLayoutTabLayoutMode.GRID,

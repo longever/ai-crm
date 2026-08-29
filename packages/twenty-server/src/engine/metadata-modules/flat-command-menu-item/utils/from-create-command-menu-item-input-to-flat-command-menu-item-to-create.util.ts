@@ -2,9 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { type FlatApplication } from 'src/engine/core-modules/application/types/flat-application.type';
 import { type CreateCommandMenuItemInput } from 'src/engine/metadata-modules/command-menu-item/dtos/create-command-menu-item.input';
-import { CommandMenuItemAvailabilityType } from 'twenty-shared/types';
+import { CommandMenuItemAvailabilityType } from 'src/engine/metadata-modules/command-menu-item/enums/command-menu-item-availability-type.enum';
 import { EngineComponentKey } from 'src/engine/metadata-modules/command-menu-item/enums/engine-component-key.enum';
-import { isObjectMetadataCommandMenuItemPayload } from 'src/engine/metadata-modules/command-menu-item/utils/is-object-metadata-command-menu-item-payload.util';
 import { type FlatCommandMenuItem } from 'src/engine/metadata-modules/flat-command-menu-item/types/flat-command-menu-item.type';
 import { type AllFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/all-flat-entity-maps.type';
 import { resolveEntityRelationUniversalIdentifiers } from 'src/engine/metadata-modules/flat-entity/utils/resolve-entity-relation-universal-identifiers.util';
@@ -27,22 +26,10 @@ export const fromCreateCommandMenuItemInputToFlatCommandMenuItemToCreate = ({
   const id = uuidv4();
   const now = new Date().toISOString();
 
-  const payload =
-    createCommandMenuItemInput.engineComponentKey ===
-    EngineComponentKey.NAVIGATION
-      ? (createCommandMenuItemInput.payload ?? null)
-      : null;
-
-  const navigationTargetObjectMetadataId =
-    isObjectMetadataCommandMenuItemPayload(payload)
-      ? payload.objectMetadataItemId
-      : null;
-
   const {
     availabilityObjectMetadataUniversalIdentifier,
     frontComponentUniversalIdentifier,
     pageLayoutUniversalIdentifier,
-    navigationTargetObjectMetadataUniversalIdentifier,
   } = resolveEntityRelationUniversalIdentifiers({
     metadataName: 'commandMenuItem',
     foreignKeyValues: {
@@ -50,7 +37,6 @@ export const fromCreateCommandMenuItemInputToFlatCommandMenuItemToCreate = ({
         createCommandMenuItemInput.availabilityObjectMetadataId,
       frontComponentId: createCommandMenuItemInput.frontComponentId,
       pageLayoutId: createCommandMenuItemInput.pageLayoutId,
-      navigationTargetObjectMetadataId,
     },
     flatEntityMaps: {
       flatObjectMetadataMaps,
@@ -71,7 +57,11 @@ export const fromCreateCommandMenuItemInputToFlatCommandMenuItemToCreate = ({
     shortLabel: createCommandMenuItemInput.shortLabel ?? null,
     position: createCommandMenuItemInput.position ?? 0,
     isPinned: createCommandMenuItemInput.isPinned ?? false,
-    payload,
+    payload:
+      createCommandMenuItemInput.engineComponentKey ===
+      EngineComponentKey.NAVIGATION
+        ? (createCommandMenuItemInput.payload ?? null)
+        : null,
     hotKeys: createCommandMenuItemInput.hotKeys ?? null,
     availabilityType:
       createCommandMenuItemInput.availabilityType ??
@@ -81,8 +71,6 @@ export const fromCreateCommandMenuItemInputToFlatCommandMenuItemToCreate = ({
     conditionalAvailabilityExpression:
       createCommandMenuItemInput.conditionalAvailabilityExpression ?? null,
     availabilityObjectMetadataUniversalIdentifier,
-    navigationTargetObjectMetadataId,
-    navigationTargetObjectMetadataUniversalIdentifier,
     pageLayoutId: createCommandMenuItemInput.pageLayoutId ?? null,
     pageLayoutUniversalIdentifier,
     workspaceId,

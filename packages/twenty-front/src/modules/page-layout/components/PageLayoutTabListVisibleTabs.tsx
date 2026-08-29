@@ -8,8 +8,6 @@ import { type SingleTabProps } from '@/ui/layout/tab-list/types/SingleTabProps';
 
 import { PAGE_LAYOUT_TAB_LIST_DROPPABLE_IDS } from '@/page-layout/components/PageLayoutTabListDroppableIds';
 import { PageLayoutTabListReorderableTab } from '@/page-layout/components/PageLayoutTabListReorderableTab';
-import { usePrerenderPageLayoutTabOnHover } from '@/page-layout/hooks/usePrerenderPageLayoutTabOnHover';
-import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
 import { DragDropItemDropTarget } from '@/ui/utilities/drag-and-drop/components/DragDropItemDropTarget';
 
 type PageLayoutTabListVisibleTabsProps = {
@@ -21,7 +19,7 @@ type PageLayoutTabListVisibleTabsProps = {
   onChangeTab?: (tabId: string) => void;
   onSelectTab: (tabId: string) => void;
   canReorder: boolean;
-  widgetDropTargetWidgetsByTabId: Map<string, PageLayoutWidget[]>;
+  widgetDropTargetTabIds: Set<string>;
   firstHiddenTabId: string | null;
   isScrollable: boolean;
 };
@@ -57,7 +55,7 @@ export const PageLayoutTabListVisibleTabs = ({
   onChangeTab,
   onSelectTab,
   canReorder,
-  widgetDropTargetWidgetsByTabId,
+  widgetDropTargetTabIds,
   firstHiddenTabId,
   isScrollable,
 }: PageLayoutTabListVisibleTabsProps) => {
@@ -65,9 +63,6 @@ export const PageLayoutTabListVisibleTabs = ({
     activeTabId,
     isScrollable,
   });
-
-  const { handleTabMouseEnter, handleTabMouseLeave } =
-    usePrerenderPageLayoutTabOnHover();
 
   if (canReorder) {
     const shownTabs = visibleTabs.slice(0, visibleTabCount);
@@ -91,9 +86,7 @@ export const PageLayoutTabListVisibleTabs = ({
               nextTabId={shownTabs[index + 1]?.id ?? firstHiddenTabId}
               isActive={tab.id === activeTabId}
               disabled={tab.disabled ?? loading}
-              widgetDropTargetWidgets={widgetDropTargetWidgetsByTabId.get(
-                tab.id,
-              )}
+              isWidgetDropTarget={widgetDropTargetTabIds.has(tab.id)}
               onSelect={() => onSelectTab(tab.id)}
             />
           </StyledTabSlot>
@@ -128,12 +121,6 @@ export const PageLayoutTabListVisibleTabs = ({
               ? () => onChangeTab?.(tab.id)
               : () => onSelectTab(tab.id)
           }
-          onMouseEnter={
-            tab.id === activeTabId || (tab.disabled ?? loading)
-              ? undefined
-              : () => handleTabMouseEnter(tab.id)
-          }
-          onMouseLeave={handleTabMouseLeave}
         />
       ))}
     </StyledTabContainer>

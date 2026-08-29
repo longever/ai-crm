@@ -21,7 +21,6 @@ const buildConnection = (
   handle: 'octocat@example.com',
   visibility: 'user',
   userWorkspaceId: 'uws-me',
-  workspaceMemberId: 'wm-me',
   accessToken: 'fresh',
   scopes: ['read'],
   authFailedAt: null,

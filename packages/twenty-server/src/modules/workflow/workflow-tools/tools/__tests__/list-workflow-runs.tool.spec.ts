@@ -7,9 +7,9 @@ const WORKSPACE_ID = '20202020-aaaa-4d02-bf25-6aeccf7ea419';
 const ROLE_ID = '20202020-cccc-4d02-bf25-6aeccf7ea419';
 
 const buildDeps = (findResult: unknown[]) => ({
-  workspaceOrmManager: {
+  globalWorkspaceOrmManager: {
     executeInWorkspaceContext: jest.fn().mockImplementation(async (fn) => fn()),
-    getRepository: jest.fn().mockReturnValue({
+    getRepository: jest.fn().mockResolvedValue({
       find: jest.fn().mockResolvedValue(findResult),
     }),
   },
@@ -26,13 +26,17 @@ describe('list_workflow_runs tool', () => {
     const context = buildContext();
 
     const tool = createListWorkflowRunsTool(
-      deps as unknown as Pick<WorkflowToolDependencies, 'workspaceOrmManager'>,
+      deps as unknown as Pick<
+        WorkflowToolDependencies,
+        'globalWorkspaceOrmManager'
+      >,
       context,
     );
 
     await tool.execute({});
 
-    expect(deps.workspaceOrmManager.getRepository).toHaveBeenCalledWith(
+    expect(deps.globalWorkspaceOrmManager.getRepository).toHaveBeenCalledWith(
+      WORKSPACE_ID,
       'workflowRun',
       context.rolePermissionConfig,
     );
@@ -66,7 +70,10 @@ describe('list_workflow_runs tool', () => {
     const context = buildContext();
 
     const tool = createListWorkflowRunsTool(
-      deps as unknown as Pick<WorkflowToolDependencies, 'workspaceOrmManager'>,
+      deps as unknown as Pick<
+        WorkflowToolDependencies,
+        'globalWorkspaceOrmManager'
+      >,
       context,
     );
 
@@ -86,17 +93,20 @@ describe('list_workflow_runs tool', () => {
   it('should apply filters when provided', async () => {
     const findMock = jest.fn().mockResolvedValue([]);
     const deps = {
-      workspaceOrmManager: {
+      globalWorkspaceOrmManager: {
         executeInWorkspaceContext: jest
           .fn()
           .mockImplementation(async (fn) => fn()),
-        getRepository: jest.fn().mockReturnValue({ find: findMock }),
+        getRepository: jest.fn().mockResolvedValue({ find: findMock }),
       },
     };
     const context = buildContext();
 
     const tool = createListWorkflowRunsTool(
-      deps as unknown as Pick<WorkflowToolDependencies, 'workspaceOrmManager'>,
+      deps as unknown as Pick<
+        WorkflowToolDependencies,
+        'globalWorkspaceOrmManager'
+      >,
       context,
     );
 

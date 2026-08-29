@@ -1,14 +1,14 @@
 import { type Meta, type StoryObj } from '@storybook/react-vite';
 import { HttpResponse, graphql } from 'msw';
 import { within } from 'storybook/test';
-import { FIELD_RESTRICTED_ADDITIONAL_PERMISSIONS_REQUIRED } from 'twenty-shared/constants';
-import { ComponentDecorator } from 'twenty-ui/testing';
 
 import { TimelineActivityContext } from '@/activities/timeline-activities/contexts/TimelineActivityContext';
 import { EventCardMessage } from '@/activities/timeline-activities/rows/message/components/EventCardMessage';
-import { MemoryRouterDecorator } from '~/testing/decorators/MemoryRouterDecorator';
+import { FIELD_RESTRICTED_ADDITIONAL_PERMISSIONS_REQUIRED } from 'twenty-shared/constants';
+import { ComponentDecorator } from 'twenty-ui/testing';
 import { ObjectMetadataItemsDecorator } from '~/testing/decorators/ObjectMetadataItemsDecorator';
 import { SnackBarDecorator } from '~/testing/decorators/SnackBarDecorator';
+import { MemoryRouterDecorator } from '~/testing/decorators/MemoryRouterDecorator';
 
 const meta: Meta<typeof EventCardMessage> = {
   title: 'Modules/TimelineActivities/Rows/Message/EventCardMessage',
@@ -18,11 +18,13 @@ const meta: Meta<typeof EventCardMessage> = {
     ComponentDecorator,
     ObjectMetadataItemsDecorator,
     SnackBarDecorator,
-    (Story) => (
-      <TimelineActivityContext.Provider value={{ recordId: 'mock-id' }}>
-        <Story />
-      </TimelineActivityContext.Provider>
-    ),
+    (Story) => {
+      return (
+        <TimelineActivityContext.Provider value={{ recordId: 'mock-id' }}>
+          <Story />
+        </TimelineActivityContext.Provider>
+      );
+    },
   ],
 };
 
@@ -35,13 +37,15 @@ export const Default: Story = {
     authorFullName: 'John Doe',
   },
   play: async ({ canvasElement }) => {
-    await within(canvasElement).findByText('Mock title');
+    const canvas = within(canvasElement);
+
+    await canvas.findByText('Mock title');
   },
   parameters: {
     msw: {
       handlers: [
-        graphql.query('FindOneMessage', () =>
-          HttpResponse.json({
+        graphql.query('FindOneMessage', () => {
+          return HttpResponse.json({
             data: {
               message: {
                 id: '1',
@@ -50,8 +54,8 @@ export const Default: Story = {
                 messageParticipants: [],
               },
             },
-          }),
-        ),
+          });
+        }),
       ],
     },
   },
@@ -63,13 +67,15 @@ export const NotShared: Story = {
     authorFullName: 'John Doe',
   },
   play: async ({ canvasElement }) => {
-    await within(canvasElement).findByText('Subject not shared');
+    const canvas = within(canvasElement);
+
+    await canvas.findByText(`Subject not shared`);
   },
   parameters: {
     msw: {
       handlers: [
-        graphql.query('FindOneMessage', () =>
-          HttpResponse.json({
+        graphql.query('FindOneMessage', () => {
+          return HttpResponse.json({
             data: {
               message: {
                 id: '1',
@@ -78,8 +84,8 @@ export const NotShared: Story = {
                 messageParticipants: [],
               },
             },
-          }),
-        ),
+          });
+        }),
       ],
     },
   },

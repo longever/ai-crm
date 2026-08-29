@@ -19,10 +19,9 @@ import { destroyOnePageLayout } from 'test/integration/metadata/suites/page-layo
 
 import { type CreatePageLayoutWidgetInput } from 'src/engine/metadata-modules/page-layout-widget/dtos/inputs/create-page-layout-widget.input';
 import { WidgetConfigurationType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-configuration-type.type';
-import { PageLayoutTabLayoutMode, WidgetType } from 'twenty-shared/types';
+import { WidgetType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-type.enum';
 
 const DEFAULT_GRID_POSITION = {
-  layoutMode: PageLayoutTabLayoutMode.GRID as const,
   row: 0,
   column: 0,
   rowSpan: 1,
@@ -70,7 +69,7 @@ describe('Page layout widget creation should fail', () => {
         input: {
           pageLayoutTabId: testPageLayoutTabId,
           type: WidgetType.IFRAME,
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
           configuration: TEST_IFRAME_CONFIG,
         } as CreatePageLayoutWidgetInput,
       });
@@ -86,14 +85,14 @@ describe('Page layout widget creation should fail', () => {
           pageLayoutTabId: faker.string.uuid(),
           type: WidgetType.IFRAME,
           configuration: TEST_IFRAME_CONFIG,
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
       expectOneNotInternalServerErrorSnapshot({ errors });
     });
 
-    it('when position has invalid values', async () => {
+    it('when gridPosition has invalid values', async () => {
       const { errors } = await createOnePageLayoutWidget({
         expectToFail: true,
         input: {
@@ -101,8 +100,7 @@ describe('Page layout widget creation should fail', () => {
           pageLayoutTabId: testPageLayoutTabId,
           type: WidgetType.IFRAME,
           configuration: TEST_IFRAME_CONFIG,
-          position: {
-            layoutMode: PageLayoutTabLayoutMode.GRID,
+          gridPosition: {
             row: -1,
             column: 0,
             rowSpan: 1,
@@ -111,25 +109,7 @@ describe('Page layout widget creation should fail', () => {
         },
       });
 
-      expect(errors).toMatchObject([
-        {
-          extensions: {
-            errors: {
-              pageLayoutWidget: [
-                {
-                  errors: [
-                    {
-                      message: expect.stringContaining(
-                        'row must be an integer greater than or equal to 0',
-                      ),
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-        },
-      ]);
+      expectOneNotInternalServerErrorSnapshot({ errors });
     });
   });
 
@@ -145,7 +125,7 @@ describe('Page layout widget creation should fail', () => {
             ...INVALID_IFRAME_CONFIG_BAD_URL,
             configurationType: WidgetConfigurationType.IFRAME,
           },
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -163,7 +143,7 @@ describe('Page layout widget creation should fail', () => {
             ...INVALID_IFRAME_CONFIG_EMPTY_URL,
             configurationType: WidgetConfigurationType.IFRAME,
           },
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -183,7 +163,7 @@ describe('Page layout widget creation should fail', () => {
             ...INVALID_STANDALONE_RICH_TEXT_CONFIG_MISSING_BODY,
             configurationType: WidgetConfigurationType.STANDALONE_RICH_TEXT,
           } as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -201,7 +181,7 @@ describe('Page layout widget creation should fail', () => {
             ...INVALID_STANDALONE_RICH_TEXT_CONFIG_BODY_WRONG_TYPE,
             configurationType: WidgetConfigurationType.STANDALONE_RICH_TEXT,
           } as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -219,7 +199,7 @@ describe('Page layout widget creation should fail', () => {
           type: WidgetType.GRAPH,
           configuration:
             INVALID_NUMBER_CHART_CONFIG_MISSING_FIELDS as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -235,7 +215,7 @@ describe('Page layout widget creation should fail', () => {
           type: WidgetType.GRAPH,
           configuration:
             INVALID_NUMBER_CHART_CONFIG_BAD_UUID as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -253,7 +233,7 @@ describe('Page layout widget creation should fail', () => {
           type: WidgetType.GRAPH,
           configuration:
             INVALID_VERTICAL_BAR_CHART_CONFIG_MISSING_GROUP_BY as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -269,7 +249,7 @@ describe('Page layout widget creation should fail', () => {
           type: WidgetType.GRAPH,
           configuration:
             INVALID_HORIZONTAL_BAR_CHART_CONFIG_MISSING_GROUP_BY as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -287,7 +267,7 @@ describe('Page layout widget creation should fail', () => {
           type: WidgetType.IFRAME,
           configuration:
             null as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -304,7 +284,7 @@ describe('Page layout widget creation should fail', () => {
           configuration: {
             someField: 'value',
           } as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 
@@ -322,7 +302,7 @@ describe('Page layout widget creation should fail', () => {
             configurationType: 'UNSUPPORTED_TYPE',
             someField: 'value',
           } as unknown as CreatePageLayoutWidgetInput['configuration'],
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 

@@ -8,8 +8,6 @@ type GenerateSummariesResponse = {
   generatedCallRecordingIds?: string[];
   failedCallRecordingIds?: string[];
   erroredCallRecordingIds?: string[];
-  skippedCallRecordingIds?: string[];
-  unavailableCallRecordingIds?: string[];
 };
 
 const buildSnackbarForResponse = (
@@ -50,23 +48,9 @@ const buildSnackbarForResponse = (
     return { message: 'Summary generation failed.', variant: 'error' };
   }
 
-  if ((response.unavailableCallRecordingIds ?? []).length > 0) {
-    return {
-      message: 'Summary unavailable for this event.',
-      variant: 'error',
-    };
-  }
-
-  if ((response.skippedCallRecordingIds ?? []).length > 0) {
-    return {
-      message: 'No usable call recording transcript found for this event.',
-      variant: 'error',
-    };
-  }
-
   return {
-    message: 'No summary was generated for this event.',
-    variant: 'error',
+    message: 'No summary to generate for this event.',
+    variant: 'success',
   };
 };
 

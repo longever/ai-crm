@@ -72,7 +72,8 @@ export const fromUpdateCommandMenuItemInputToFlatCommandMenuItemToUpdateOrThrow 
 
     const flatCommandMenuItemToUpdate: FlatCommandMenuItem = {
       ...mergedRecord,
-      overrides,
+      // sanitizeOverridableEntityInput returns a loosely-typed Record overrides
+      overrides: overrides as FlatCommandMenuItem['overrides'],
       updatedAt: new Date().toISOString(),
     };
 

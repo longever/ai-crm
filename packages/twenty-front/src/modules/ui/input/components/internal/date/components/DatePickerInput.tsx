@@ -9,35 +9,23 @@ import { MIN_DATE } from '@/ui/input/components/internal/date/constants/MinDate'
 import { useParseDateInputStringToJSDate } from '@/ui/input/components/internal/date/hooks/useParseDateInputStringToJSDate';
 import { useParsePlainDateToDateInputString } from '@/ui/input/components/internal/date/hooks/useParsePlainDateToDateInputString';
 import { getDateMask } from '@/ui/input/components/internal/date/utils/getDateMask';
-import { type FormFieldInputVariant } from '@/ui/input/types/FormFieldInputVariant';
 
 import { useParseDateInputStringToPlainDate } from '@/ui/input/components/internal/date/hooks/useParseDateInputStringToPlainDate';
 import { useParseJSDateToIMaskDateInputString } from '@/ui/input/components/internal/date/hooks/useParseJSDateToIMaskDateInputString';
 import { isDefined } from 'twenty-shared/utils';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
-const StyledInputContainer = styled.div<{
-  $variant: FormFieldInputVariant;
-}>`
+const StyledInputContainer = styled.div`
   align-items: center;
-  border-bottom: ${({ $variant }) =>
-    $variant === 'transparent'
-      ? 'none'
-      : `1px solid ${themeCssVariables.border.color.light}`};
+  border-bottom: 1px solid ${themeCssVariables.border.color.light};
   border-top-left-radius: ${themeCssVariables.border.radius.md};
   border-top-right-radius: ${themeCssVariables.border.radius.md};
   display: flex;
-  height: ${({ $variant }) =>
-    $variant === 'transparent'
-      ? themeCssVariables.spacing[6]
-      : themeCssVariables.spacing[8]};
+  height: ${themeCssVariables.spacing[8]};
   width: 100%;
 `;
 
-const StyledInput = styled.input<{
-  hasError?: boolean;
-  $variant: FormFieldInputVariant;
-}>`
+const StyledInput = styled.input<{ hasError?: boolean }>`
   background: transparent;
   border: none;
   color: ${({ hasError }) =>
@@ -45,10 +33,9 @@ const StyledInput = styled.input<{
       ? themeCssVariables.color.red
       : themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.md};
-  font-weight: ${({ $variant }) =>
-    $variant === 'transparent' ? themeCssVariables.font.weight.regular : 500};
+  font-weight: 500;
   outline: none;
-  padding: ${({ $variant }) => ($variant === 'transparent' ? '0' : '4px 8px')};
+  padding: 4px 8px 4px 8px;
   width: 100%;
 `;
 
@@ -56,14 +43,12 @@ type DatePickerInputProps = {
   onChange?: (date: string | null) => void;
   date: string | null;
   readonly?: boolean;
-  variant?: FormFieldInputVariant;
 };
 
 export const DatePickerInput = ({
   date,
   onChange,
   readonly = false,
-  variant = 'default',
 }: DatePickerInputProps) => {
   const { dateFormat } = useDateTimeFormat();
 
@@ -126,9 +111,8 @@ export const DatePickerInput = ({
   }, [date, internalDate, parsePlainDateToDateInputString, setValue]);
 
   return (
-    <StyledInputContainer $variant={variant}>
+    <StyledInputContainer>
       <StyledInput
-        $variant={variant}
         type="text"
         disabled={readonly}
         ref={ref as any}

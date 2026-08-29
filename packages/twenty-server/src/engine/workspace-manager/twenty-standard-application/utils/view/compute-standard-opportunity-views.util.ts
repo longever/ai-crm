@@ -23,7 +23,7 @@ export const computeStandardOpportunityViews = (
         type: ViewType.TABLE,
         key: ViewKey.INDEX,
         position: 0,
-        icon: 'IconTable',
+        icon: 'IconList',
       },
     }),
     byStage: createStandardViewFlatMetadata({
@@ -50,7 +50,7 @@ export const computeStandardOpportunityViews = (
         type: ViewType.FIELDS_WIDGET,
         key: null,
         position: 0,
-        icon: 'IconListDetails',
+        icon: 'IconList',
       },
     }),
   };

@@ -5,13 +5,15 @@ import { In } from 'typeorm';
 
 import { type WorkspaceAuthContext } from 'src/engine/core-modules/auth/types/workspace-auth-context.type';
 import { WorkspaceNotFoundDefaultError } from 'src/engine/core-modules/workspace/workspace.exception';
-import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { NoteTargetWorkspaceEntity } from 'src/modules/note/standard-objects/note-target.workspace-entity';
 import { NoteWorkspaceEntity } from 'src/modules/note/standard-objects/note.workspace-entity';
 
 @Injectable()
 export class NotePostQueryHookService {
-  constructor(private readonly workspaceOrmManager: WorkspaceOrmManager) {}
+  constructor(
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
+  ) {}
 
   async handleNoteTargetsDelete(
     authContext: WorkspaceAuthContext,
@@ -25,9 +27,10 @@ export class NotePostQueryHookService {
 
     assertIsDefinedOrThrow(workspace, WorkspaceNotFoundDefaultError);
 
-    await this.workspaceOrmManager.executeInWorkspaceContext(async () => {
+    await this.globalWorkspaceOrmManager.executeInWorkspaceContext(async () => {
       const noteTargetRepository =
-        this.workspaceOrmManager.getRepository<NoteTargetWorkspaceEntity>(
+        await this.globalWorkspaceOrmManager.getRepository<NoteTargetWorkspaceEntity>(
+          workspace.id,
           'noteTarget',
         );
 
@@ -49,9 +52,10 @@ export class NotePostQueryHookService {
 
     assertIsDefinedOrThrow(workspace, WorkspaceNotFoundDefaultError);
 
-    await this.workspaceOrmManager.executeInWorkspaceContext(async () => {
+    await this.globalWorkspaceOrmManager.executeInWorkspaceContext(async () => {
       const noteTargetRepository =
-        this.workspaceOrmManager.getRepository<NoteTargetWorkspaceEntity>(
+        await this.globalWorkspaceOrmManager.getRepository<NoteTargetWorkspaceEntity>(
+          workspace.id,
           'noteTarget',
         );
 

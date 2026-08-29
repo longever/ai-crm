@@ -5,20 +5,24 @@ import {
 } from '@/page-layout/testing/pageLayoutDraftFixtures';
 import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
 import { moveWidgetToGridTabInDraft } from '@/page-layout/utils/moveWidgetToGridTabInDraft';
-import {
-  PageLayoutTabLayoutMode,
-  type PageLayoutWidgetGridPosition,
-} from '~/generated-metadata/graphql';
+import { PageLayoutTabLayoutMode } from '~/generated-metadata/graphql';
 
 const makeGridWidget = (
   id: string,
   tabId: string,
-  position: PageLayoutWidgetGridPosition,
+  gridPosition: {
+    row: number;
+    column: number;
+    rowSpan: number;
+    columnSpan: number;
+  },
 ): PageLayoutWidget => ({
   ...makeWidget(id, 0, tabId),
+  gridPosition,
   position: {
     __typename: 'PageLayoutWidgetGridPosition' as const,
-    ...position,
+    layoutMode: PageLayoutTabLayoutMode.GRID,
+    ...gridPosition,
   },
 });
 
@@ -30,8 +34,6 @@ describe('moveWidgetToGridTabInDraft', () => {
     const draft = makeDraft([
       makeGridTab('tab-1', [
         makeGridWidget('widget-a', 'tab-1', {
-          __typename: 'PageLayoutWidgetGridPosition' as const,
-          layoutMode: PageLayoutTabLayoutMode.GRID,
           row: 0,
           column: 0,
           rowSpan: 4,
@@ -42,8 +44,6 @@ describe('moveWidgetToGridTabInDraft', () => {
         'tab-2',
         [
           makeGridWidget('widget-b', 'tab-2', {
-            __typename: 'PageLayoutWidgetGridPosition' as const,
-            layoutMode: PageLayoutTabLayoutMode.GRID,
             row: 2,
             column: 3,
             rowSpan: 5,
@@ -69,9 +69,7 @@ describe('moveWidgetToGridTabInDraft', () => {
       (widget) => widget.id === 'widget-a',
     );
     expect(movedWidget?.pageLayoutTabId).toBe('tab-2');
-    expect(movedWidget?.position).toEqual({
-      __typename: 'PageLayoutWidgetGridPosition' as const,
-      layoutMode: PageLayoutTabLayoutMode.GRID,
+    expect(movedWidget?.gridPosition).toEqual({
       row: 7,
       column: 0,
       rowSpan: 4,
@@ -83,8 +81,6 @@ describe('moveWidgetToGridTabInDraft', () => {
     const draft = makeDraft([
       makeGridTab('tab-1', [
         makeGridWidget('widget-a', 'tab-1', {
-          __typename: 'PageLayoutWidgetGridPosition' as const,
-          layoutMode: PageLayoutTabLayoutMode.GRID,
           row: 3,
           column: 2,
           rowSpan: 2,
@@ -100,9 +96,7 @@ describe('moveWidgetToGridTabInDraft', () => {
     });
 
     const movedWidget = result.tabs[1].widgets[0];
-    expect(movedWidget?.position).toEqual({
-      __typename: 'PageLayoutWidgetGridPosition' as const,
-      layoutMode: PageLayoutTabLayoutMode.GRID,
+    expect(movedWidget?.gridPosition).toEqual({
       row: 0,
       column: 0,
       rowSpan: 2,
@@ -114,8 +108,6 @@ describe('moveWidgetToGridTabInDraft', () => {
     const draft = makeDraft([
       makeGridTab('tab-1', [
         makeGridWidget('widget-a', 'tab-1', {
-          __typename: 'PageLayoutWidgetGridPosition' as const,
-          layoutMode: PageLayoutTabLayoutMode.GRID,
           row: 0,
           column: 0,
           rowSpan: 2,

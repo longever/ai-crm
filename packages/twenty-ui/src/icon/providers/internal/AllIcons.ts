@@ -1,6 +1,4 @@
 /* oxlint-disable no-restricted-imports */
-import { IconAddressBook } from '@ui/icon/components/IconAddressBook';
-
 import {
   IconNumber123 as Icon123,
   IconAB,
@@ -1360,7 +1358,6 @@ import {
   IconCookieOff,
   IconCopy,
   IconCopyOff,
-  IconCopyPlus,
   IconCopyleft,
   IconCopyleftOff,
   IconCopyright,
@@ -2995,7 +2992,6 @@ import {
   IconNumber7,
   IconNumber8,
   IconNumber9,
-  IconNumber95Small,
   IconNumbers,
   IconNurse,
   IconOctagon,
@@ -3889,7 +3885,6 @@ import {
   IconTimelineEventPlus,
   IconTimelineEventText,
   IconTimelineEventX,
-  IconTimezone,
   IconTir,
   IconToggleLeft,
   IconToggleRight,
@@ -4209,7 +4204,6 @@ export const ALL_ICONS = {
   IconAdCircle,
   IconAdCircleOff,
   IconAdOff,
-  IconAddressBook,
   IconAddressBookOff,
   IconAdjustments,
   IconAdjustmentsAlt,
@@ -5548,7 +5542,6 @@ export const ALL_ICONS = {
   IconCookieOff,
   IconCopy,
   IconCopyOff,
-  IconCopyPlus,
   IconCopyleft,
   IconCopyleftOff,
   IconCopyright,
@@ -7183,7 +7176,6 @@ export const ALL_ICONS = {
   IconNumber7,
   IconNumber8,
   IconNumber9,
-  IconNumber95Small,
   IconNumbers,
   IconNurse,
   IconOctagon,
@@ -8077,7 +8069,6 @@ export const ALL_ICONS = {
   IconTimelineEventPlus,
   IconTimelineEventText,
   IconTimelineEventX,
-  IconTimezone,
   IconTir,
   IconToggleLeft,
   IconToggleRight,

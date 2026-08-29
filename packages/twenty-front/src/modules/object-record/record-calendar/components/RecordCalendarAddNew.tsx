@@ -4,6 +4,7 @@ import { isFieldMetadataReadOnlyByPermissions } from '@/object-record/read-only/
 import { useRecordCalendarContextOrThrow } from '@/object-record/record-calendar/contexts/RecordCalendarContext';
 import { isRecordCalendarReadOnlyComponentState } from '@/object-record/record-calendar/states/isRecordCalendarReadOnlyComponentState';
 import { hasAnySoftDeleteFilterOnViewComponentSelector } from '@/object-record/record-filter/states/hasAnySoftDeleteFilterOnView';
+import { recordIndexCalendarEndFieldMetadataIdComponentState } from '@/object-record/record-index/states/recordIndexCalendarEndFieldMetadataIdComponentState';
 import { recordIndexCalendarFieldMetadataIdComponentState } from '@/object-record/record-index/states/recordIndexCalendarFieldMetadataIdComponentState';
 import { useCreateNewIndexRecord } from '@/object-record/record-table/hooks/useCreateNewIndexRecord';
 import { RecordTableWidgetContext } from '@/object-record/record-table-widget/contexts/RecordTableWidgetContext';
@@ -20,18 +21,22 @@ import { IconPlus } from 'twenty-ui/icon';
 import { Button } from 'twenty-ui/input';
 import { ThemeContext, themeCssVariables } from 'twenty-ui/theme-constants';
 
-const StyledButtonContainer = styled.div`
+const StyledButtonContainer = styled.div<{ compact: boolean }>`
   height: auto;
   min-width: unset;
-  padding: ${themeCssVariables.spacing['0.5']};
+  padding: ${({ compact }) => (compact ? 0 : themeCssVariables.spacing['0.5'])};
 `;
 
 type RecordCalendarAddNewProps = {
   cardDate: Temporal.PlainDate;
+  cardTime?: Temporal.PlainTime;
+  compact?: boolean;
 };
 
 export const RecordCalendarAddNew = ({
   cardDate,
+  cardTime,
+  compact = false,
 }: RecordCalendarAddNewProps) => {
   const isRecordCalendarReadOnly = useAtomComponentStateValue(
     isRecordCalendarReadOnlyComponentState,
@@ -55,9 +60,15 @@ export const RecordCalendarAddNew = ({
   const recordIndexCalendarFieldMetadataId = useAtomComponentStateValue(
     recordIndexCalendarFieldMetadataIdComponentState,
   );
+  const recordIndexCalendarEndFieldMetadataId = useAtomComponentStateValue(
+    recordIndexCalendarEndFieldMetadataIdComponentState,
+  );
 
   const calendarFieldMetadataItem = objectMetadataItem.fields.find(
     (field) => field.id === recordIndexCalendarFieldMetadataId,
+  );
+  const calendarEndFieldMetadataItem = objectMetadataItem.fields.find(
+    (field) => field.id === recordIndexCalendarEndFieldMetadataId,
   );
 
   const isCalendarFieldReadOnly = calendarFieldMetadataItem
@@ -65,6 +76,14 @@ export const RecordCalendarAddNew = ({
       isFieldMetadataReadOnlyByPermissions({
         objectPermissions,
         fieldMetadataId: calendarFieldMetadataItem.id,
+      })
+    : false;
+
+  const isCalendarEndFieldReadOnly = calendarEndFieldMetadataItem
+    ? calendarEndFieldMetadataItem.isUIEditable === false ||
+      isFieldMetadataReadOnlyByPermissions({
+        objectPermissions,
+        fieldMetadataId: calendarEndFieldMetadataItem.id,
       })
     : false;
 
@@ -88,15 +107,22 @@ export const RecordCalendarAddNew = ({
     return null;
   }
 
+  const createRecordAriaLabel = cardTime
+    ? t`Create record on ${cardDate.toLocaleString(undefined, {
+        dateStyle: 'full',
+      })} at ${cardTime.toLocaleString(undefined, { timeStyle: 'short' })}`
+    : t`Create record`;
+
   return (
-    <StyledButtonContainer>
+    <StyledButtonContainer compact={compact}>
       <Button
-        ariaLabel={t`Create record`}
+        ariaLabel={createRecordAriaLabel}
         onClick={async (event) => {
           event.stopPropagation();
 
           const startDateTime = cardDate.toZonedDateTime({
             timeZone: userTimezone,
+            plainTime: cardTime,
           });
           const startValue =
             calendarFieldMetadataItem.type === FieldMetadataType.DATE
@@ -105,9 +131,24 @@ export const RecordCalendarAddNew = ({
 
           await createNewIndexRecord({
             [calendarFieldMetadataItem.name]: startValue,
+            ...(calendarFieldMetadataItem.type === FieldMetadataType.DATE &&
+              isCalendarEndFieldReadOnly === false &&
+              calendarEndFieldMetadataItem?.type === FieldMetadataType.DATE && {
+                [calendarEndFieldMetadataItem.name]: cardDate.toString(),
+              }),
+            ...(calendarFieldMetadataItem.type ===
+              FieldMetadataType.DATE_TIME &&
+              isCalendarEndFieldReadOnly === false &&
+              calendarEndFieldMetadataItem?.type ===
+                FieldMetadataType.DATE_TIME && {
+                [calendarEndFieldMetadataItem.name]: startDateTime
+                  .add({ hours: 1 })
+                  .toInstant()
+                  .toString(),
+              }),
           });
         }}
-        size="medium"
+        size={compact ? 'small' : 'medium'}
         type="button"
         variant="tertiary"
         Icon={() => <IconPlus size={theme.icon.size.sm} />}

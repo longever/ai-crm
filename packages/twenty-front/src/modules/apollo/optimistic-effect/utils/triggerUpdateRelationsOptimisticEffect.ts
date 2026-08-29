@@ -1,8 +1,9 @@
 import { triggerAttachRelationOptimisticEffect } from '@/apollo/optimistic-effect/utils/triggerAttachRelationOptimisticEffect';
 import { triggerDestroyRecordsOptimisticEffect } from '@/apollo/optimistic-effect/utils/triggerDestroyRecordsOptimisticEffect';
 import { triggerDetachRelationOptimisticEffect } from '@/apollo/optimistic-effect/utils/triggerDetachRelationOptimisticEffect';
+import { CORE_OBJECT_NAMES_TO_DELETE_ON_TRIGGER_RELATION_DETACH } from '@/apollo/types/coreObjectNamesToDeleteOnRelationDetach';
 import {
-  CoreObjectNameSingular,
+  type CoreObjectNameSingular,
   FieldMetadataType,
   RelationType,
   type ObjectPermissions,
@@ -15,7 +16,6 @@ import { type RecordGqlConnectionEdgesRequired } from '@/object-record/graphql/t
 import { type RecordGqlNode } from '@/object-record/graphql/types/RecordGqlNode';
 import { isFieldMorphRelation } from '@/object-record/record-field/ui/types/guards/isFieldMorphRelation';
 import { isFieldRelation } from '@/object-record/record-field/ui/types/guards/isFieldRelation';
-import { getJunctionObjectMetadataIds } from '@/object-record/record-field/ui/utils/junction/getJunctionObjectMetadataIds';
 import { type ObjectRecord } from '@/object-record/types/ObjectRecord';
 import { type ApolloCache } from '@apollo/client';
 import { isArray } from '@sniptt/guards';
@@ -39,18 +39,6 @@ type TriggerUpdateRelationsOptimisticEffectArgs = {
   upsertRecordsInStore: (props: { partialRecords: ObjectRecord[] }) => void;
 };
 
-// A junction record only exists to link its two sides, so detaching one destroys it.
-// Comments are the one remaining relation that cascades without being a junction.
-const shouldCascadeDeleteOnDetach = ({
-  targetObjectMetadata,
-  junctionObjectMetadataIds,
-}: {
-  targetObjectMetadata: FieldMetadataItemRelation['targetObjectMetadata'];
-  junctionObjectMetadataIds: ReadonlySet<string>;
-}) =>
-  junctionObjectMetadataIds.has(targetObjectMetadata.id) ||
-  targetObjectMetadata.nameSingular === CoreObjectNameSingular.Comment;
-
 export const triggerUpdateRelationsOptimisticEffect = ({
   cache,
   sourceObjectMetadataItem,
@@ -63,8 +51,6 @@ export const triggerUpdateRelationsOptimisticEffect = ({
   const isDeletion =
     isDefined(updatedSourceRecord) &&
     isDefined(updatedSourceRecord['deletedAt']);
-  const junctionObjectMetadataIds =
-    getJunctionObjectMetadataIds(objectMetadataItems);
 
   sourceObjectMetadataItem.fields.forEach((fieldMetadataItemOnSourceRecord) => {
     if (
@@ -85,7 +71,6 @@ export const triggerUpdateRelationsOptimisticEffect = ({
         isDeletion,
         upsertRecordsInStore,
         objectPermissionsByObjectMetadataId,
-        junctionObjectMetadataIds,
       });
     }
 
@@ -100,7 +85,6 @@ export const triggerUpdateRelationsOptimisticEffect = ({
         isDeletion,
         upsertRecordsInStore,
         objectPermissionsByObjectMetadataId,
-        junctionObjectMetadataIds,
       });
     }
   });
@@ -116,7 +100,6 @@ const triggerUpdateRelationOptimisticEffect = ({
   isDeletion,
   upsertRecordsInStore,
   objectPermissionsByObjectMetadataId,
-  junctionObjectMetadataIds,
 }: {
   fieldMetadataItemOnSourceRecord: FieldMetadataItem;
   updatedSourceRecord: RecordGqlNode | null;
@@ -130,7 +113,6 @@ const triggerUpdateRelationOptimisticEffect = ({
     string,
     ObjectPermissions & { objectMetadataId: string }
   >;
-  junctionObjectMetadataIds: ReadonlySet<string>;
 }) => {
   const fieldDoesNotExist =
     isDefined(updatedSourceRecord) &&
@@ -194,10 +176,12 @@ const triggerUpdateRelationOptimisticEffect = ({
     relation,
   );
 
-  const shouldCascadeDeleteTargetRecords = shouldCascadeDeleteOnDetach({
-    targetObjectMetadata,
-    junctionObjectMetadataIds,
-  });
+  // TODO: see if we can de-hardcode this, put cascade delete in relation metadata item
+  //   Instead of hardcoding it here
+  const shouldCascadeDeleteTargetRecords =
+    CORE_OBJECT_NAMES_TO_DELETE_ON_TRIGGER_RELATION_DETACH.includes(
+      targetObjectMetadata.nameSingular as CoreObjectNameSingular,
+    );
 
   const gqlFieldNameOnTargetRecord =
     targetFieldMetadataFullObject.type === FieldMetadataType.RELATION
@@ -272,7 +256,6 @@ const triggerUpdateMorphRelationOptimisticEffect = ({
   isDeletion,
   objectPermissionsByObjectMetadataId,
   upsertRecordsInStore,
-  junctionObjectMetadataIds,
 }: {
   fieldMetadataItemOnSourceRecord: FieldMetadataItem;
   updatedSourceRecord: RecordGqlNode | null;
@@ -286,7 +269,6 @@ const triggerUpdateMorphRelationOptimisticEffect = ({
     string,
     ObjectPermissions & { objectMetadataId: string }
   >;
-  junctionObjectMetadataIds: ReadonlySet<string>;
 }) => {
   const morphRelations = fieldMetadataItemOnSourceRecord.morphRelations;
   if (!morphRelations) {
@@ -360,10 +342,12 @@ const triggerUpdateMorphRelationOptimisticEffect = ({
       morphRelation,
     );
 
-    const shouldCascadeDeleteTargetRecords = shouldCascadeDeleteOnDetach({
-      targetObjectMetadata,
-      junctionObjectMetadataIds,
-    });
+    // TODO: see if we can de-hardcode this, put cascade delete in relation metadata item
+    //   Instead of hardcoding it here
+    const shouldCascadeDeleteTargetRecords =
+      CORE_OBJECT_NAMES_TO_DELETE_ON_TRIGGER_RELATION_DETACH.includes(
+        targetObjectMetadata.nameSingular as CoreObjectNameSingular,
+      );
     if (
       shouldCascadeDeleteTargetRecords &&
       targetRecordsToDetachFrom.length > 0

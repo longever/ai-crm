@@ -21,6 +21,7 @@ import { type FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object
 import { EventStreamService } from 'src/engine/subscriptions/event-stream.service';
 import { SubscriptionService } from 'src/engine/subscriptions/subscription.service';
 import { type EventStreamData } from 'src/engine/subscriptions/types/event-stream-data.type';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { WorkspaceCacheService } from 'src/engine/workspace-cache/services/workspace-cache.service';
 import { type WorkspaceEventBatch } from 'src/engine/workspace-event-emitter/types/workspace-event-batch.type';
 import { ObjectRecordEventPublisher } from 'src/engine/subscriptions/object-record-event/object-record-event-publisher';
@@ -92,6 +93,10 @@ describe('ObjectRecordEventPublisher', () => {
       WorkspaceManyOrAllFlatEntityMapsCacheService,
       'getOrRecomputeManyOrAllFlatEntityMaps'
     >
+  >;
+
+  let mockGlobalWorkspaceOrmManager: jest.Mocked<
+    Pick<GlobalWorkspaceOrmManager, 'getGlobalWorkspaceDataSourceReplica'>
   >;
 
   const workspaceId = COMPANY_FLAT_OBJECT_MOCK.workspaceId;
@@ -266,6 +271,12 @@ describe('ObjectRecordEventPublisher', () => {
       } as never),
     };
 
+    mockGlobalWorkspaceOrmManager = {
+      getGlobalWorkspaceDataSourceReplica: jest.fn().mockResolvedValue({
+        getRepository: jest.fn(),
+      }),
+    };
+
     (buildRowLevelPermissionRecordFilter as jest.Mock).mockReturnValue({});
     (
       isRecordMatchingRLSRowLevelPermissionPredicate as jest.Mock
@@ -293,6 +304,10 @@ describe('ObjectRecordEventPublisher', () => {
         {
           provide: WorkspaceManyOrAllFlatEntityMapsCacheService,
           useValue: mockWorkspaceManyOrAllFlatEntityMapsCacheService,
+        },
+        {
+          provide: GlobalWorkspaceOrmManager,
+          useValue: mockGlobalWorkspaceOrmManager,
         },
         {
           provide: CommonSelectFieldsHelper,
@@ -1550,6 +1565,10 @@ describe('ObjectRecordEventPublisher', () => {
         });
 
         expect(
+          mockGlobalWorkspaceOrmManager.getGlobalWorkspaceDataSourceReplica,
+        ).toHaveBeenCalled();
+
+        expect(
           mockProcessNestedRelationsHelper.processNestedRelations,
         ).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -1558,6 +1577,9 @@ describe('ObjectRecordEventPublisher', () => {
             authContext: expect.objectContaining({
               userWorkspaceId,
               userId: 'test-user-id',
+            }),
+            workspaceDataSource: expect.objectContaining({
+              getRepository: expect.any(Function),
             }),
             rolePermissionConfig: expect.objectContaining({
               intersectionOf: [roleId],

@@ -41,7 +41,6 @@ import { BillingService } from 'src/engine/core-modules/billing/services/billing
 import { WorkspaceDomainsService } from 'src/engine/core-modules/domain/workspace-domains/services/workspace-domains.service';
 import { FeatureFlagService } from 'src/engine/core-modules/feature-flag/services/feature-flag.service';
 import { LogicFunctionDriverFactory } from 'src/engine/core-modules/logic-function/logic-function-drivers/logic-function-driver.factory';
-import { computeLogicFunctionExecutionCreditsMicro } from 'src/engine/core-modules/logic-function/logic-function-executor/utils/compute-logic-function-execution-credits-micro.util';
 import { SecretEncryptionService } from 'src/engine/core-modules/secret-encryption/secret-encryption.service';
 import { ThrottlerService } from 'src/engine/core-modules/throttler/throttler.service';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
@@ -599,18 +598,14 @@ export class LogicFunctionExecutorService {
 
     // Billing-exempt apps (first-party maintenance apps whose per-record
     // triggers fire during mailbox/calendar import) do not consume the
-    // workspace's credits for the execution itself. Explicit chargeCredits
+    // workspace's credits for the invocation itself. Explicit chargeCredits
     // calls and AI token usage from within the function are billed separately
     // and stay untouched.
-    const { invocationCreditsMicro, durationCreditsMicro, billedDurationMs } =
-      computeLogicFunctionExecutionCreditsMicro({
-        durationMs: result.billedDurationMs,
-        isBillingExempt: isBillingExemptApplication(
-          flatApplication.universalIdentifier,
-        ),
-      });
-
-    const totalCreditsMicro = invocationCreditsMicro + durationCreditsMicro;
+    const creditsUsedMicro = isBillingExemptApplication(
+      flatApplication.universalIdentifier,
+    )
+      ? 0
+      : 100;
 
     let periodStart: Date | undefined;
 
@@ -623,10 +618,10 @@ export class LogicFunctionExecutorService {
       if (currentBillingSubscription !== NO_BILLING_SUBSCRIPTION) {
         periodStart = currentBillingSubscription.currentPeriodStart;
 
-        if (totalCreditsMicro > 0) {
+        if (creditsUsedMicro > 0) {
           await this.billingUsageService.decrementAvailableCreditsInCache({
             workspaceId,
-            usedCredits: totalCreditsMicro,
+            usedCredits: creditsUsedMicro,
           });
         }
       }
@@ -638,18 +633,9 @@ export class LogicFunctionExecutorService {
         {
           resourceType: UsageResourceType.LOGIC_FUNCTION,
           operationType: UsageOperationType.CODE_EXECUTION,
-          creditsUsedMicro: invocationCreditsMicro,
+          creditsUsedMicro,
           quantity: 1,
           unit: UsageUnit.INVOCATION,
-          resourceId: flatLogicFunction.id,
-          periodStart,
-        },
-        {
-          resourceType: UsageResourceType.LOGIC_FUNCTION,
-          operationType: UsageOperationType.CODE_EXECUTION,
-          creditsUsedMicro: durationCreditsMicro,
-          quantity: billedDurationMs,
-          unit: UsageUnit.MILLISECOND,
           resourceId: flatLogicFunction.id,
           periodStart,
         },

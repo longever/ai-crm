@@ -170,6 +170,7 @@ export class BarChartDataService {
                   subFieldName: configuration.secondaryAxisGroupBySubFieldName,
                 }
               : undefined,
+          workspaceId,
           authContext,
           flatObjectMetadataMaps,
           flatFieldMetadataMaps,

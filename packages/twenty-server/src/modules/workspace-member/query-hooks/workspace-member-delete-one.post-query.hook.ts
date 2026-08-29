@@ -11,12 +11,11 @@ import { type WorkspaceAuthContext } from 'src/engine/core-modules/auth/types/wo
 import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user-workspace.entity';
 import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
 import { WorkspaceNotFoundDefaultError } from 'src/engine/core-modules/workspace/workspace.exception';
-import { ConnectedAccountOwnershipTransferService } from 'src/engine/metadata-modules/connected-account/services/connected-account-ownership-transfer.service';
 import {
   PermissionsException,
   PermissionsExceptionCode,
 } from 'src/engine/metadata-modules/permissions/permissions.exception';
-import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/standard-objects/workspace-member.workspace-entity';
 
 @WorkspaceQueryHook({
@@ -25,11 +24,10 @@ import { WorkspaceMemberWorkspaceEntity } from 'src/modules/workspace-member/sta
 })
 export class WorkspaceMemberDeleteOnePostQueryHook implements WorkspacePostQueryHookInstance {
   constructor(
-    private readonly workspaceOrmManager: WorkspaceOrmManager,
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
     @InjectRepository(UserWorkspaceEntity)
     private readonly userWorkspaceRepository: Repository<UserWorkspaceEntity>,
     private readonly userWorkspaceService: UserWorkspaceService,
-    private readonly connectedAccountOwnershipTransferService: ConnectedAccountOwnershipTransferService,
   ) {}
 
   async execute(
@@ -49,20 +47,24 @@ export class WorkspaceMemberDeleteOnePostQueryHook implements WorkspacePostQuery
     assertIsDefinedOrThrow(workspace, WorkspaceNotFoundDefaultError);
 
     const workspaceMember =
-      await this.workspaceOrmManager.executeInWorkspaceContext(async () => {
-        const workspaceMemberRepository =
-          this.workspaceOrmManager.getRepository<WorkspaceMemberWorkspaceEntity>(
-            'workspaceMember',
-            { shouldBypassPermissionChecks: true },
-          );
+      await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+        async () => {
+          const workspaceMemberRepository =
+            await this.globalWorkspaceOrmManager.getRepository<WorkspaceMemberWorkspaceEntity>(
+              workspace.id,
+              'workspaceMember',
+              { shouldBypassPermissionChecks: true },
+            );
 
-        return workspaceMemberRepository.findOne({
-          where: {
-            id: targettedWorkspaceMemberId,
-          },
-          withDeleted: true,
-        });
-      }, authContext);
+          return workspaceMemberRepository.findOne({
+            where: {
+              id: targettedWorkspaceMemberId,
+            },
+            withDeleted: true,
+          });
+        },
+        authContext,
+      );
 
     if (!isDefined(workspaceMember)) {
       throw new PermissionsException(
@@ -84,16 +86,6 @@ export class WorkspaceMemberDeleteOnePostQueryHook implements WorkspacePostQuery
         PermissionsExceptionCode.USER_WORKSPACE_NOT_FOUND,
       );
     }
-
-    await this.connectedAccountOwnershipTransferService.transferConnectedAccountsOwnershipToCustodian(
-      {
-        removedUserWorkspace: userWorkspace,
-        actingUserWorkspaceId:
-          'userWorkspaceId' in authContext
-            ? authContext.userWorkspaceId
-            : undefined,
-      },
-    );
 
     await this.userWorkspaceService.deleteUserWorkspace({
       userWorkspaceId: userWorkspace.id,

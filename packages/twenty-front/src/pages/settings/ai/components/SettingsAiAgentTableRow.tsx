@@ -29,7 +29,7 @@ export const SettingsAiAgentTableRow = ({
 }: SettingsAiAgentTableRowProps) => {
   const { theme } = useContext(ThemeContext);
   const { getIcon } = useIcons();
-  const Icon = getIcon(agent.icon || 'IconLego');
+  const Icon = getIcon(agent.icon || 'IconRobot');
 
   return (
     <TableRow

@@ -405,18 +405,6 @@ export const STANDARD_PAGE_LAYOUT_UNIVERSAL_IDENTIFIERS = {
           timeline: 'Timeline',
         },
       },
-      summary: {
-        title: 'Summary',
-        widgets: {
-          summary: 'Summary',
-        },
-      },
-      callRecording: {
-        title: 'Call Recording',
-        widgets: {
-          transcript: 'Transcript',
-        },
-      },
     },
   }),
   messageChannelMessageAssociationRecordPage:

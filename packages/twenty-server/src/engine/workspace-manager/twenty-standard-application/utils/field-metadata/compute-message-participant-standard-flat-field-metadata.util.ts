@@ -421,7 +421,7 @@ export const buildMessageParticipantStandardFlatFieldMetadatas = ({
           context: 'fieldMetadata.description',
         }),
       ),
-      icon: 'IconUsers',
+      icon: 'IconCircleUser',
       isNullable: true,
       isUIEditable: false,
       targetObjectName: 'workspaceMember',

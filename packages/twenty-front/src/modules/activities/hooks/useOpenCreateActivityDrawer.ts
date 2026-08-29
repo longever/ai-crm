@@ -8,14 +8,13 @@ import { isUpsertingActivityInDBState } from '@/activities/states/isCreatingActi
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { type ActivityTargetableObject } from '@/activities/types/ActivityTargetableEntity';
 import { type Note } from '@/activities/types/Note';
+import { type NoteTarget } from '@/activities/types/NoteTarget';
 import { type Task } from '@/activities/types/Task';
+import { type TaskTarget } from '@/activities/types/TaskTarget';
 import { useOpenRecordInSidePanel } from '@/side-panel/hooks/useOpenRecordInSidePanel';
 import { useObjectMetadataItems } from '@/object-metadata/hooks/useObjectMetadataItems';
-import { useCreateManyRecords } from '@/object-record/hooks/useCreateManyRecords';
 import { useCreateOneRecord } from '@/object-record/hooks/useCreateOneRecord';
 import { findTargetFieldInfo } from '@/object-record/record-field/ui/utils/junction/findTargetFieldInfo';
-import { useObjectMorphJunctionConfigOrThrow } from '@/object-record/record-field/ui/hooks/useObjectMorphJunctionConfigOrThrow';
-import { isDefined } from 'twenty-shared/utils';
 
 export const useOpenCreateActivityDrawer = ({
   activityObjectNameSingular,
@@ -30,14 +29,13 @@ export const useOpenCreateActivityDrawer = ({
     objectNameSingular: activityObjectNameSingular,
   });
 
-  const { objectMetadataItems } = useObjectMetadataItems();
-
-  const morphJunctionConfig = useObjectMorphJunctionConfigOrThrow({
-    objectNameSingular: activityObjectNameSingular,
-  });
-
-  const { createManyRecords: createActivityTargets } = useCreateManyRecords({
-    objectNameSingular: morphJunctionConfig.junctionObjectMetadata.nameSingular,
+  const { createOneRecord: createOneActivityTarget } = useCreateOneRecord<
+    TaskTarget | NoteTarget
+  >({
+    objectNameSingular:
+      activityObjectNameSingular === CoreObjectNameSingular.Task
+        ? CoreObjectNameSingular.TaskTarget
+        : CoreObjectNameSingular.NoteTarget,
     shouldMatchRootQueryFilter: true,
   });
 
@@ -54,6 +52,8 @@ export const useOpenCreateActivityDrawer = ({
   );
 
   const { openRecordInSidePanel } = useOpenRecordInSidePanel();
+
+  const { objectMetadataItems } = useObjectMetadataItems();
 
   const openCreateActivityDrawer = async ({
     targetableObjects,
@@ -74,43 +74,56 @@ export const useOpenCreateActivityDrawer = ({
       position: 'last',
     });
 
-    const { junctionObjectMetadata, sourceJoinColumnName } =
-      morphJunctionConfig;
+    if (targetableObjects.length > 0) {
+      const activityTargetObjectNameSingular =
+        activityObjectNameSingular === CoreObjectNameSingular.Task
+          ? CoreObjectNameSingular.TaskTarget
+          : CoreObjectNameSingular.NoteTarget;
 
-    const supportedTargets = targetableObjects.flatMap((targetableObject) => {
-      const targetObjectMetadata = objectMetadataItems.find(
-        (item) =>
-          item.nameSingular === targetableObject.targetObjectNameSingular,
+      const activityTargetObjectMetadata = objectMetadataItems.find(
+        (item) => item.nameSingular === activityTargetObjectNameSingular,
       );
+
+      const targetObjectMetadataItem = objectMetadataItems.find(
+        (item) =>
+          item.nameSingular === targetableObjects[0].targetObjectNameSingular,
+      );
+
       const targetFieldInfo = findTargetFieldInfo(
-        junctionObjectMetadata.fields,
-        targetObjectMetadata?.id ?? '',
+        activityTargetObjectMetadata?.fields ?? [],
+        targetObjectMetadataItem?.id ?? '',
         objectMetadataItems,
       );
 
-      if (!isDefined(targetFieldInfo?.joinColumnName)) {
-        return [];
-      }
+      const targetableObjectRelationIdName =
+        targetFieldInfo?.joinColumnName ??
+        `${targetableObjects[0].targetObjectNameSingular}Id`;
 
-      return [
-        { targetableObject, joinColumnName: targetFieldInfo.joinColumnName },
-      ];
-    });
+      await createOneActivityTarget({
+        ...(activityObjectNameSingular === CoreObjectNameSingular.Task
+          ? {
+              taskId: activity.id,
+            }
+          : {
+              noteId: activity.id,
+            }),
+        [targetableObjectRelationIdName]: targetableObjects[0].id,
+      });
 
-    if (supportedTargets.length > 0) {
-      const recordsToCreate = supportedTargets.map(
-        ({ targetableObject, joinColumnName }) => ({
-          [sourceJoinColumnName]: activity.id,
-          [joinColumnName]: targetableObject.id,
-        }),
-      );
+      setActivityTargetableEntityArray(targetableObjects);
+    } else {
+      await createOneActivityTarget({
+        ...(activityObjectNameSingular === CoreObjectNameSingular.Task
+          ? {
+              taskId: activity.id,
+            }
+          : {
+              noteId: activity.id,
+            }),
+      });
 
-      await createActivityTargets({ recordsToCreate, upsert: true });
+      setActivityTargetableEntityArray([]);
     }
-
-    setActivityTargetableEntityArray(
-      supportedTargets.map(({ targetableObject }) => targetableObject),
-    );
 
     openRecordInSidePanel({
       recordId: activity.id,

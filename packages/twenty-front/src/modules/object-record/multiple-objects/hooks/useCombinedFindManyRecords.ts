@@ -39,19 +39,13 @@ export const useCombinedFindManyRecords = ({
     },
   );
 
-  const resultWithoutConnection = useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(data ?? {}).map(
-          ([namePlural, objectRecordConnection]) => [
-            namePlural,
-            getRecordsFromRecordConnection({
-              recordConnection: objectRecordConnection,
-            }),
-          ],
-        ),
-      ),
-    [data],
+  const resultWithoutConnection = Object.fromEntries(
+    Object.entries(data ?? {}).map(([namePlural, objectRecordConnection]) => [
+      namePlural,
+      getRecordsFromRecordConnection({
+        recordConnection: objectRecordConnection,
+      }),
+    ]),
   );
 
   return {

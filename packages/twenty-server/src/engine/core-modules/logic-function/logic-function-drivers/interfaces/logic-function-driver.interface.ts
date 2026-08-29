@@ -14,7 +14,6 @@ export type LogicFunctionExecuteError = {
 export type LogicFunctionExecuteResult = {
   data: object | null;
   duration: number;
-  billedDurationMs: number;
   logs: string;
   status: LogicFunctionExecutionStatus;
   error?: LogicFunctionExecuteError;

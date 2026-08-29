@@ -7,6 +7,7 @@ import { type FlatConnectionProvider } from 'src/engine/metadata-modules/flat-co
 import { type FlatTimelineActivityTypeMaps } from 'src/engine/metadata-modules/flat-timeline-activity-type/types/flat-timeline-activity-type-maps.type';
 import { type FlatTimelineActivityType } from 'src/engine/metadata-modules/flat-timeline-activity-type/types/flat-timeline-activity-type.type';
 import { type FlatCommandMenuItem } from 'src/engine/metadata-modules/flat-command-menu-item/types/flat-command-menu-item.type';
+import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { type MetadataEntity } from 'src/engine/metadata-modules/flat-entity/types/metadata-entity.type';
 import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 import { type FlatFieldPermissionMaps } from 'src/engine/metadata-modules/flat-field-permission/types/flat-field-permission-maps.type';
@@ -48,11 +49,6 @@ import { type FlatViewSortMaps } from 'src/engine/metadata-modules/flat-view-sor
 import { type FlatViewSort } from 'src/engine/metadata-modules/flat-view-sort/types/flat-view-sort.type';
 import { type FlatSearchFieldMetadataMaps } from 'src/engine/metadata-modules/flat-search-field-metadata/types/flat-search-field-metadata-maps.type';
 import { type FlatSearchFieldMetadata } from 'src/engine/metadata-modules/flat-search-field-metadata/types/flat-search-field-metadata.type';
-import { type FlatFieldMetadataMaps } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata-maps.type';
-import { type FlatIndexMetadataMaps } from 'src/engine/metadata-modules/flat-index-metadata/types/flat-index-metadata-maps.type';
-import { type FlatLogicFunctionMaps } from 'src/engine/metadata-modules/logic-function/types/flat-logic-function-maps.type';
-import { type FlatObjectMetadataMaps } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata-maps.type';
-import { type FlatRoleMaps } from 'src/engine/metadata-modules/flat-role/types/flat-role-maps.type';
 import { type FlatViewMaps } from 'src/engine/metadata-modules/flat-view/types/flat-view-maps.type';
 import { type FlatView } from 'src/engine/metadata-modules/flat-view/types/flat-view.type';
 import { type FlatApplicationVariableMaps } from 'src/engine/metadata-modules/flat-application-variable/types/flat-application-variable-maps.type';
@@ -356,7 +352,7 @@ import {
 
 export type AllFlatEntityTypesByMetadataName = {
   fieldMetadata: {
-    flatEntityMaps: FlatFieldMetadataMaps;
+    flatEntityMaps: FlatEntityMaps<FlatFieldMetadata>;
     universalActions: {
       create: UniversalCreateFieldAction;
       update: UniversalUpdateFieldAction;
@@ -375,7 +371,7 @@ export type AllFlatEntityTypesByMetadataName = {
     entity: MetadataEntity<'fieldMetadata'>;
   };
   objectMetadata: {
-    flatEntityMaps: FlatObjectMetadataMaps;
+    flatEntityMaps: FlatEntityMaps<FlatObjectMetadata>;
     universalActions: {
       create: UniversalCreateObjectAction;
       update: UniversalUpdateObjectAction;
@@ -519,7 +515,7 @@ export type AllFlatEntityTypesByMetadataName = {
     entity: MetadataEntity<'viewFilterGroup'>;
   };
   index: {
-    flatEntityMaps: FlatIndexMetadataMaps;
+    flatEntityMaps: FlatEntityMaps<FlatIndexMetadata>;
     universalActions: {
       create: UniversalCreateIndexAction;
       update: UniversalUpdateIndexAction;
@@ -535,7 +531,7 @@ export type AllFlatEntityTypesByMetadataName = {
     entity: MetadataEntity<'index'>;
   };
   logicFunction: {
-    flatEntityMaps: FlatLogicFunctionMaps;
+    flatEntityMaps: FlatEntityMaps<FlatLogicFunction>;
     universalActions: {
       create: UniversalCreateLogicFunctionAction;
       update: UniversalUpdateLogicFunctionAction;
@@ -567,7 +563,7 @@ export type AllFlatEntityTypesByMetadataName = {
     entity: MetadataEntity<'viewFilter'>;
   };
   role: {
-    flatEntityMaps: FlatRoleMaps;
+    flatEntityMaps: FlatEntityMaps<FlatRole>;
     universalActions: {
       create: UniversalCreateRoleAction;
       update: UniversalUpdateRoleAction;

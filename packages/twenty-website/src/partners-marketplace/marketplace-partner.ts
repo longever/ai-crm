@@ -35,7 +35,6 @@ export type MarketplacePartner = {
   city: string;
   country: string;
   skills: readonly string[];
-  superPartner: boolean;
   services: readonly PartnerService[];
   portfolio: readonly PartnerCaseStudy[];
   clients: readonly PartnerClient[];

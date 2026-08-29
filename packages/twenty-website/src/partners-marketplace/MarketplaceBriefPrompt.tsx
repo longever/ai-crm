@@ -2,11 +2,10 @@
 
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react';
-import { type ReactNode } from 'react';
 
-import { EngagementBand } from '@/ui';
+import { Button, EngagementBand } from '@/ui';
 
-export function MarketplaceBriefPrompt({ cta }: { cta: ReactNode }) {
+export function MarketplaceBriefPrompt() {
   const { i18n } = useLingui();
 
   return (
@@ -16,7 +15,9 @@ export function MarketplaceBriefPrompt({ cta }: { cta: ReactNode }) {
       body={i18n._(
         msg`Tell us what you need and we'll match you with a certified Twenty partner.`,
       )}
-      actions={cta}
+      actions={
+        <Button href="/partners/brief" label={i18n._(msg`Submit a brief`)} />
+      }
     />
   );
 }

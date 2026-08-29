@@ -7,10 +7,10 @@ import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomState
 import { viewsSelector } from '@/views/states/selectors/viewsSelector';
 import { useLingui } from '@lingui/react/macro';
 import {
+  IconAppWindow,
   IconCommand,
-  IconCompass,
-  IconLayoutGridAdd,
-  IconPerspective,
+  IconLayoutSidebarLeftExpand,
+  IconPuzzle,
   IconTable,
 } from 'twenty-ui/icon';
 
@@ -35,7 +35,7 @@ export const SettingsLayoutItemsStats = () => {
             value: commandMenuItems.length.toString(),
           },
           {
-            Icon: IconCompass,
+            Icon: IconLayoutSidebarLeftExpand,
             label: t`Sidebar items`,
             value: navigationMenuItems.length.toString(),
           },
@@ -47,14 +47,14 @@ export const SettingsLayoutItemsStats = () => {
             value: views.length.toString(),
           },
           {
-            Icon: IconPerspective,
+            Icon: IconAppWindow,
             label: t`Pages`,
             value: pageLayoutsWithRelations.length.toString(),
           },
         ],
         [
           {
-            Icon: IconLayoutGridAdd,
+            Icon: IconPuzzle,
             label: t`Widgets`,
             value: frontComponents.length.toString(),
           },

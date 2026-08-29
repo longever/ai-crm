@@ -1,4 +1,4 @@
-import { HeaderIdentifier } from '@/ui/layout/page/components/HeaderIdentifier';
+import { SidePanelPageInfoLayout } from '@/side-panel/components/SidePanelPageInfoLayout';
 import { useFindManyRecordsSelectedInContextStore } from '@/context-store/hooks/useFindManyRecordsSelectedInContextStore';
 import { useNumberFormat } from '@/localization/hooks/useNumberFormat';
 import { t } from '@lingui/core/macro';
@@ -21,7 +21,7 @@ export const SidePanelMultipleRecordsInfo = ({
   });
 
   return (
-    <HeaderIdentifier
+    <SidePanelPageInfoLayout
       icon={
         <IconPencil size={theme.icon.size.md} stroke={theme.icon.stroke.sm} />
       }

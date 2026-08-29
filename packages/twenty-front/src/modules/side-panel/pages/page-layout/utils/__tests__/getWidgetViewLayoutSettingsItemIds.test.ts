@@ -5,6 +5,7 @@ describe('getWidgetViewLayoutSettingsItemIds', () => {
     expect(
       getWidgetViewLayoutSettingsItemIds({
         isCalendarLayout: false,
+        isCalendarWeekViewEnabled: false,
         hasGroupBy: false,
       }),
     ).toEqual(['object-view-layout', 'record-table-group-by']);
@@ -14,6 +15,7 @@ describe('getWidgetViewLayoutSettingsItemIds', () => {
     expect(
       getWidgetViewLayoutSettingsItemIds({
         isCalendarLayout: false,
+        isCalendarWeekViewEnabled: false,
         hasGroupBy: true,
       }),
     ).toEqual([
@@ -23,11 +25,22 @@ describe('getWidgetViewLayoutSettingsItemIds', () => {
     ]);
   });
 
-  it('swaps group-by rows for calendar field and layout rows', () => {
+  it('swaps group-by rows for the calendar field row on a calendar layout', () => {
     expect(
       getWidgetViewLayoutSettingsItemIds({
         isCalendarLayout: true,
+        isCalendarWeekViewEnabled: false,
         hasGroupBy: true,
+      }),
+    ).toEqual(['object-view-layout', 'record-table-calendar-field']);
+  });
+
+  it('includes the calendar view row when the week/day flag is enabled', () => {
+    expect(
+      getWidgetViewLayoutSettingsItemIds({
+        isCalendarLayout: true,
+        isCalendarWeekViewEnabled: true,
+        hasGroupBy: false,
       }),
     ).toEqual([
       'object-view-layout',
@@ -40,6 +53,7 @@ describe('getWidgetViewLayoutSettingsItemIds', () => {
     expect(
       getWidgetViewLayoutSettingsItemIds({
         isCalendarLayout: false,
+        isCalendarWeekViewEnabled: false,
         hasGroupBy: false,
         isLayoutRowHidden: true,
       }),

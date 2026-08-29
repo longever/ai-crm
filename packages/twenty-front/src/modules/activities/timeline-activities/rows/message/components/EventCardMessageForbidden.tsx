@@ -29,15 +29,17 @@ export const EventCardMessageForbidden = ({
   notSharedByFullName,
 }: {
   notSharedByFullName: string;
-}) => (
-  <StyledEventCardMessageContainer>
-    <StyledEmailContent>
-      <StyledEmailTitle>
-        <Trans>Subject not shared</Trans>
-      </StyledEmailTitle>
-      <EventCardMessageBodyNotShared
-        notSharedByFullName={notSharedByFullName}
-      />
-    </StyledEmailContent>
-  </StyledEventCardMessageContainer>
-);
+}) => {
+  return (
+    <StyledEventCardMessageContainer>
+      <StyledEmailContent>
+        <StyledEmailTitle>
+          <Trans>Subject not shared</Trans>
+        </StyledEmailTitle>
+        <EventCardMessageBodyNotShared
+          notSharedByFullName={notSharedByFullName}
+        />
+      </StyledEmailContent>
+    </StyledEventCardMessageContainer>
+  );
+};

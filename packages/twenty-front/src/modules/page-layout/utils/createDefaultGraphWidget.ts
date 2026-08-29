@@ -3,8 +3,9 @@ import {
   AxisNameDisplay,
   BarChartLayout,
   GraphOrderBy,
+  type GridPosition,
+  PageLayoutTabLayoutMode,
   type PageLayoutWidget,
-  type PageLayoutWidgetGridPosition,
   type WidgetConfiguration,
   WidgetConfigurationType,
   WidgetType,
@@ -40,7 +41,7 @@ type CreateDefaultGraphWidgetParams = {
   id: string;
   pageLayoutTabId: string;
   title: string;
-  position: PageLayoutWidgetGridPosition;
+  gridPosition: GridPosition;
   objectMetadataId?: string | null;
   fieldSelection?: GraphWidgetFieldSelection;
   timezone?: string;
@@ -51,7 +52,7 @@ export const createDefaultGraphWidget = ({
   id,
   pageLayoutTabId,
   title,
-  position,
+  gridPosition,
   objectMetadataId,
   fieldSelection,
   timezone,
@@ -77,9 +78,14 @@ export const createDefaultGraphWidget = ({
     isActive: true,
     type: WidgetType.GRAPH,
     configuration,
+    gridPosition,
     position: {
-      ...position,
       __typename: 'PageLayoutWidgetGridPosition',
+      layoutMode: PageLayoutTabLayoutMode.GRID,
+      row: gridPosition.row,
+      column: gridPosition.column,
+      rowSpan: gridPosition.rowSpan,
+      columnSpan: gridPosition.columnSpan,
     },
     objectMetadataId: resolvedObjectMetadataId,
     createdAt: new Date().toISOString(),

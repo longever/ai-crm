@@ -4,22 +4,25 @@ import { isNonEmptyString } from '@sniptt/guards';
 
 import { deleteConnectedAccount } from 'test/integration/metadata/suites/connected-account/utils/delete-connected-account.util';
 import { updateConfigVariable } from 'test/integration/twenty-config/utils/update-config-variable.util';
-import { connectDovecotImapAccount } from 'test/integration/utils/connect-dovecot-imap-account.util';
+import { connectGreenmailImapAccount } from 'test/integration/utils/connect-greenmail-imap-account.util';
 import { queryMessageFolders } from 'test/integration/utils/query-messaging.util';
 import { runMessageChannelSync } from 'test/integration/utils/run-message-channel-sync.util';
-import { type DovecotServer } from 'test/integration/utils/start-dovecot-container.util';
+import { type GreenmailServer } from 'test/integration/utils/start-greenmail-container.util';
 
-const PASSWORD = 'dovecot-password';
+const PASSWORD = 'greenmail-password';
+
+// GreenMail registers a declared user under the local part of its address, so
+// that is the login, while the channel keeps the full address as its handle.
 const HANDLE = `imap-folder-discovery-${randomUUID()}@acme.test`;
 
 describe('IMAP folder discovery (integration)', () => {
-  let dovecot: DovecotServer;
+  let greenmail: GreenmailServer;
   let connectedAccountId: string;
   let messageChannelId: string;
 
   beforeAll(async () => {
-    ({ dovecot, connectedAccountId, messageChannelId } =
-      await connectDovecotImapAccount({
+    ({ greenmail, connectedAccountId, messageChannelId } =
+      await connectGreenmailImapAccount({
         handle: HANDLE,
         password: PASSWORD,
       }));
@@ -37,39 +40,14 @@ describe('IMAP folder discovery (integration)', () => {
       }).catch(() => undefined);
     }
 
-    await dovecot?.stop().catch(() => undefined);
+    await greenmail?.stop().catch(() => undefined);
   });
 
   it('discovers the mailboxes exposed by the IMAP server', async () => {
     await runMessageChannelSync(messageChannelId);
 
-    const folderNames = (await queryMessageFolders(messageChannelId)).map(
-      (folder) => folder.name,
-    );
-
-    expect(folderNames).toEqual(
-      expect.arrayContaining(['INBOX', 'Sent', 'Drafts']),
-    );
-  }, 300000);
-
-  it('skips the mailboxes excluded from folder management', async () => {
-    await runMessageChannelSync(messageChannelId);
-
-    const folderNames = (await queryMessageFolders(messageChannelId)).map(
-      (folder) => folder.name,
-    );
-
-    expect(folderNames).not.toContain('Trash');
-    expect(folderNames).not.toContain('Junk');
-  }, 300000);
-
-  it('marks the special-use sent folder as the sent folder', async () => {
-    await runMessageChannelSync(messageChannelId);
-
     const folders = await queryMessageFolders(messageChannelId);
 
-    expect(
-      folders.filter((folder) => folder.isSentFolder).map(({ name }) => name),
-    ).toEqual(['Sent']);
+    expect(folders.map((folder) => folder.name)).toContain('INBOX');
   }, 300000);
 });

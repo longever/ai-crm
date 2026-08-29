@@ -20,9 +20,6 @@ export const FieldContextProvider = ({
   overridenIsFieldEmpty,
   onMouseEnter,
   anchorId,
-  showLabel = true,
-  maxWidth,
-  isDisplayModeFixHeight,
   children,
 }: {
   clearable?: boolean;
@@ -35,9 +32,6 @@ export const FieldContextProvider = ({
   overridenIsFieldEmpty?: boolean;
   onMouseEnter?: () => void;
   anchorId?: string;
-  showLabel?: boolean;
-  maxWidth?: number;
-  isDisplayModeFixHeight?: boolean;
   children: ReactNode;
 }) => {
   const { objectMetadataItem } = useObjectMetadataItem({
@@ -80,7 +74,7 @@ export const FieldContextProvider = ({
         isLabelIdentifier,
         fieldDefinition: formatFieldMetadataItemAsColumnDefinition({
           field: fieldMetadataItem,
-          showLabel,
+          showLabel: true,
           position: fieldPosition,
           objectMetadataItem,
           labelWidth: 90,
@@ -92,8 +86,6 @@ export const FieldContextProvider = ({
         isRecordFieldReadOnly,
         onMouseEnter,
         anchorId,
-        maxWidth,
-        isDisplayModeFixHeight,
       }}
     >
       {children}

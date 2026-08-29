@@ -1,0 +1,89 @@
+
+
+[7m[1m[36m NX [39m[22m[27m  [36mRunning target [1mbuild[22m for project twenty-front and [1m11[22m tasks it depends on:[39m
+
+[2m[36m[39m[22m
+
+[2m> [22m[2mnx run[22m twenty-shared:generateBarrels
+
+[2m> [22mtsx packages/twenty-shared/scripts/generateBarrels.ts
+
+
+[2m> [22m[2mnx run[22m twenty-shared:build
+
+[2m> [22mnpx vite build
+
+[2m> [22mtsgo -p tsconfig.lib.json --declaration --emitDeclarationOnly --noEmit false --outDir dist --rootDir src && npx tsc-alias -p tsconfig.lib.json --outDir dist
+
+
+[2m> [22m[2mnx run[22m twenty-shared:"build:individual"
+
+[2m> [22mnpx vite build -c vite.config.individual.ts
+
+
+[2m> [22m[2mnx run[22m twenty-client-sdk:build
+
+[2m> [22mnpx rimraf dist && npx vite build && npx vite build -c vite.metadata.config.ts
+
+[2m> [22mtsgo -p tsconfig.lib.json --declaration --emitDeclarationOnly --noEmit false --outDir dist --rootDir src && npx tsc-alias -p tsconfig.lib.json --outDir dist
+
+
+[2m> [22m[2mnx run[22m twenty-ui:build
+
+
+[2m> [22m[2mnx run[22m twenty-ui:"build:individual"
+
+[2m> [22mnpx vite build -c vite.config.individual.ts
+
+
+[2m> [22m[2mnx run[22m twenty-sdk:"build:sdk"
+
+[2m> [22mnpx vite build -c vite.config.define.ts && npx vite build -c vite.config.billing.ts && npx vite build -c vite.config.front-component.ts && npx vite build -c vite.config.logic-function.ts && npx vite build -c vite.config.utils.ts && npx rollup -c rollup.config.sdk-dts.mjs
+
+[36m
+[1msrc/sdk/define/index.ts[22m → [1mdist/define/index.d.ts[22m...[39m
+[32mcreated [1mdist/define/index.d.ts[22m in [1m1.7s[22m[39m
+[36m
+[1msrc/sdk/front-component/index.ts[22m → [1mdist/front-component/index.d.ts[22m...[39m
+[32mcreated [1mdist/front-component/index.d.ts[22m in [1m1.1s[22m[39m
+[36m
+[1msrc/sdk/billing/index.ts[22m → [1mdist/billing/index.d.ts[22m...[39m
+[32mcreated [1mdist/billing/index.d.ts[22m in [1m971ms[22m[39m
+[36m
+[1msrc/sdk/logic-function/index.ts[22m → [1mdist/logic-function/index.d.ts[22m...[39m
+[32mcreated [1mdist/logic-function/index.d.ts[22m in [1m949ms[22m[39m
+[36m
+[1msrc/sdk/utils/index.ts[22m → [1mdist/utils/index.d.ts[22m...[39m
+[32mcreated [1mdist/utils/index.d.ts[22m in [1m1.1s[22m[39m
+
+[2m> [22m[2mnx run[22m twenty-sdk:build
+
+[2m> [22mnpx rimraf dist && npx vite build -c vite.config.node.ts && npx vite build -c vite.config.define.ts && npx vite build -c vite.config.billing.ts && npx vite build -c vite.config.front-component.ts && npx vite build -c vite.config.logic-function.ts && npx vite build -c vite.config.utils.ts && npx vite build -c vite.config.browser.ts
+
+[33m[plugin rolldown:vite-resolve] Module "perf_hooks" has been externalized for browser compatibility, imported by "D:/ai-hub/twenty/node_modules/@ts-morph/common/dist/typescript.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+[33m[plugin rolldown:vite-resolve] Module "perf_hooks" has been externalized for browser compatibility, imported by "D:/ai-hub/twenty/node_modules/@ts-morph/common/dist/typescript.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+[2m> [22mtsgo -p tsconfig.lib.json --declaration --emitDeclarationOnly --noEmit false --outDir dist --rootDir src && npx tsc-alias -p tsconfig.lib.json --outDir dist
+
+[2m> [22mnpx rimraf 'dist/sdk' 'dist/define/**/*.d.ts' 'dist/define/**/*.d.ts.map' 'dist/billing/**/*.d.ts' 'dist/billing/**/*.d.ts.map' 'dist/front-component/**/*.d.ts' 'dist/front-component/**/*.d.ts.map' 'dist/logic-function/**/*.d.ts' 'dist/logic-function/**/*.d.ts.map' 'dist/utils/**/*.d.ts' 'dist/utils/**/*.d.ts.map' && npx rollup -c rollup.config.sdk-dts.mjs
+
+Error: Illegal characters in path.
+    at pathArg (file:///D:/ai-hub/twenty/node_modules/[4mrimraf[24m/dist/esm/path-arg.js:38:33)
+    at file:///D:/ai-hub/twenty/node_modules/[4mrimraf[24m/dist/esm/index.js:17:54
+    at Array.map (<anonymous>)
+    at file:///D:/ai-hub/twenty/node_modules/[4mrimraf[24m/dist/esm/index.js:17:42
+    at main (file:///D:/ai-hub/twenty/node_modules/[4mrimraf[24m/dist/esm/bin.mjs:243:15)
+    at file:///D:/ai-hub/twenty/node_modules/[4mrimraf[24m/dist/esm/bin.mjs:251:5 {
+  path: [32m"D:\\ai-hub\\twenty\\packages\\twenty-sdk\\'dist\\define\\**\\*.d.ts'"[39m,
+  code: [32m'EINVAL'[39m
+}
+Warning: command "npx rimraf 'dist/sdk' 'dist/define/**/*.d.ts' 'dist/define/**/*.d.ts.map' 'dist/billing/**/*.d.ts' 'dist/billing/**/*.d.ts.map' 'dist/front-component/**/*.d.ts' 'dist/front-component/**/*.d.ts.map' 'dist/logic-function/**/*.d.ts' 'dist/logic-function/**/*.d.ts.map' 'dist/utils/**/*.d.ts' 'dist/utils/**/*.d.ts.map' && npx rollup -c rollup.config.sdk-dts.mjs" exited with non-zero status code
+[2m[31m[39m[22m
+
+[7m[1m[31m NX [39m[22m[27m  [31mRunning target [1mbuild[22m for project twenty-front and [1m11[22m tasks it depends on failed[39m
+
+[2mFailed tasks:[22m
+
+[2m-[22m twenty-sdk:build
+
+[2mHint: run the command with[22m --verbose [2mfor more details.[22m
+

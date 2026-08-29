@@ -3,16 +3,16 @@ import {
   type ObjectRecordGroupByDateGranularity,
 } from 'twenty-shared/types';
 
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 
 export type GroupByRegularField = {
-  fieldMetadata: OrmFlatFieldMetadata;
+  fieldMetadata: FlatFieldMetadata;
   subFieldName?: string;
   shouldUnnest?: boolean;
 };
 
 export type GroupByDateField = {
-  fieldMetadata: OrmFlatFieldMetadata;
+  fieldMetadata: FlatFieldMetadata;
   subFieldName?: string;
   dateGranularity: ObjectRecordGroupByDateGranularity;
   weekStartDay?: FirstDayOfTheWeek;
@@ -20,8 +20,8 @@ export type GroupByDateField = {
 };
 
 export type GroupByRelationField = {
-  fieldMetadata: OrmFlatFieldMetadata;
-  nestedFieldMetadata: OrmFlatFieldMetadata;
+  fieldMetadata: FlatFieldMetadata;
+  nestedFieldMetadata: FlatFieldMetadata;
   nestedSubFieldName?: string;
   dateGranularity?: ObjectRecordGroupByDateGranularity;
   weekStartDay?: FirstDayOfTheWeek;

@@ -12,7 +12,7 @@ import {
 
 import { UUIDScalarType } from 'src/engine/api/graphql/workspace-schema-builder/graphql-types/scalars';
 import { CreateIndexFieldInput } from 'src/engine/metadata-modules/index-metadata/dtos/create-index-field.input';
-import { IndexType } from 'twenty-shared/types';
+import { IndexType } from 'src/engine/metadata-modules/index-metadata/types/indexType.types';
 
 @InputType()
 export class CreateIndexInput {

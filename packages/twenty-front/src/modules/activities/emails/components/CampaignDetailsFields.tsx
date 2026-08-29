@@ -12,7 +12,7 @@ import {
   CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH,
   CampaignEnvelopeBox,
 } from '@/activities/emails/components/CampaignEnvelopeBox';
-import { ComposerFieldRow } from '@/activities/components/ComposerFieldRow';
+import { EmailComposerFieldRow } from '@/activities/emails/components/EmailComposerFieldRow';
 import { useCampaignAudiencePreview } from '@/activities/emails/hooks/useCampaignAudiencePreview';
 import { useCampaignDetailsState } from '@/activities/emails/hooks/useCampaignDetailsState';
 import { useUnsubscribeTopics } from '@/activities/emails/hooks/useUnsubscribeTopics';
@@ -144,7 +144,7 @@ export const CampaignDetailsFields = ({
         )
       }
     >
-      <ComposerFieldRow
+      <EmailComposerFieldRow
         label={t`From`}
         labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
       >
@@ -156,8 +156,8 @@ export const CampaignDetailsFields = ({
           emptyOption={{ label: t`Select a sender`, value: '' }}
           onChange={detailsState.setFromAddress}
         />
-      </ComposerFieldRow>
-      <ComposerFieldRow
+      </EmailComposerFieldRow>
+      <EmailComposerFieldRow
         label={t`To`}
         labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
       >
@@ -168,9 +168,9 @@ export const CampaignDetailsFields = ({
           onChange={detailsState.setListId}
           onCreate={handleCreateList}
         />
-      </ComposerFieldRow>
+      </EmailComposerFieldRow>
       {hasTopicOptions && (
-        <ComposerFieldRow
+        <EmailComposerFieldRow
           label={t`Unsubscribe topic`}
           labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
         >
@@ -184,9 +184,9 @@ export const CampaignDetailsFields = ({
               detailsState.setUnsubscribeTopicId(value === '' ? null : value)
             }
           />
-        </ComposerFieldRow>
+        </EmailComposerFieldRow>
       )}
-      <ComposerFieldRow
+      <EmailComposerFieldRow
         label={t`Subject`}
         labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
       >
@@ -197,7 +197,7 @@ export const CampaignDetailsFields = ({
           defaultValue={detailsState.subject}
           onChange={(event) => detailsState.setSubject(event.target.value)}
         />
-      </ComposerFieldRow>
+      </EmailComposerFieldRow>
     </CampaignEnvelopeBox>
   );
 };

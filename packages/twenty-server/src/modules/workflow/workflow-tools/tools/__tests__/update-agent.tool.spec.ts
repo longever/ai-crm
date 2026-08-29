@@ -25,8 +25,8 @@ const buildTool = ({
   const workflowVersionRepository = {
     find: jest.fn().mockResolvedValue(draftVersions),
   };
-  const workspaceOrmManager = {
-    getRepository: jest.fn().mockReturnValue(workflowVersionRepository),
+  const globalWorkspaceOrmManager = {
+    getRepository: jest.fn().mockResolvedValue(workflowVersionRepository),
   };
   const flatEntityMapsCacheService = {
     invalidateFlatEntityMaps: jest.fn().mockResolvedValue(undefined),
@@ -36,7 +36,7 @@ const buildTool = ({
     {
       agentService,
       workflowVersionStepService,
-      workspaceOrmManager,
+      globalWorkspaceOrmManager,
       flatEntityMapsCacheService,
     } as never,
     { workspaceId: WORKSPACE_ID },
@@ -46,7 +46,7 @@ const buildTool = ({
     tool,
     agentService,
     workflowVersionStepService,
-    workspaceOrmManager,
+    globalWorkspaceOrmManager,
     flatEntityMapsCacheService,
   };
 };
@@ -92,11 +92,10 @@ describe('createUpdateAgentTool', () => {
 
   it('should not resync when responseFormat is not provided', async () => {
     const step = buildAiAgentStep(AGENT_ID);
-    const { tool, workflowVersionStepService, workspaceOrmManager } = buildTool(
-      {
+    const { tool, workflowVersionStepService, globalWorkspaceOrmManager } =
+      buildTool({
         draftVersions: [{ id: 'version-1', status: 'DRAFT', steps: [step] }],
-      },
-    );
+      });
 
     const result = (await tool.execute({
       agentId: AGENT_ID,
@@ -104,7 +103,7 @@ describe('createUpdateAgentTool', () => {
     } as never)) as Record<string, unknown>;
 
     expect(result.success).toBe(true);
-    expect(workspaceOrmManager.getRepository).not.toHaveBeenCalled();
+    expect(globalWorkspaceOrmManager.getRepository).not.toHaveBeenCalled();
     expect(
       workflowVersionStepService.updateWorkflowVersionStep,
     ).not.toHaveBeenCalled();

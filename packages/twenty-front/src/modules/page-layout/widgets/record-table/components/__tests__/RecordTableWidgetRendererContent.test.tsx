@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react';
 
 import { RecordTableWidgetRendererContent } from '@/page-layout/widgets/record-table/components/RecordTableWidgetRendererContent';
-import { ViewCalendarLayout, ViewType } from '~/generated-metadata/graphql';
+import { ViewType } from '~/generated-metadata/graphql';
 
 const mockUseViewById = jest.fn();
-const mockIsPageLayoutInEditMode = jest.fn();
 
 jest.mock('@/object-metadata/hooks/useObjectMetadataItemById', () => ({
   useObjectMetadataItemById: jest.fn(() => ({
@@ -12,7 +11,7 @@ jest.mock('@/object-metadata/hooks/useObjectMetadataItemById', () => ({
   })),
 }));
 jest.mock('@/page-layout/hooks/useIsPageLayoutInEditMode', () => ({
-  useIsPageLayoutInEditMode: () => mockIsPageLayoutInEditMode(),
+  useIsPageLayoutInEditMode: jest.fn(() => false),
 }));
 jest.mock(
   '@/ui/utilities/state/jotai/hooks/useAtomComponentFamilySelectorValue',
@@ -20,6 +19,9 @@ jest.mock(
 );
 jest.mock('@/views/hooks/useViewById', () => ({
   useViewById: () => mockUseViewById(),
+}));
+jest.mock('@/workspace/hooks/useIsFeatureEnabled', () => ({
+  useIsFeatureEnabled: jest.fn(() => false),
 }));
 jest.mock(
   '@/object-record/record-table-widget/components/RecordTableWidgetProvider',
@@ -44,14 +46,7 @@ jest.mock(
 );
 jest.mock(
   '@/object-record/record-calendar-widget/components/RecordCalendarWidget',
-  () => ({
-    RecordCalendarWidget: ({ isReadOnly }: { isReadOnly: boolean }) => (
-      <div>
-        record calendar widget
-        <button disabled={isReadOnly}>Create calendar record</button>
-      </div>
-    ),
-  }),
+  () => ({ RecordCalendarWidget: () => <div>record calendar widget</div> }),
 );
 
 const renderWidgetForViewType = (viewType: ViewType | undefined) => {
@@ -70,44 +65,7 @@ const renderWidgetForViewType = (viewType: ViewType | undefined) => {
 };
 
 describe('RecordTableWidgetRendererContent', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    mockIsPageLayoutInEditMode.mockReturnValue(false);
-  });
-
-  it.each([
-    [ViewCalendarLayout.DAY, false, false],
-    [ViewCalendarLayout.WEEK, false, false],
-    [ViewCalendarLayout.MONTH, false, true],
-    [ViewCalendarLayout.DAY, true, true],
-    [ViewCalendarLayout.WEEK, true, true],
-  ])(
-    'renders %s with edit mode %s as read-only %s',
-    (calendarLayout, isEditMode, isReadOnly) => {
-      mockIsPageLayoutInEditMode.mockReturnValue(isEditMode);
-      mockUseViewById.mockReturnValue({
-        view: { id: 'view-id', type: ViewType.CALENDAR_WIDGET, calendarLayout },
-      });
-
-      render(
-        <RecordTableWidgetRendererContent
-          objectMetadataId="object-metadata-id"
-          viewId="view-id"
-          widgetId="widget-id"
-        />,
-      );
-
-      const createButton = screen.getByRole('button', {
-        name: 'Create calendar record',
-      });
-
-      if (isReadOnly) {
-        expect(createButton).toBeDisabled();
-      } else {
-        expect(createButton).toBeEnabled();
-      }
-    },
-  );
+  beforeEach(() => jest.clearAllMocks());
 
   // A layout that fell through to the table renderer was the bug this widget
   // type set out to fix, so every layout has to claim its own renderer.

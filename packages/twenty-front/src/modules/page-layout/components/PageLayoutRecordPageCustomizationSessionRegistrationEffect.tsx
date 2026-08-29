@@ -1,10 +1,6 @@
 import { activeCustomizationPageLayoutIdsState } from '@/layout-customization/states/activeCustomizationPageLayoutIdsState';
 import { isLayoutCustomizationModeEnabledState } from '@/layout-customization/states/isLayoutCustomizationModeEnabledState';
-import { useIsPageLayoutInEditMode } from '@/page-layout/hooks/useIsPageLayoutInEditMode';
-import { pageLayoutDraftComponentState } from '@/page-layout/states/pageLayoutDraftComponentState';
 import { pageLayoutPersistedComponentState } from '@/page-layout/states/pageLayoutPersistedComponentState';
-import { normalizeVerticalListWidgetsInDraftPageLayout } from '@/page-layout/utils/normalizeVerticalListWidgetsInDraftPageLayout';
-import { useAtomComponentStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateCallbackState';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useStore } from 'jotai';
@@ -18,12 +14,8 @@ export const PageLayoutRecordPageCustomizationSessionRegistrationEffect =
     const isLayoutCustomizationModeEnabled = useAtomStateValue(
       isLayoutCustomizationModeEnabledState,
     );
-    const isPageLayoutInEditMode = useIsPageLayoutInEditMode();
     const pageLayoutPersisted = useAtomComponentStateValue(
       pageLayoutPersistedComponentState,
-    );
-    const pageLayoutDraftState = useAtomComponentStateCallbackState(
-      pageLayoutDraftComponentState,
     );
 
     useEffect(() => {
@@ -39,25 +31,12 @@ export const PageLayoutRecordPageCustomizationSessionRegistrationEffect =
         return;
       }
 
-      if (isPageLayoutInEditMode) {
-        store.set(
-          pageLayoutDraftState,
-          normalizeVerticalListWidgetsInDraftPageLayout,
-        );
-      }
-
       store.set(activeCustomizationPageLayoutIdsState.atom, (activeIds) =>
         activeIds.includes(pageLayoutPersisted.id)
           ? activeIds
           : [...activeIds, pageLayoutPersisted.id],
       );
-    }, [
-      isLayoutCustomizationModeEnabled,
-      isPageLayoutInEditMode,
-      pageLayoutDraftState,
-      pageLayoutPersisted,
-      store,
-    ]);
+    }, [isLayoutCustomizationModeEnabled, pageLayoutPersisted, store]);
 
     return null;
   };

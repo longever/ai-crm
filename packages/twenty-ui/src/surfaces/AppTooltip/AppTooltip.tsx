@@ -297,7 +297,6 @@ export const AppTooltip = ({
           style={{ maxWidth: width ?? '40%' }}
         >
           <Tooltip.Popup
-            role="tooltip"
             className={clsx(
               styles.tooltip,
               clickable && styles.clickable,

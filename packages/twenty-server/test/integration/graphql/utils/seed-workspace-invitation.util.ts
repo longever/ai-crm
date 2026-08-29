@@ -1,34 +1,28 @@
 import { AppTokenType } from 'src/engine/core-modules/app-token/app-token.entity';
 import { SEED_APPLE_WORKSPACE_ID } from 'src/engine/workspace-manager/dev-seeder/core/constants/seeder-workspaces.constant';
 
-export const seedWorkspaceInvitation = async ({
+export const seedWorkspaceInvitation = ({
   email,
   value,
   expiresAt,
-  roleId,
   workspaceId = SEED_APPLE_WORKSPACE_ID,
 }: {
   email: string;
   value: string;
   expiresAt: Date;
-  roleId?: string;
   workspaceId?: string;
-}): Promise<string> => {
-  const insertedRows = await testDataSource.query(
+}) =>
+  testDataSource.query(
     `INSERT INTO core."appToken" ("workspaceId", "type", "value", "expiresAt", "context")
-     VALUES ($1, $2, $3, $4, $5::jsonb)
-     RETURNING "id"`,
+     VALUES ($1, $2, $3, $4, $5::jsonb)`,
     [
       workspaceId,
       AppTokenType.InvitationToken,
       value,
       expiresAt.toISOString(),
-      JSON.stringify({ email, ...(roleId ? { roleId } : {}) }),
+      JSON.stringify({ email }),
     ],
   );
-
-  return insertedRows[0].id;
-};
 
 export const findWorkspaceInvitationsByEmail = ({
   email,

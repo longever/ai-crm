@@ -14,7 +14,7 @@ export const STANDARD_RELATION_FIELD_PROPERTIES_BY_RELATION_OBJECT = {
   },
   attachment: {
     label: msg({ message: `Attachments`, context: 'fieldMetadata.label' }),
-    icon: 'IconPaperclip',
+    icon: 'IconFileImport',
   },
   timelineActivity: {
     label: msg({

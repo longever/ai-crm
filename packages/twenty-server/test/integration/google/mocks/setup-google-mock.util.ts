@@ -65,12 +65,10 @@ const googleApiErrorResponse = ({
 
 export const setupGoogleMock = ({
   handle,
-  aliases = [],
   inbox = [],
   labels = DEFAULT_LABELS,
 }: {
   handle: string;
-  aliases?: string[];
   inbox?: gmail_v1.Schema$Message[];
   labels?: gmail_v1.Schema$Label[];
 }): GoogleMock => {
@@ -81,7 +79,7 @@ export const setupGoogleMock = ({
 
   const httpMock = setupHttpMock(
     ...googleTokenHandlers(),
-    ...googleIdentityHandlers(handle, aliases),
+    ...googleIdentityHandlers(handle),
     ...googleCalendarEventsHandlers([], 'mock-calendar-sync-token'),
     ...gmailMailboxHandlers(inbox, labelStore),
     http.post('*/gmail/v1/users/me/messages/send', async ({ request }) => {

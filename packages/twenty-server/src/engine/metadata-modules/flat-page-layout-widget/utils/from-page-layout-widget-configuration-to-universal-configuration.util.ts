@@ -314,11 +314,7 @@ export const fromPageLayoutWidgetConfigurationToUniversalConfiguration = ({
     }
 
     case WidgetConfigurationType.FRONT_COMPONENT: {
-      const {
-        frontComponentId,
-        configurationType,
-        headerCommandMenuItemUniversalIdentifiers,
-      } = configuration;
+      const { frontComponentId, configurationType } = configuration;
 
       const frontComponentUniversalIdentifier: string | null =
         frontComponentUniversalIdentifierById[frontComponentId] ?? null;
@@ -336,23 +332,6 @@ export const fromPageLayoutWidgetConfigurationToUniversalConfiguration = ({
       return {
         configurationType,
         frontComponentUniversalIdentifier,
-        headerCommandMenuItemUniversalIdentifiers,
-      };
-    }
-
-    case WidgetConfigurationType.FORM_FIELD: {
-      const { fieldMetadataId, configurationType } = configuration;
-
-      const fieldMetadataUniversalIdentifier =
-        getFieldMetadataUniversalIdentifier({
-          fieldMetadataId,
-          fieldMetadataUniversalIdentifierById,
-          shouldThrowOnMissingIdentifier,
-        });
-
-      return {
-        configurationType,
-        fieldMetadataId: fieldMetadataUniversalIdentifier ?? fieldMetadataId,
       };
     }
 

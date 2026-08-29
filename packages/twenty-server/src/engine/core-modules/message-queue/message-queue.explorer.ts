@@ -20,7 +20,6 @@ import { MessageQueueMetadataAccessor } from 'src/engine/core-modules/message-qu
 import { type MessageQueueService } from 'src/engine/core-modules/message-queue/services/message-queue.service';
 import { MESSAGE_QUEUE_WORKER_CONFIG } from 'src/engine/core-modules/message-queue/message-queue-worker-config.constant';
 import { MessageQueue } from 'src/engine/core-modules/message-queue/message-queue.constants';
-import { EventLoopStallMonitorService } from 'src/engine/core-modules/message-queue/services/event-loop-stall-monitor.service';
 import { getQueueToken } from 'src/engine/core-modules/message-queue/utils/get-queue-token.util';
 import { shouldCreateWorkerForQueue } from 'src/engine/core-modules/message-queue/utils/should-create-worker-for-queue.util';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
@@ -45,7 +44,6 @@ export class MessageQueueExplorer implements OnModuleInit {
     private readonly metadataScanner: MetadataScanner,
     private readonly exceptionHandlerService: ExceptionHandlerService,
     private readonly twentyConfigService: TwentyConfigService,
-    private readonly eventLoopStallMonitorService: EventLoopStallMonitorService,
   ) {}
 
   onModuleInit() {
@@ -106,7 +104,6 @@ export class MessageQueueExplorer implements OnModuleInit {
         processorGroupCollection,
         messageQueueService,
         MESSAGE_QUEUE_WORKER_CONFIG[queueName].workerOptions,
-        queueName,
       );
     }
   }
@@ -185,22 +182,10 @@ export class MessageQueueExplorer implements OnModuleInit {
     processorGroupCollection: ProcessorGroup[],
     queue: MessageQueueService,
     options: MessageQueueWorkerOptions,
-    queueName: MessageQueue,
   ) {
     queue.work(async (job) => {
-      const stallMonitorToken =
-        this.eventLoopStallMonitorService.registerJobStart({
-          queueName,
-          jobName: job.name,
-          workspaceId: job.data?.workspaceId,
-        });
-
-      try {
-        for (const processorGroup of processorGroupCollection) {
-          await this.handleProcessor(processorGroup, job);
-        }
-      } finally {
-        this.eventLoopStallMonitorService.registerJobEnd(stallMonitorToken);
+      for (const processorGroup of processorGroupCollection) {
+        await this.handleProcessor(processorGroup, job);
       }
     }, options);
   }

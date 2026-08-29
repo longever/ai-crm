@@ -8,7 +8,7 @@ import { LinkIconWithLinkOverlay } from '@/navigation-menu-item/display/link/com
 import { useNavigationMenuItemEditSectionItems } from '@/navigation-menu-item/edit/hooks/useNavigationMenuItemEditSectionItems';
 import { useNavigationMenuItemTitleEdit } from '@/navigation-menu-item/edit/hooks/useNavigationMenuItemTitleEdit';
 import { useNavigationMenuItemEditController } from '@/navigation-menu-item/edit/hooks/useNavigationMenuItemEditController';
-import { HeaderIdentifier } from '@/ui/layout/page/components/HeaderIdentifier';
+import { SidePanelPageInfoLayout } from '@/side-panel/components/SidePanelPageInfoLayout';
 import { sidePanelPageInfoState } from '@/side-panel/states/sidePanelPageInfoState';
 import { sidePanelShouldFocusTitleInputComponentState } from '@/side-panel/states/sidePanelShouldFocusTitleInputComponentState';
 import { TitleInput } from '@/ui/input/components/TitleInput';
@@ -54,7 +54,7 @@ export const SidePanelLinkInfo = () => {
   if (!isDefined(selectedItem)) return null;
 
   return (
-    <HeaderIdentifier
+    <SidePanelPageInfoLayout
       icon={
         <LinkIconWithLinkOverlay
           link={selectedItem.link}

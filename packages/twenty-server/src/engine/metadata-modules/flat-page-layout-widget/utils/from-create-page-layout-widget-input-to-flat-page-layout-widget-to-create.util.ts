@@ -54,6 +54,7 @@ export const fromCreatePageLayoutWidgetInputToFlatPageLayoutWidgetToCreate = ({
       title: createPageLayoutWidgetInput.title,
       type: createPageLayoutWidgetInput.type,
       objectMetadataId: createPageLayoutWidgetInput.objectMetadataId,
+      gridPosition: createPageLayoutWidgetInput.gridPosition,
       position: createPageLayoutWidgetInput.position,
     },
     flatPageLayoutTabMaps,

@@ -17,9 +17,11 @@ import {
   getSystemViewUniversalIdentifier,
   type ObjectManifest,
 } from 'twenty-shared/application';
-import { FieldMetadataType, PageLayoutType } from 'twenty-shared/types';
+import { FieldMetadataType } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 import { v4 as uuidv4 } from 'uuid';
+
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 const TEST_APP_ID = uuidv4();
 const TEST_ROLE_ID = uuidv4();

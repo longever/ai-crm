@@ -35,42 +35,38 @@ export { defineCommandMenuItem } from '@/sdk/define/command-menu-items/define-co
 export type { CommandMenuItemConfig } from '@/sdk/define/command-menu-items/command-menu-item-config';
 export type { CommandMenuItemManifest } from 'twenty-shared/application';
 
-export { defineTimelineActivityType } from '@/sdk/define/timeline-activity-types/define-timeline-activity-type';
-export type { TimelineActivityTypeConfig } from '@/sdk/define/timeline-activity-types/timeline-activity-type-config';
-export type { TimelineActivityTypeManifest } from 'twenty-shared/application';
-
 export {
-  canAccessFullAdminPanel,
+  pageType,
+  isInSidePanel,
+  isDashboardPageLayoutInEditMode,
+  isLayoutCustomizationModeEnabled,
+  favoriteRecordIds,
+  isSelectAll,
+  hasAnySoftDeleteFilterOnView,
+  numberOfSelectedRecords,
+  objectPermissions,
+  selectedRecords,
+  featureFlags,
+  targetObjectReadPermissions,
+  targetObjectWritePermissions,
   canImpersonate,
+  canAccessFullAdminPanel,
+  isDefined,
+  isNonEmptyString,
+  includes,
   every,
   everyDefined,
   everyEquals,
-  favoriteRecordIds,
-  featureFlags,
-  hasAnySoftDeleteFilterOnView,
-  includes,
-  includesEvery,
-  isDashboardPageLayoutInEditMode,
-  isDefined,
-  isInSidePanel,
-  isLayoutCustomizationModeEnabled,
-  isNonEmptyString,
-  isSelectAll,
-  none,
-  noneDefined,
-  noneEquals,
-  numberOfSelectedRecords,
-  objectMetadataItem,
-  objectMetadataLabel,
-  objectPermissions,
-  pageType,
-  selectedRecords,
   some,
   someDefined,
   someEquals,
+  none,
+  noneDefined,
+  noneEquals,
   someNonEmptyString,
-  targetObjectReadPermissions,
-  targetObjectWritePermissions,
+  includesEvery,
+  objectMetadataItem,
+  objectMetadataLabel,
 } from '@/sdk/define/conditional-availability/conditional-availability-variables';
 
 export { defineFrontComponent } from '@/sdk/define/front-component/define-front-component';
@@ -190,11 +186,9 @@ export type {
 
 export {
   AggregateOperations,
-  CommandMenuItemAvailabilityType,
   DateDisplayFormat,
   FieldMetadataSettingsOnClickAction,
   HTTPMethod,
-  IndexType,
   MetadataWritability,
   NavigationMenuItemType,
   NumberDataType,
@@ -209,13 +203,9 @@ export {
   ViewSortDirection,
   ViewType,
   ViewVisibility,
-  WidgetType,
 } from 'twenty-shared/types';
 export type {
-  PageLayoutWidgetCanvasPosition,
+  GridPosition,
   PageLayoutWidgetConditionalDisplay,
-  PageLayoutWidgetGridPosition,
-  PageLayoutWidgetPosition,
   PageLayoutWidgetUniversalConfiguration,
-  PageLayoutWidgetVerticalListPosition,
 } from 'twenty-shared/types';

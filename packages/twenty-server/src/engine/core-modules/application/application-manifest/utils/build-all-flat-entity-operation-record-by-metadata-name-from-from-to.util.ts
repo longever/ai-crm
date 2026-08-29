@@ -4,7 +4,6 @@ import {
 } from 'twenty-shared/metadata';
 import { isDefined } from 'twenty-shared/utils';
 
-import { preserveApplicationLocalMetadataState } from 'src/engine/core-modules/application/application-manifest/utils/preserve-application-local-metadata-state.util';
 import { type AllFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/all-flat-entity-maps.type';
 import {
   type AllFlatEntityOperationRecordByMetadataName,
@@ -79,17 +78,13 @@ const buildFlatEntityOperationRecordForMetadata = <T extends AllMetadataName>({
         return undefined;
       }
 
-      const toFlatEntityWithLocalState = preserveApplicationLocalMetadataState({
-        existingEntity: fromFlatEntity,
-        manifestEntity: toFlatEntity,
-      });
       const update = compareTwoFlatEntity({
         fromUniversalFlatEntity: fromFlatEntity,
-        toUniversalFlatEntity: toFlatEntityWithLocalState,
+        toUniversalFlatEntity: toFlatEntity,
         metadataName,
       });
 
-      return isDefined(update) ? toFlatEntityWithLocalState : undefined;
+      return isDefined(update) ? toFlatEntity : undefined;
     })
     .filter(isDefined);
 

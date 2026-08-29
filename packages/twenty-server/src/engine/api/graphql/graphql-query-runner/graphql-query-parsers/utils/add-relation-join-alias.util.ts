@@ -1,7 +1,7 @@
-import { type WorkspaceSelectQueryBuilder } from 'src/engine/twenty-orm/query-builder/workspace-select-query-builder';
+import { type RecordQueryBuilder } from 'src/engine/api/graphql/graphql-query-runner/types/record-query-builder.type';
 
 type AddRelationJoinAliasToQueryBuilderArgs = {
-  queryBuilder: WorkspaceSelectQueryBuilder;
+  queryBuilder: RecordQueryBuilder;
   parentAlias: string;
   relationName: string;
 };
@@ -11,9 +11,9 @@ export const addRelationJoinAliasToQueryBuilder = ({
   parentAlias,
   relationName,
 }: AddRelationJoinAliasToQueryBuilderArgs): void => {
-  const alreadyJoined = queryBuilder
-    .getJoinAliases()
-    .some((joinAlias) => joinAlias.name === relationName);
+  const alreadyJoined = queryBuilder.expressionMap.joinAttributes.some(
+    (joinAttribute) => joinAttribute.alias.name === relationName,
+  );
 
   if (alreadyJoined) {
     return;

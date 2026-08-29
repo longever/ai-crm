@@ -27,7 +27,6 @@ import { mockedRoles } from '~/testing/mock-data/generated/metadata/roles/mock-r
 import { mockedCommandMenuItems } from '~/testing/mock-data/generated/metadata/command-menu-items/mock-command-menu-items-data';
 
 import { type Task } from '@/activities/types/Task';
-import { getJunctionRecordsFromRecord } from '@/object-record/record-field/ui/utils/junction/getJunctionRecordsFromRecord';
 import { FIND_MINIMAL_METADATA } from '@/metadata-store/graphql/queries/findMinimalMetadata';
 import {
   getConnectionTypename,
@@ -447,16 +446,16 @@ export const graphqlMocks = {
       });
     }),
     graphql.query('FindManyTaskTargets', () => {
-      const taskTargetNodes = flatTaskRecords.flatMap((task) =>
-        getJunctionRecordsFromRecord({
-          record: task,
-          junctionFieldName: 'taskTargets',
-        }),
+      const taskTargetNodes = flatTaskRecords.flatMap(
+        (task) => task.taskTargets ?? [],
       );
 
       return HttpResponse.json({
         data: {
-          taskTargets: wrapRecordsAsConnection('taskTarget', taskTargetNodes),
+          taskTargets: wrapRecordsAsConnection(
+            'taskTarget',
+            taskTargetNodes as Record<string, unknown>[],
+          ),
         },
       });
     }),

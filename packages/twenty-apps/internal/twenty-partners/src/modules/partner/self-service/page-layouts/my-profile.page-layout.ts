@@ -1,4 +1,4 @@
-import { definePageLayout, PageLayoutTabLayoutMode } from 'twenty-sdk/define';
+import { PageLayoutTabLayoutMode, definePageLayout } from 'twenty-sdk/define';
 
 import {
   MY_PROFILE_FRONT_COMPONENT_ID,
@@ -23,7 +23,7 @@ export default definePageLayout({
           universalIdentifier: MY_PROFILE_PAGE_WIDGET_ID,
           title: 'My Profile',
           type: 'FRONT_COMPONENT',
-          position: { layoutMode: PageLayoutTabLayoutMode.CANVAS },
+          gridPosition: { row: 0, column: 0, rowSpan: 14, columnSpan: 12 },
           configuration: {
             configurationType: 'FRONT_COMPONENT',
             frontComponentUniversalIdentifier: MY_PROFILE_FRONT_COMPONENT_ID,

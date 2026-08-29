@@ -32,16 +32,12 @@ export class CreateCommandMenuItemActionHandlerService extends WorkspaceMigratio
     flatApplication,
     workspaceId,
   }: WorkspaceMigrationActionRunnerArgs<UniversalCreateCommandMenuItemAction>): Promise<FlatCreateCommandMenuItemAction> {
-    const {
-      availabilityObjectMetadataId,
-      frontComponentId,
-      pageLayoutId,
-      navigationTargetObjectMetadataId,
-    } = resolveUniversalRelationIdentifiersToIds({
-      flatEntityMaps: allFlatEntityMaps,
-      metadataName: action.metadataName,
-      universalForeignKeyValues: action.flatEntity,
-    });
+    const { availabilityObjectMetadataId, frontComponentId, pageLayoutId } =
+      resolveUniversalRelationIdentifiersToIds({
+        flatEntityMaps: allFlatEntityMaps,
+        metadataName: action.metadataName,
+        universalForeignKeyValues: action.flatEntity,
+      });
 
     const overrides = isDefined(action.flatEntity.universalOverrides)
       ? fromUniversalOverridesToCommandMenuItemOverrides({
@@ -63,7 +59,6 @@ export class CreateCommandMenuItemActionHandlerService extends WorkspaceMigratio
         availabilityObjectMetadataId,
         frontComponentId,
         pageLayoutId,
-        navigationTargetObjectMetadataId,
         overrides,
         applicationId: flatApplication.id,
         id: action.id ?? v4(),

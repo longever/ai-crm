@@ -1,13 +1,11 @@
 import { Command } from 'nest-commander';
 import { isDefined } from 'twenty-shared/utils';
-import { isWorkspaceObjectNotFoundError } from 'src/database/commands/upgrade-version-command/utils/is-workspace-object-not-found-error.util';
+import { EntityMetadataNotFoundError } from 'typeorm/error/EntityMetadataNotFoundError';
 
 import { ProvisionedWorkspaceCommandRunner } from 'src/database/commands/command-runners/provisioned-workspace.command-runner';
 import { WorkspaceIteratorService } from 'src/database/commands/command-runners/workspace-iterator.service';
 import { type RunOnWorkspaceArgs } from 'src/database/commands/command-runners/workspace.command-runner';
 import { RegisteredWorkspaceCommand } from 'src/engine/core-modules/upgrade/decorators/registered-workspace-command.decorator';
-import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
-import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 import { WorkspaceCacheService } from 'src/engine/workspace-cache/services/workspace-cache.service';
 import { getWorkspaceSchemaName } from 'src/engine/workspace-datasource/utils/get-workspace-schema-name.util';
 import { type WorkflowVersionWorkspaceEntity } from 'src/modules/workflow/common/standard-objects/workflow-version.workspace-entity';
@@ -28,7 +26,6 @@ export class RepairOrphanCoreWorkflowVersionsCommand extends ProvisionedWorkspac
   constructor(
     protected readonly workspaceIteratorService: WorkspaceIteratorService,
     private readonly workspaceCacheService: WorkspaceCacheService,
-    private readonly workspaceOrmManager: WorkspaceOrmManager,
   ) {
     super(workspaceIteratorService);
   }
@@ -43,23 +40,17 @@ export class RepairOrphanCoreWorkflowVersionsCommand extends ProvisionedWorkspac
     }
 
     try {
-      // Resolve the workspace workflowVersion object; an object-not-found error
+      // Resolve the workspace workflowVersion object; EntityMetadataNotFoundError
       // means it was never provisioned, so there is nothing to repair and the
       // orphan query below would fail to resolve its schema table. Skip cleanly
       // like the sibling backfill commands rather than aborting the upgrade.
-      await this.workspaceOrmManager.executeInWorkspaceContext(
-        async () => {
-          const workflowVersionRepository =
-            this.workspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>('workflowVersion',
-              { shouldBypassPermissionChecks: true },
-            );
-
-          return workflowVersionRepository.count();
-        },
-        buildSystemAuthContext(workspaceId),
-      );
+      await dataSource
+        .getRepository<WorkflowVersionWorkspaceEntity>('workflowVersion', {
+          shouldBypassPermissionChecks: true,
+        })
+        .count();
     } catch (error) {
-      if (isWorkspaceObjectNotFoundError(error)) {
+      if (error instanceof EntityMetadataNotFoundError) {
         return;
       }
 

@@ -13,7 +13,6 @@ const StyledHandleContainer = styled.div`
   & .react-flow__handle {
     background: var(--handle-bg);
     border-color: var(--handle-border-color);
-    corner-shape: round;
     height: ${NODE_HANDLE_HEIGHT_PX}px;
     opacity: var(--handle-opacity, 1);
     transform: var(--handle-transform);

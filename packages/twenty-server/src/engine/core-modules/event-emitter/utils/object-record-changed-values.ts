@@ -10,9 +10,9 @@ import { computeMorphOrRelationFieldJoinColumnName } from 'src/engine/metadata-m
 import { getJoinColumnNameForRelationField } from 'src/engine/metadata-modules/field-metadata/utils/get-join-column-name-for-relation-field.util';
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { findFlatEntityByIdInFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps.util';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 import { buildFieldMapsFromFlatObjectMetadata } from 'src/engine/metadata-modules/flat-field-metadata/utils/build-field-maps-from-flat-object-metadata.util';
-import { isMorphOrRelationFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/utils/is-morph-or-relation-flat-field-metadata.util';
+import { isFlatFieldMetadataOfType } from 'src/engine/metadata-modules/flat-field-metadata/utils/is-flat-field-metadata-of-type.util';
 import { type FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata.type';
 
 export type RelationFieldChangeValue = {
@@ -25,11 +25,11 @@ const buildRelationFieldChangeValue = (
   id: isDefined(relationId) ? relationId : null,
 });
 
-const isManyToOneMorphOrRelationField = (
-  field: OrmFlatFieldMetadata,
-): boolean => {
+const isManyToOneRelationField = (
+  field: FlatFieldMetadata,
+): field is FlatFieldMetadata<FieldMetadataType.RELATION> => {
   return (
-    isMorphOrRelationFlatFieldMetadata(field) &&
+    isFlatFieldMetadataOfType(field, FieldMetadataType.RELATION) &&
     field.settings?.relationType === RelationType.MANY_TO_ONE
   );
 };
@@ -37,7 +37,7 @@ const isManyToOneMorphOrRelationField = (
 export const computeUpdatedFieldsFromDiff = (
   diff: Record<string, unknown>,
   objectMetadataItem: FlatObjectMetadata,
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>,
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
 ): string[] => {
   const { fieldIdByName } = buildFieldMapsFromFlatObjectMetadata(
     flatFieldMetadataMaps,
@@ -56,7 +56,7 @@ export const computeUpdatedFieldsFromDiff = (
       flatEntityMaps: flatFieldMetadataMaps,
     });
 
-    if (isDefined(field) && isManyToOneMorphOrRelationField(field)) {
+    if (isDefined(field) && isManyToOneRelationField(field)) {
       return [
         diffKey,
         computeMorphOrRelationFieldJoinColumnName({ name: field.name }),
@@ -71,7 +71,7 @@ export const objectRecordChangedValues = (
   oldRecord: Partial<ObjectRecord>,
   newRecord: Partial<ObjectRecord>,
   objectMetadataItem: FlatObjectMetadata,
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>,
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
 ) => {
   const { fieldIdByName, fieldIdByJoinColumnName } =
     buildFieldMapsFromFlatObjectMetadata(
@@ -102,7 +102,7 @@ export const objectRecordChangedValues = (
       if (
         key === 'updatedAt' ||
         key === 'searchVector' ||
-        (isDefined(field) && isManyToOneMorphOrRelationField(field)) ||
+        (isDefined(field) && isManyToOneRelationField(field)) ||
         field?.type === FieldMetadataType.RELATION ||
         field?.type === FieldMetadataType.MORPH_RELATION
       ) {
@@ -129,7 +129,7 @@ export const objectRecordChangedValues = (
 
   for (const field of objectFields) {
     if (
-      !isManyToOneMorphOrRelationField(field) ||
+      !isManyToOneRelationField(field) ||
       isDefined(accumulator[field.name])
     ) {
       continue;

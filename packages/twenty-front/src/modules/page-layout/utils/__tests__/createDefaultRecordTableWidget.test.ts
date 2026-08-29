@@ -9,20 +9,13 @@ describe('createDefaultRecordTableWidget', () => {
   const widgetId = 'widget-id-1';
   const pageLayoutTabId = 'tab-id-1';
   const title = 'My Record Table';
-  const position = {
-    __typename: 'PageLayoutWidgetGridPosition' as const,
-    layoutMode: PageLayoutTabLayoutMode.GRID as const,
-    row: 1,
-    column: 2,
-    rowSpan: 3,
-    columnSpan: 4,
-  };
+  const gridPosition = { row: 1, column: 2, rowSpan: 3, columnSpan: 4 };
 
   const widget = createDefaultRecordTableWidget({
     id: widgetId,
     pageLayoutTabId,
     title,
-    position,
+    gridPosition,
   });
 
   it('should return correct shape with all required fields', () => {
@@ -45,15 +38,15 @@ describe('createDefaultRecordTableWidget', () => {
     });
   });
 
-  it('should correctly map grid position values to both position and position fields', () => {
-    expect(widget.position).toEqual(position);
+  it('should correctly map grid position values to both gridPosition and position fields', () => {
+    expect(widget.gridPosition).toEqual(gridPosition);
     expect(widget.position).toEqual({
       __typename: 'PageLayoutWidgetGridPosition',
       layoutMode: PageLayoutTabLayoutMode.GRID,
-      row: position.row,
-      column: position.column,
-      rowSpan: position.rowSpan,
-      columnSpan: position.columnSpan,
+      row: gridPosition.row,
+      column: gridPosition.column,
+      rowSpan: gridPosition.rowSpan,
+      columnSpan: gridPosition.columnSpan,
     });
   });
 

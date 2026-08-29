@@ -1,32 +1,29 @@
-import { type TimelineActivityTypeSnapshot } from 'twenty-shared/timeline';
 import { isDefined } from 'twenty-shared/utils';
 import { type WorkspaceMember } from '~/generated-metadata/graphql';
 
 export type TimelineActivity = {
   id: string;
   createdAt: string;
-  happensAt: string;
   updatedAt: string;
   deletedAt: string | null;
   workspaceMemberId: string;
   workspaceMember: WorkspaceMember;
-  properties: Record<string, unknown> & {
-    diff?: Record<string, { before: unknown; after: unknown }>;
-  };
+  properties: any;
+  name: string | null;
   timelineActivityTypeId: string | null;
-  timelineActivityTypeSnapshot: TimelineActivityTypeSnapshot | null;
+  linkedRecordCachedName: string;
   linkedRecordId: string | null;
   linkedObjectMetadataId: string | null;
   __typename: 'TimelineActivity';
-} & Record<string, unknown>;
+} & Record<string, any>;
 
-export type TimelineActivityWithLinkedRecord = TimelineActivity & {
+export type TimelineActivityWithRecord = TimelineActivity & {
   linkedRecordId: string;
   linkedObjectMetadataId: string;
 };
 
 export const isTimelineActivityWithLinkedRecord = (
   timelineActivity: TimelineActivity,
-): timelineActivity is TimelineActivityWithLinkedRecord =>
+): timelineActivity is TimelineActivityWithRecord =>
   isDefined(timelineActivity.linkedObjectMetadataId) &&
   isDefined(timelineActivity.linkedRecordId);

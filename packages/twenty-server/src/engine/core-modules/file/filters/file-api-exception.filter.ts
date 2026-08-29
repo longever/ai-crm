@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 
 import { type Response } from 'express';
-import { isDefined } from 'twenty-shared/utils';
 
 import { HttpExceptionHandlerService } from 'src/engine/core-modules/exception-handler/http-exception-handler.service';
 import {
@@ -35,19 +34,6 @@ export class FileApiExceptionFilter implements ExceptionFilter {
           exception,
           response,
           404,
-        );
-      case FileExceptionCode.RANGE_NOT_SATISFIABLE:
-        if (isDefined(exception.fileSizeInBytes)) {
-          response.setHeader(
-            'Content-Range',
-            `bytes */${exception.fileSizeInBytes}`,
-          );
-        }
-
-        return this.httpExceptionHandlerService.handleError(
-          exception,
-          response,
-          416,
         );
       case FileExceptionCode.INTERNAL_SERVER_ERROR:
       default:

@@ -1,8 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { FileEntity } from 'src/engine/core-modules/file/entities/file.entity';
-import { FilesFieldModule } from 'src/engine/core-modules/file/files-field/files-field.module';
 import { RecordCrudModule } from 'src/engine/core-modules/record-crud/record-crud.module';
 import { TOOL_PROVIDERS } from 'src/engine/core-modules/tool-provider/constants/tool-providers.token';
 import { ActionToolProvider } from 'src/engine/core-modules/tool-provider/providers/action-tool.provider';
@@ -15,7 +13,6 @@ import { RoleToolProvider } from 'src/engine/core-modules/tool-provider/provider
 import { ViewToolProvider } from 'src/engine/core-modules/tool-provider/providers/view-tool.provider';
 import { WebhookToolProvider } from 'src/engine/core-modules/tool-provider/providers/webhook-tool.provider';
 import { WorkflowToolProvider } from 'src/engine/core-modules/tool-provider/providers/workflow-tool.provider';
-import { RecordFilesResolverService } from 'src/engine/core-modules/tool-provider/services/record-files-resolver.service';
 import { ToolExecutorService } from 'src/engine/core-modules/tool-provider/services/tool-executor.service';
 import { ToolModule } from 'src/engine/core-modules/tool/tool.module';
 import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user-workspace.entity';
@@ -35,7 +32,6 @@ import { ViewFilterModule } from 'src/engine/metadata-modules/view-filter/view-f
 import { ViewSortModule } from 'src/engine/metadata-modules/view-sort/view-sort.module';
 import { ViewModule } from 'src/engine/metadata-modules/view/view.module';
 import { WebhookModule } from 'src/engine/metadata-modules/webhook/webhook.module';
-import { provideWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/provide-workspace-scoped-repository';
 import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache.module';
 import { EmailingModule } from 'src/modules/emailing/emailing.module';
 
@@ -56,7 +52,6 @@ import { ToolRegistryService } from './services/tool-registry.service';
   imports: [
     ToolModule,
     RecordCrudModule,
-    FilesFieldModule,
     AiModelsModule,
     forwardRef(() => AiAgentExecutionModule),
     ObjectMetadataModule,
@@ -74,13 +69,11 @@ import { ToolRegistryService } from './services/tool-registry.service';
     RoleModule,
     UserRoleModule,
     EmailingModule,
-    TypeOrmModule.forFeature([UserEntity, UserWorkspaceEntity, FileEntity]),
+    TypeOrmModule.forFeature([UserEntity, UserWorkspaceEntity]),
   ],
   providers: [
     ToolIndexResolver,
     ToolExecutorService,
-    RecordFilesResolverService,
-    provideWorkspaceScopedRepository(FileEntity),
     ActionToolProvider,
     DashboardToolProvider,
     DatabaseToolProvider,

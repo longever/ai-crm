@@ -1,5 +1,5 @@
 import { css } from '@linaria/core';
-import { type MouseEvent, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { LocalizedLink } from '@/platform/i18n/LocalizedLink';
 import {
@@ -174,7 +174,7 @@ export type ButtonProps = {
   size?: ButtonSize;
   type?: 'button' | 'submit';
   variant?: ButtonVariant;
-  onClick?: (event: MouseEvent<HTMLElement>) => void;
+  onClick?: () => void;
 };
 
 export function Button({
@@ -193,14 +193,8 @@ export function Button({
   const isProtocolLink =
     href !== undefined &&
     (href.startsWith('mailto:') || href.startsWith('tel:'));
-  // An in-page jump stays on the current document: it must keep its href so
-  // the target is focusable and reachable without JS, and must never open a tab.
-  const isHashLink = href !== undefined && href.startsWith('#');
   const isExternal =
-    href !== undefined &&
-    !href.startsWith('/') &&
-    !isProtocolLink &&
-    !isHashLink;
+    href !== undefined && !href.startsWith('/') && !isProtocolLink;
 
   const inner = (
     <>
@@ -237,9 +231,9 @@ export function Button({
     );
   }
 
-  if (isProtocolLink || isHashLink) {
+  if (isProtocolLink) {
     return (
-      <a {...sharedAttributes} href={href} onClick={onClick}>
+      <a {...sharedAttributes} href={href}>
         {inner}
       </a>
     );
@@ -250,7 +244,6 @@ export function Button({
       <a
         {...sharedAttributes}
         href={href}
-        onClick={onClick}
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -262,7 +255,7 @@ export function Button({
   // Internal links route through LocalizedLink so an unprefixed href ("/x")
   // carries the active locale (/fr/x), and the source locale stays unprefixed.
   return (
-    <LocalizedLink {...sharedAttributes} href={href} onClick={onClick}>
+    <LocalizedLink {...sharedAttributes} href={href}>
       {inner}
     </LocalizedLink>
   );

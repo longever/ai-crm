@@ -49,7 +49,7 @@ export const DashboardWidgetPlaceholder = () => {
 
   return (
     <WidgetCard
-      variant="framed"
+      variant="dashboard"
       isEditable={true}
       isEditing={false}
       isDragging={false}
@@ -58,7 +58,7 @@ export const DashboardWidgetPlaceholder = () => {
       className="widget"
     >
       <WidgetCardHeader
-        variant="framed"
+        variant="dashboard"
         widgetId="widget-placeholder"
         isInEditMode={isPageLayoutInEditMode}
         isResizing={false}

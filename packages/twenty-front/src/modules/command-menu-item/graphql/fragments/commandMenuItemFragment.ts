@@ -3,7 +3,6 @@ import { gql } from '@apollo/client';
 export const COMMAND_MENU_ITEM_FRAGMENT = gql`
   fragment CommandMenuItemFields on CommandMenuItem {
     id
-    universalIdentifier
     applicationId
     workflowVersionId
     frontComponentId

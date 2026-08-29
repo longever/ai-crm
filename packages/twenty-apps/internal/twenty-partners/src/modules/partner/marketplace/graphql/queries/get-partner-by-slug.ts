@@ -18,7 +18,6 @@ export const queryPartnerBySlug = (client: CoreApiClient, slug: string) =>
           id: true,
           name: true,
           slug: true,
-          superPartner: true,
           introduction: true,
           languagesSpoken: true,
           deploymentExpertise: true,

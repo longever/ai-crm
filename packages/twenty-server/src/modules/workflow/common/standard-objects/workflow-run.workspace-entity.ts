@@ -69,7 +69,5 @@ export class WorkflowRunWorkspaceEntity extends BaseWorkspaceEntity {
   workflowVersionId: string;
   workflow: EntityRelation<WorkflowWorkspaceEntity>;
   workflowId: string;
-  coreWorkflowId: string | null;
-  coreWorkflowVersionId: string | null;
   timelineActivities: EntityRelation<TimelineActivityWorkspaceEntity[]>;
 }

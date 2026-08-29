@@ -25,16 +25,10 @@ describe('on-application-set-name', () => {
 
   it('labels the application from partner + opportunity names', async () => {
     queryMock.mockResolvedValue({
-      applications: {
-        edges: [
-          {
-            node: {
-              id: 'a1',
-              partner: { name: 'Acme Partners' },
-              opportunity: { name: 'Q3 Renewal' },
-            },
-          },
-        ],
+      application: {
+        id: 'a1',
+        partner: { name: 'Acme Partners' },
+        opportunity: { name: 'Q3 Renewal' },
       },
     });
 
@@ -52,18 +46,5 @@ describe('on-application-set-name', () => {
     await handler(event({ id: 'a1' }, ['pitch']));
     expect(queryMock).not.toHaveBeenCalled();
     expect(mutationMock).not.toHaveBeenCalled();
-  });
-
-  it('falls back to the placeholder label when the application row is absent', async () => {
-    queryMock.mockResolvedValue({ applications: { edges: [] } });
-
-    await handler(event({ id: 'a1' }, ['partnerId']));
-
-    expect(mutationMock).toHaveBeenCalledWith({
-      updateApplication: {
-        __args: { id: 'a1', data: { name: 'Unassigned · No brief' } },
-        id: true,
-      },
-    });
   });
 });

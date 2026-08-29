@@ -26,9 +26,7 @@ type FrontComponentRendererProps = {
   frontComponentId: string;
   commandMenuItemId?: string;
   selectedRecordIds?: string[];
-  timelineActivityId?: string;
   loadingFallback?: ReactNode;
-  unavailableFallback?: ReactNode;
 };
 
 type ResolvedFrontComponent = NonNullable<
@@ -39,7 +37,6 @@ type FrontComponentRendererContentProps = {
   frontComponent: ResolvedFrontComponent;
   commandMenuItemId?: string;
   selectedRecordIds?: string[];
-  timelineActivityId?: string;
   loadingFallback?: ReactNode;
 };
 
@@ -47,9 +44,7 @@ export const FrontComponentRenderer = ({
   frontComponentId,
   commandMenuItemId,
   selectedRecordIds,
-  timelineActivityId,
   loadingFallback,
-  unavailableFallback,
 }: FrontComponentRendererProps) => {
   const { data, loading, error } = useQuery(FindOneFrontComponentDocument, {
     variables: { id: frontComponentId },
@@ -65,15 +60,11 @@ export const FrontComponentRenderer = ({
     <>
       <FrontComponentLoadErrorSnackBarEffect errorMessage={error?.message} />
       {loading && loadingFallback}
-      {!loading &&
-        (!isDefined(frontComponent) || isDefined(error)) &&
-        unavailableFallback}
-      {!loading && isDefined(frontComponent) && !isDefined(error) && (
+      {!loading && isDefined(frontComponent) && (
         <FrontComponentRendererContent
           frontComponent={frontComponent}
           commandMenuItemId={commandMenuItemId}
           selectedRecordIds={selectedRecordIds}
-          timelineActivityId={timelineActivityId}
           loadingFallback={loadingFallback}
         />
       )}
@@ -85,7 +76,6 @@ const FrontComponentRendererContent = ({
   frontComponent,
   commandMenuItemId,
   selectedRecordIds,
-  timelineActivityId,
   loadingFallback,
 }: FrontComponentRendererContentProps) => {
   const { colorScheme } = useContext(ThemeContext);
@@ -108,7 +98,6 @@ const FrontComponentRendererContent = ({
     applicationId,
     commandMenuItemId,
     selectedRecordIds,
-    timelineActivityId,
     colorScheme,
   });
 

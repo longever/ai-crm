@@ -62,7 +62,6 @@ import {
 } from '@/utils/filter/utils/validation-schemas/filterValueScalarSchemas';
 import { arrayOfUuidOrVariableSchema } from '@/utils/filter/utils/validation-schemas/arrayOfUuidsOrVariablesSchema';
 import { jsonRelationFilterValueSchema } from '@/utils/filter/utils/validation-schemas/jsonRelationFilterValueSchema';
-import { computeMorphRelationGqlFieldName } from '@/utils/fieldMetadata/compute-morph-relation-gql-field-name';
 import {
   computeMorphRelationGqlFieldJoinColumnName,
   computeRelationGqlFieldJoinColumnName,
@@ -89,7 +88,6 @@ const parseActorSourceFilterValue = (value: string): string[] => {
 type FieldSharedMorphRelation = {
   type: RelationType;
   targetObjectMetadata: {
-    id: string;
     nameSingular: string;
     namePlural: string;
   };
@@ -100,7 +98,6 @@ export type FieldShared = {
   name: string;
   type: FieldMetadataType;
   label: string;
-  relation?: { sourceObjectMetadata: { id: string } } | null;
   morphRelations?: FieldSharedMorphRelation[] | null;
 };
 
@@ -108,42 +105,6 @@ type TurnRecordFilterIntoRecordGqlOperationFilterParams = {
   filterValueDependencies: RecordFilterValueDependencies;
   recordFilter: Omit<RecordFilter, 'id'>;
   fieldMetadataItemById: Map<string, FieldShared>;
-};
-
-const getTraversalFieldName = ({
-  sourceFieldMetadataItem,
-  targetFieldMetadataItem,
-}: {
-  sourceFieldMetadataItem: FieldShared;
-  targetFieldMetadataItem: FieldShared;
-}): string => {
-  if (sourceFieldMetadataItem.type !== FieldMetadataType.MORPH_RELATION) {
-    return sourceFieldMetadataItem.name;
-  }
-
-  const traversedObjectMetadataId =
-    targetFieldMetadataItem.relation?.sourceObjectMetadata.id;
-
-  const matchingMorphRelation = sourceFieldMetadataItem.morphRelations?.find(
-    (morphRelation) =>
-      morphRelation.targetObjectMetadata.id === traversedObjectMetadataId,
-  );
-
-  if (!isDefined(matchingMorphRelation)) {
-    throw new CustomError(
-      `No morph relation on field ${sourceFieldMetadataItem.name} targets the traversed object ${traversedObjectMetadataId}`,
-      'UNRESOLVED_MORPH_RELATION_TRAVERSAL',
-    );
-  }
-
-  return computeMorphRelationGqlFieldName({
-    fieldName: sourceFieldMetadataItem.name,
-    relationType: matchingMorphRelation.type,
-    targetObjectMetadataNameSingular:
-      matchingMorphRelation.targetObjectMetadata.nameSingular,
-    targetObjectMetadataNamePlural:
-      matchingMorphRelation.targetObjectMetadata.namePlural,
-  });
 };
 
 export const turnRecordFilterIntoRecordGqlOperationFilter = ({
@@ -166,8 +127,7 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
   }
 
   if (
-    (sourceFieldMetadataItem.type === FieldMetadataType.RELATION ||
-      sourceFieldMetadataItem.type === FieldMetadataType.MORPH_RELATION) &&
+    sourceFieldMetadataItem.type === FieldMetadataType.RELATION &&
     isDefined(recordFilter.relationTargetFieldMetadataId)
   ) {
     const targetFieldMetadataItem = fieldMetadataItemById.get(
@@ -177,11 +137,6 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
     if (!isDefined(targetFieldMetadataItem)) {
       return;
     }
-
-    const traversalFieldName = getTraversalFieldName({
-      sourceFieldMetadataItem,
-      targetFieldMetadataItem,
-    });
 
     const innerFilter = buildDirectFieldGqlOperationFilter({
       recordFilter: {
@@ -198,7 +153,7 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
     }
 
     return {
-      [traversalFieldName]: innerFilter,
+      [sourceFieldMetadataItem.name]: innerFilter,
     } as RecordGqlOperationFilter;
   }
 

@@ -4,7 +4,9 @@ import { findPageLayoutTabs } from 'test/integration/metadata/suites/page-layout
 import { findPageLayoutWidgets } from 'test/integration/metadata/suites/page-layout-widget/utils/find-page-layout-widgets.util';
 import { updateOnePageLayoutWidget } from 'test/integration/metadata/suites/page-layout-widget/utils/update-one-page-layout-widget.util';
 import { findPageLayouts } from 'test/integration/metadata/suites/page-layout/utils/find-page-layouts.util';
-import { PageLayoutTabLayoutMode, PageLayoutType } from 'twenty-shared/types';
+import { PageLayoutTabLayoutMode } from 'twenty-shared/types';
+
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 const WIDGET_OVERRIDE_GQL_FIELDS = `
   id

@@ -71,6 +71,8 @@ export class BackfillMessageThreadSubjectCommand extends ProvisionedWorkspaceCom
        WHERE mt.id = sub."messageThreadId"
          AND mt."subject" IS NULL`,
       undefined,
+      undefined,
+      { shouldBypassPermissionChecks: true },
     );
 
     this.logger.log(

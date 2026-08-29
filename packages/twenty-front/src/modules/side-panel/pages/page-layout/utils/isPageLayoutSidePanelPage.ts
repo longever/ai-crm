@@ -5,7 +5,6 @@ import { type PageLayoutSidePanelPage } from '@/side-panel/pages/page-layout/typ
 const PAGE_LAYOUT_SIDE_PANEL_PAGES: PageLayoutSidePanelPage[] = [
   SidePanelPages.PageLayoutDashboardWidgetTypeSelect,
   SidePanelPages.PageLayoutTabSettings,
-  SidePanelPages.PageLayoutWidgetSettings,
   SidePanelPages.DashboardChartSettings,
   SidePanelPages.DashboardIframeSettings,
   SidePanelPages.DashboardRecordTableSettings,

@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { InjectDataSource } from '@nestjs/typeorm';
 
 import { isDefined } from 'twenty-shared/utils';
-import { DataSource } from 'typeorm';
 
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
 import { type ObjectRecordCountDTO } from 'src/engine/metadata-modules/object-metadata/dtos/object-record-count.dto';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { computeObjectTargetTable } from 'src/engine/utils/compute-object-target-table.util';
 import { getWorkspaceSchemaName } from 'src/engine/workspace-datasource/utils/get-workspace-schema-name.util';
 
 @Injectable()
 export class ObjectRecordCountService {
   constructor(
-    @InjectDataSource()
-    private readonly coreDataSource: DataSource,
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
     private readonly workspaceManyOrAllFlatEntityMapsCacheService: WorkspaceManyOrAllFlatEntityMapsCacheService,
   ) {}
 
@@ -24,14 +22,19 @@ export class ObjectRecordCountService {
   ): Promise<Map<string, number>> {
     const schemaName = getWorkspaceSchemaName(workspaceId);
 
+    const dataSource =
+      await this.globalWorkspaceOrmManager.getGlobalWorkspaceDataSource();
+
     const rows: { relname: string; approximate_count: number }[] =
-      await this.coreDataSource.query(
+      await dataSource.query(
         `SELECT relname, reltuples::bigint AS approximate_count
          FROM pg_class c
          JOIN pg_namespace n ON c.relnamespace = n.oid
          WHERE n.nspname = $1
          AND c.relkind = 'r'`,
         [schemaName],
+        undefined,
+        { shouldBypassPermissionChecks: true },
       );
 
     const countByTableName = new Map<string, number>();

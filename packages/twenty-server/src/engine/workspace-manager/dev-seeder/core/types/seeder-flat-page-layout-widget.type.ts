@@ -6,6 +6,7 @@ export type SeederFlatPageLayoutWidget = Pick<
   | 'pageLayoutTabId'
   | 'title'
   | 'type'
+  | 'gridPosition'
   | 'position'
   | 'configuration'
   | 'objectMetadataId'

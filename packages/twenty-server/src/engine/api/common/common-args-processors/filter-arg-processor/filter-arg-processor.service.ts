@@ -23,7 +23,6 @@ import { isCompositeFieldMetadataType } from 'src/engine/metadata-modules/field-
 import { FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { findFlatEntityByIdInFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps.util';
 import { FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
 import { buildFieldMapsFromFlatObjectMetadata } from 'src/engine/metadata-modules/flat-field-metadata/utils/build-field-maps-from-flat-object-metadata.util';
 import { isFlatFieldMetadataOfType } from 'src/engine/metadata-modules/flat-field-metadata/utils/is-flat-field-metadata-of-type.util';
 import { FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata.type';
@@ -53,7 +52,7 @@ export class FilterArgProcessorService {
     filter: T;
     flatObjectMetadata: FlatObjectMetadata;
     flatObjectMetadataMaps?: FlatEntityMaps<FlatObjectMetadata>;
-    flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+    flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
   }): T {
     if (!isDefined(filter)) {
       return filter;
@@ -80,7 +79,7 @@ export class FilterArgProcessorService {
     filterObject: ObjectRecordFilter,
     flatObjectMetadata: FlatObjectMetadata,
     flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata> | undefined,
-    flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>,
+    flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
     fieldIdByName: Record<string, string>,
     fieldIdByJoinColumnName: Record<string, string>,
     depth: number,
@@ -158,7 +157,7 @@ export class FilterArgProcessorService {
     key: string;
     fieldIdByName: Record<string, string>;
     fieldIdByJoinColumnName: Record<string, string>;
-    flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+    flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
   }):
     | FlatFieldMetadata<
         FieldMetadataType.RELATION | FieldMetadataType.MORPH_RELATION
@@ -170,11 +169,12 @@ export class FilterArgProcessorService {
       return undefined;
     }
 
-    const fieldMetadata =
-      findFlatEntityByIdInFlatEntityMaps<OrmFlatFieldMetadata>({
+    const fieldMetadata = findFlatEntityByIdInFlatEntityMaps<FlatFieldMetadata>(
+      {
         flatEntityId: resolvedByName,
         flatEntityMaps: flatFieldMetadataMaps,
-      });
+      },
+    );
 
     if (!isDefined(fieldMetadata)) {
       return undefined;
@@ -197,7 +197,7 @@ export class FilterArgProcessorService {
       FieldMetadataType.RELATION | FieldMetadataType.MORPH_RELATION
     >,
     flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata> | undefined,
-    flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>,
+    flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
     depth: number,
   ): ObjectRecordFilter {
     if (fieldMetadata.settings?.relationType !== RelationType.MANY_TO_ONE) {
@@ -266,7 +266,7 @@ export class FilterArgProcessorService {
     key: string,
     filterValue: Record<string, unknown>,
     flatObjectMetadata: FlatObjectMetadata,
-    flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>,
+    flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
     fieldIdByName: Record<string, string>,
     fieldIdByJoinColumnName: Record<string, string>,
   ): Record<string, unknown> {
@@ -284,11 +284,12 @@ export class FilterArgProcessorService {
       );
     }
 
-    const fieldMetadata =
-      findFlatEntityByIdInFlatEntityMaps<OrmFlatFieldMetadata>({
+    const fieldMetadata = findFlatEntityByIdInFlatEntityMaps<FlatFieldMetadata>(
+      {
         flatEntityId: fieldMetadataId,
         flatEntityMaps: flatFieldMetadataMaps,
-      });
+      },
+    );
 
     if (!fieldMetadata) {
       throw new CommonQueryRunnerException(
@@ -313,7 +314,7 @@ export class FilterArgProcessorService {
   }
 
   private validateAndTransformCompositeFieldFilter(
-    fieldMetadata: OrmFlatFieldMetadata,
+    fieldMetadata: FlatFieldMetadata,
     filterValue: Record<string, unknown>,
   ): Record<string, unknown> {
     const compositeType = compositeTypeDefinitions.get(

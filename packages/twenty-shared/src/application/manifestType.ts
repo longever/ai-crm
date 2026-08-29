@@ -20,7 +20,6 @@ import {
 import { type PermissionFlagManifest } from './permissionFlagManifestType';
 import { type RoleManifest } from './roleManifestType';
 import { type SkillManifest } from './skillManifestType';
-import { type TimelineActivityTypeManifest } from './timelineActivityTypeManifestType';
 import {
   type StandaloneViewFieldManifest,
   type ViewManifest,
@@ -49,6 +48,5 @@ export type Manifest = {
   pageLayouts: PageLayoutManifest[];
   pageLayoutTabs: PageLayoutTabManifest[];
   commandMenuItems: CommandMenuItemManifest[];
-  timelineActivityTypes: TimelineActivityTypeManifest[];
   translations?: TranslationsManifest;
 };

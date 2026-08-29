@@ -1,7 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { InjectDataSource } from '@nestjs/typeorm';
-
-import { DataSource } from 'typeorm';
 
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
 import { findFlatEntityByIdInFlatEntityMapsOrThrow } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps-or-throw.util';
@@ -9,6 +6,7 @@ import { findManyFlatEntityByIdInFlatEntityMapsOrThrow } from 'src/engine/metada
 import { MOSTLY_EMPTY_MINIMUM_ROW_COUNT } from 'src/engine/metadata-modules/object-metadata/constants/mostly-empty-minimum-row-count.constant';
 import { ObjectRecordCountService } from 'src/engine/metadata-modules/object-metadata/object-record-count.service';
 import { computeMostlyEmptyFieldMetadataIds } from 'src/engine/metadata-modules/object-metadata/utils/compute-mostly-empty-field-metadata-ids.util';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { computeObjectTargetTable } from 'src/engine/utils/compute-object-target-table.util';
 import { getWorkspaceSchemaName } from 'src/engine/workspace-datasource/utils/get-workspace-schema-name.util';
 
@@ -19,8 +17,7 @@ import { getWorkspaceSchemaName } from 'src/engine/workspace-datasource/utils/ge
 @Injectable()
 export class MostlyEmptyFieldsService {
   constructor(
-    @InjectDataSource()
-    private readonly coreDataSource: DataSource,
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
     private readonly workspaceManyOrAllFlatEntityMapsCacheService: WorkspaceManyOrAllFlatEntityMapsCacheService,
     private readonly objectRecordCountService: ObjectRecordCountService,
   ) {}
@@ -60,6 +57,9 @@ export class MostlyEmptyFieldsService {
       return [];
     }
 
+    const dataSource =
+      await this.globalWorkspaceOrmManager.getGlobalWorkspaceDataSource();
+
     // Per-column emptiness: null fraction plus the sampled frequency of the
     // column type's empty sentinel — '' for text columns (NOT NULL DEFAULT ''),
     // '{}' for arrays, '{}'/'[]' for json. Sentinels are matched per physical
@@ -67,7 +67,7 @@ export class MostlyEmptyFieldsService {
     const columnStatisticsRows: {
       column_name: string;
       empty_fraction: number;
-    }[] = await this.coreDataSource.query(
+    }[] = await dataSource.query(
       `SELECT s.attname AS column_name,
               (s.null_frac + COALESCE(empty_sentinel.frequency, 0))::float AS empty_fraction
        FROM pg_stats s
@@ -92,6 +92,8 @@ export class MostlyEmptyFieldsService {
        AND s.tablename = $2
        AND NOT s.inherited`,
       [schemaName, tableName],
+      undefined,
+      { shouldBypassPermissionChecks: true },
     );
 
     const emptyFractionByColumnName = new Map(

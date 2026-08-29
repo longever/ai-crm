@@ -15,9 +15,6 @@ export class ObjectFilterInput {
   @Field(() => UUIDFilterComparisonInput, { nullable: true })
   id?: UUIDFilterComparisonInput;
 
-  @Field(() => UUIDFilterComparisonInput, { nullable: true })
-  universalIdentifier?: UUIDFilterComparisonInput;
-
   @Field(() => BooleanFieldComparisonInput, { nullable: true })
   isActive?: BooleanFieldComparisonInput;
 
@@ -45,7 +42,6 @@ export const OBJECT_FILTER_COLUMN_BY_FILTER_FIELD: Record<
   MetadataFilterColumn
 > = {
   id: { column: 'id', type: 'uuid' },
-  universalIdentifier: { column: 'universalIdentifier', type: 'uuid' },
   isActive: { column: 'isActive', type: 'boolean' },
   isRemote: { column: 'isRemote', type: 'boolean' },
   isSearchable: { column: 'isSearchable', type: 'boolean' },

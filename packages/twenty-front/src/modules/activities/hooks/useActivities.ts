@@ -3,8 +3,10 @@ import { useStore } from 'jotai';
 
 import { useActivityTargetsForTargetableObjects } from '@/activities/hooks/useActivityTargetsForTargetableObjects';
 import { type ActivityTargetableObject } from '@/activities/types/ActivityTargetableEntity';
-import { type ActivityTarget } from '@/activities/types/ActivityTarget';
-import { getRelatedRecordFromJunction } from '@/object-record/record-field/ui/utils/junction/getRelatedRecordFromJunction';
+import { type Note } from '@/activities/types/Note';
+import { type NoteTarget } from '@/activities/types/NoteTarget';
+import { type Task } from '@/activities/types/Task';
+import { type TaskTarget } from '@/activities/types/TaskTarget';
 import {
   type CoreObjectNameSingular,
   type RecordGqlOperationOrderBy,
@@ -13,7 +15,7 @@ import { getRecordsFromRecordConnection } from '@/object-record/cache/utils/getR
 import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
 import { isDefined } from 'twenty-shared/utils';
 
-export const useActivities = ({
+export const useActivities = <T extends Task | Note>({
   objectNameSingular,
   targetableObjects,
   activityTargetsOrderByVariables,
@@ -28,12 +30,9 @@ export const useActivities = ({
 }) => {
   const store = useStore();
   const updateActivitiesInStore = useCallback(
-    (activityTargets: ActivityTarget[], activityRelationFieldName: string) => {
+    (activityTargets: (TaskTarget | NoteTarget)[]) => {
       for (const activityTarget of activityTargets) {
-        const activity = getRelatedRecordFromJunction({
-          junctionRecord: activityTarget,
-          relationFieldName: activityRelationFieldName,
-        });
+        const activity = activityTarget[objectNameSingular];
 
         if (!isDefined(activity)) {
           continue;
@@ -42,7 +41,7 @@ export const useActivities = ({
         store.set(recordStoreFamilyState.atomFamily(activity.id), activity);
       }
     },
-    [store],
+    [store, objectNameSingular],
   );
 
   const {
@@ -51,7 +50,6 @@ export const useActivities = ({
     totalCountActivityTargets,
     fetchMoreActivityTargets,
     hasNextPage,
-    activityRelationFieldName,
   } = useActivityTargetsForTargetableObjects({
     objectNameSingular,
     targetableObjects,
@@ -63,12 +61,9 @@ export const useActivities = ({
 
   const activities = activityTargets
     .map((activityTarget) => {
-      return getRelatedRecordFromJunction({
-        junctionRecord: activityTarget,
-        relationFieldName: activityRelationFieldName,
-      });
+      return activityTarget[objectNameSingular];
     })
-    .filter(isDefined);
+    .filter(isDefined) as T[];
 
   const fetchMoreActivities = async () => {
     const result = await fetchMoreActivityTargets();
@@ -77,24 +72,23 @@ export const useActivities = ({
       return [];
     }
 
-    const activityTargets = getRecordsFromRecordConnection<ActivityTarget>({
+    const activityTargets = getRecordsFromRecordConnection<
+      TaskTarget | NoteTarget
+    >({
       recordConnection: result.data,
     });
 
-    updateActivitiesInStore(activityTargets, activityRelationFieldName);
+    updateActivitiesInStore(activityTargets);
 
     return activityTargets
       .map((activityTarget) => {
-        return getRelatedRecordFromJunction({
-          junctionRecord: activityTarget,
-          relationFieldName: activityRelationFieldName,
-        });
+        return activityTarget[objectNameSingular];
       })
-      .filter(isDefined);
+      .filter(isDefined) as T[];
   };
 
   return {
-    activities,
+    activities: activities as T[],
     loading: loadingActivityTargets,
     totalCountActivities: totalCountActivityTargets,
     fetchMoreActivities,

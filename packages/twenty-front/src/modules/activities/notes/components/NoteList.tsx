@@ -15,6 +15,7 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: ${themeCssVariables.spacing[4]} ${themeCssVariables.spacing[6]};
 `;
 
 const StyledNoteContainer = styled.div`

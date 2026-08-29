@@ -15,12 +15,10 @@ import {
   errorResponse,
   failureResponse,
   resolvePartnerFromRequest,
-} from 'src/modules/shared/http/resolve-partner-from-request.service';
+} from 'src/modules/partner/self-service/services/resolve-partner-from-request.service';
 import { buildReconcilePlan } from 'src/modules/partner/self-service/utils/reconcile-children';
 
-export type SaveLinksResult =
-  | { ok: true; links: LinkRow[] }
-  | { ok: false; reason: string };
+export type SaveLinksResult = { ok: true; links: LinkRow[] } | { ok: false; reason: string };
 
 const queryExistingLinkIds = async (
   client: CoreApiClient,
@@ -30,10 +28,7 @@ const queryExistingLinkIds = async (
   return (result.partnerLinks?.edges ?? []).map((edge) => edge.node.id);
 };
 
-const queryLinkRows = async (
-  client: CoreApiClient,
-  partnerId: string,
-): Promise<LinkRow[]> => {
+const queryLinkRows = async (client: CoreApiClient, partnerId: string): Promise<LinkRow[]> => {
   const result = await findPartnerLinkRows(client, partnerId);
   return (result.partnerLinks?.edges ?? []).map((edge) => ({
     id: edge.node.id,

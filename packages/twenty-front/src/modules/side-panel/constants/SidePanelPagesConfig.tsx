@@ -6,8 +6,6 @@ import { SidePanelNewSidebarItemPage } from '@/navigation-menu-item/edit/side-pa
 import { SidePanelEmailBlockSettingsPage } from '@/side-panel/pages/email-block-settings/components/SidePanelEmailBlockSettingsPage';
 import { SidePanelAskAiPage } from '@/side-panel/pages/ask-ai/components/SidePanelAskAiPage';
 import { SidePanelComposeEmailPage } from '@/side-panel/pages/compose-email/components/SidePanelComposeEmailPage';
-import { SidePanelComposeCalendarEventPage } from '@/side-panel/pages/compose-calendar-event/components/SidePanelComposeCalendarEventPage';
-import { SidePanelCreateRelatedRecordPage } from '@/side-panel/pages/create-related-record/components/SidePanelCreateRelatedRecordPage';
 import { SidePanelSendCampaignTestPage } from '@/side-panel/pages/send-campaign-test/components/SidePanelSendCampaignTestPage';
 import { SidePanelFrontComponentPage } from '@/side-panel/pages/front-component/components/SidePanelFrontComponentPage';
 import { SidePanelDashboardChartSettings } from '@/side-panel/pages/page-layout/components/dashboard/SidePanelDashboardChartSettings';
@@ -18,7 +16,6 @@ import { SidePanelRecordPageFieldsSettings } from '@/side-panel/pages/page-layou
 import { SidePanelPageLayoutDashboardWidgetTypeSelect } from '@/side-panel/pages/page-layout/components/SidePanelPageLayoutDashboardWidgetTypeSelect';
 import { SidePanelPageLayoutRecordPageWidgetTypeSelect } from '@/side-panel/pages/page-layout/components/SidePanelPageLayoutRecordPageWidgetTypeSelect';
 import { SidePanelPageLayoutTabSettings } from '@/side-panel/pages/page-layout/components/SidePanelPageLayoutTabSettings';
-import { SidePanelPageLayoutWidgetSettings } from '@/side-panel/pages/page-layout/components/SidePanelPageLayoutWidgetSettings';
 import { SidePanelMergeRecordPage } from '@/side-panel/pages/record-page/components/SidePanelMergeRecordPage';
 import { SidePanelRecordsPage } from '@/side-panel/pages/records-page/components/SidePanelRecordsPage';
 import { SidePanelRecordPage } from '@/side-panel/pages/record-page/components/SidePanelRecordPage';
@@ -69,10 +66,6 @@ export const SIDE_PANEL_PAGES_CONFIG = new Map<SidePanelPages, React.ReactNode>(
     ],
     [SidePanelPages.PageLayoutTabSettings, <SidePanelPageLayoutTabSettings />],
     [
-      SidePanelPages.PageLayoutWidgetSettings,
-      <SidePanelPageLayoutWidgetSettings />,
-    ],
-    [
       SidePanelPages.DashboardRecordTableSettings,
       <SidePanelDashboardRecordTableSettings />,
     ],
@@ -95,12 +88,7 @@ export const SIDE_PANEL_PAGES_CONFIG = new Map<SidePanelPages, React.ReactNode>(
     ],
     [SidePanelPages.NavigationMenuAddItem, <SidePanelNewSidebarItemPage />],
     [SidePanelPages.CommandMenuEdit, <SidePanelCommandMenuItemEditPage />],
-    [
-      SidePanelPages.ComposeCalendarEvent,
-      <SidePanelComposeCalendarEventPage />,
-    ],
     [SidePanelPages.ComposeEmail, <SidePanelComposeEmailPage />],
-    [SidePanelPages.CreateRelatedRecord, <SidePanelCreateRelatedRecordPage />],
     [SidePanelPages.SendCampaignTest, <SidePanelSendCampaignTestPage />],
     [SidePanelPages.EmailBlockSettings, <SidePanelEmailBlockSettingsPage />],
     [

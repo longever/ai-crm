@@ -16,10 +16,7 @@ import { useStore } from 'jotai';
 import { useCallback } from 'react';
 import { isDefined } from 'twenty-shared/utils';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  PageLayoutTabLayoutMode,
-  WidgetType,
-} from '~/generated-metadata/graphql';
+import { WidgetType } from '~/generated-metadata/graphql';
 
 export const useCreatePageLayoutFrontComponentWidget = ({
   pageLayoutId: pageLayoutIdFromProps,
@@ -83,7 +80,6 @@ export const useCreatePageLayoutFrontComponentWidget = ({
         title,
         frontComponentId,
         {
-          layoutMode: PageLayoutTabLayoutMode.GRID,
           row: position.y,
           column: position.x,
           rowSpan: position.h,

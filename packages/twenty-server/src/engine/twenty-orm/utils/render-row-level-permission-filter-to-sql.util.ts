@@ -14,13 +14,13 @@ import { computeWhereConditionParts } from 'src/engine/api/graphql/graphql-query
 import { type CompositeFieldMetadataType } from 'src/engine/metadata-modules/field-metadata/types/composite-field-metadata-type.type';
 import { isCompositeFieldMetadataType } from 'src/engine/metadata-modules/field-metadata/utils/is-composite-field-metadata-type.util';
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 import { buildFieldMapsFromFlatObjectMetadata } from 'src/engine/metadata-modules/flat-field-metadata/utils/build-field-maps-from-flat-object-metadata.util';
 import { isMorphOrRelationFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/utils/is-morph-or-relation-flat-field-metadata.util';
 import { type FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata.type';
 import {
-  TwentyOrmException,
-  TwentyOrmExceptionCode,
+  TwentyORMException,
+  TwentyORMExceptionCode,
 } from 'src/engine/twenty-orm/exceptions/twenty-orm.exception';
 
 const ALWAYS_TRUE_CONDITION = '1=1';
@@ -29,7 +29,7 @@ type SqlRenderingContext = {
   tableAlias: string;
   fieldIdByName: Record<string, string>;
   fieldIdByJoinColumnName: Record<string, string>;
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
   collectedParameters: ObjectLiteral;
 };
 
@@ -47,7 +47,7 @@ export const renderRowLevelPermissionFilterToSql = ({
   recordFilter: RecordGqlOperationFilter;
   tableAlias: string;
   objectMetadata: FlatObjectMetadata;
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
 }): RenderedSqlCondition | null => {
   const { fieldIdByName, fieldIdByJoinColumnName } =
     buildFieldMapsFromFlatObjectMetadata(flatFieldMetadataMaps, objectMetadata);
@@ -175,9 +175,9 @@ const renderFieldCondition = (
     });
 
   if (!isDefined(fieldMetadata)) {
-    throw new TwentyOrmException(
+    throw new TwentyORMException(
       `Cannot render row level permission predicate: field "${fieldNameOrJoinColumnName}" does not exist on object "${tableAlias}"`,
-      TwentyOrmExceptionCode.MALFORMED_METADATA,
+      TwentyORMExceptionCode.MALFORMED_METADATA,
     );
   }
 
@@ -185,9 +185,9 @@ const renderFieldCondition = (
     isReferencedByFieldName &&
     isMorphOrRelationFlatFieldMetadata(fieldMetadata)
   ) {
-    throw new TwentyOrmException(
+    throw new TwentyORMException(
       `Cannot render row level permission predicate on relation "${fieldNameOrJoinColumnName}": traversing a relation requires an additional join, which a join condition cannot express`,
-      TwentyOrmExceptionCode.MALFORMED_METADATA,
+      TwentyORMExceptionCode.MALFORMED_METADATA,
     );
   }
 
@@ -221,7 +221,7 @@ const renderFieldCondition = (
 };
 
 const renderCompositeFieldCondition = (
-  fieldMetadata: OrmFlatFieldMetadata,
+  fieldMetadata: FlatFieldMetadata,
   filterValue: unknown,
   context: SqlRenderingContext,
 ): string => {
@@ -230,9 +230,9 @@ const renderCompositeFieldCondition = (
   );
 
   if (!isDefined(compositeType)) {
-    throw new TwentyOrmException(
+    throw new TwentyORMException(
       `Cannot render row level permission predicate: composite type definition not found for type "${fieldMetadata.type}"`,
-      TwentyOrmExceptionCode.MALFORMED_METADATA,
+      TwentyORMExceptionCode.MALFORMED_METADATA,
     );
   }
 
@@ -244,9 +244,9 @@ const renderCompositeFieldCondition = (
     );
 
     if (!isKnownSubField) {
-      throw new TwentyOrmException(
+      throw new TwentyORMException(
         `Cannot render row level permission predicate: "${subFieldName}" is not a sub field of composite type "${fieldMetadata.type}"`,
-        TwentyOrmExceptionCode.MALFORMED_METADATA,
+        TwentyORMExceptionCode.MALFORMED_METADATA,
       );
     }
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { isDefined } from 'twenty-shared/utils';
 
-import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
-import { type WorkspaceTransactionScope } from 'src/engine/twenty-orm/types/workspace-transaction-scope.type';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
+import { type WorkspaceTransactionScope } from 'src/engine/twenty-orm/global-workspace-datasource/types/workspace-transaction-scope.type';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 import {
   type AutomatedTriggerType,
@@ -12,7 +12,9 @@ import { type AutomatedTriggerSettings } from 'src/modules/workflow/workflow-tri
 
 @Injectable()
 export class AutomatedTriggerWorkspaceService {
-  constructor(private readonly workspaceOrmManager: WorkspaceOrmManager) {}
+  constructor(
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
+  ) {}
 
   async addAutomatedTrigger({
     workflowId,
@@ -39,9 +41,10 @@ export class AutomatedTriggerWorkspaceService {
 
     const authContext = buildSystemAuthContext(workspaceId);
 
-    await this.workspaceOrmManager.executeInWorkspaceContext(async () => {
+    await this.globalWorkspaceOrmManager.executeInWorkspaceContext(async () => {
       const workflowAutomatedTriggerRepository =
-        this.workspaceOrmManager.getRepository<WorkflowAutomatedTriggerWorkspaceEntity>(
+        await this.globalWorkspaceOrmManager.getRepository<WorkflowAutomatedTriggerWorkspaceEntity>(
+          workspaceId,
           'workflowAutomatedTrigger',
         );
 
@@ -74,9 +77,10 @@ export class AutomatedTriggerWorkspaceService {
 
     const authContext = buildSystemAuthContext(workspaceId);
 
-    await this.workspaceOrmManager.executeInWorkspaceContext(async () => {
+    await this.globalWorkspaceOrmManager.executeInWorkspaceContext(async () => {
       const workflowAutomatedTriggerRepository =
-        this.workspaceOrmManager.getRepository<WorkflowAutomatedTriggerWorkspaceEntity>(
+        await this.globalWorkspaceOrmManager.getRepository<WorkflowAutomatedTriggerWorkspaceEntity>(
+          workspaceId,
           'workflowAutomatedTrigger',
         );
 

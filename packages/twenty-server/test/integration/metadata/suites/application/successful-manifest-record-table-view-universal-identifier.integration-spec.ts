@@ -52,20 +52,14 @@ const buildManifestWithRecordTableDashboard = () =>
             universalIdentifier: TEST_TAB_ID,
             title: 'Tables',
             position: 0,
-            layoutMode: PageLayoutTabLayoutMode.GRID,
+            layoutMode: PageLayoutTabLayoutMode.CANVAS,
             widgets: [
               {
                 universalIdentifier: TEST_WIDGET_ID,
                 title: 'RT test table',
                 type: 'RECORD_TABLE',
                 objectUniversalIdentifier: PERSON_OBJECT_UNIVERSAL_IDENTIFIER,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
-                  row: 0,
-                  column: 0,
-                  rowSpan: 4,
-                  columnSpan: 6,
-                },
+                gridPosition: { row: 0, column: 0, rowSpan: 4, columnSpan: 6 },
                 configuration: {
                   configurationType: 'RECORD_TABLE',
                   viewUniversalIdentifier: TEST_VIEW_ID,

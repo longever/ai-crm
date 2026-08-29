@@ -2,21 +2,20 @@ import { isDefined } from 'twenty-shared/utils';
 
 import { UserInputError } from 'src/engine/core-modules/graphql/utils/graphql-errors.util';
 import {
-  type TwentyOrmException,
-  TwentyOrmExceptionCode,
+  type TwentyORMException,
+  TwentyORMExceptionCode,
 } from 'src/engine/twenty-orm/exceptions/twenty-orm.exception';
-import { isTwentyOrmUserInputError } from 'src/engine/twenty-orm/utils/is-twenty-orm-user-input-error.util';
 
-interface DuplicateKeyErrorWithMetadata extends TwentyOrmException {
+interface DuplicateKeyErrorWithMetadata extends TwentyORMException {
   conflictingRecordId?: string;
   conflictingObjectNameSingular?: string;
 }
 
-export const twentyOrmGraphqlApiExceptionHandler = (
-  error: TwentyOrmException,
+export const twentyORMGraphqlApiExceptionHandler = (
+  error: TwentyORMException,
 ) => {
-  switch (true) {
-    case error.code === TwentyOrmExceptionCode.DUPLICATE_ENTRY_DETECTED: {
+  switch (error.code) {
+    case TwentyORMExceptionCode.DUPLICATE_ENTRY_DETECTED: {
       const duplicateKeyError: DuplicateKeyErrorWithMetadata = error;
 
       const extensions: Record<string, unknown> = {
@@ -34,7 +33,12 @@ export const twentyOrmGraphqlApiExceptionHandler = (
       throw new UserInputError(error.message, extensions);
     }
 
-    case isTwentyOrmUserInputError(error):
+    case TwentyORMExceptionCode.INVALID_INPUT:
+    case TwentyORMExceptionCode.CONNECT_RECORD_NOT_FOUND:
+    case TwentyORMExceptionCode.CONNECT_NOT_ALLOWED:
+    case TwentyORMExceptionCode.CONNECT_UNIQUE_CONSTRAINT_ERROR:
+    case TwentyORMExceptionCode.RLS_VALIDATION_FAILED:
+    case TwentyORMExceptionCode.TOO_MANY_RECORDS_TO_UPDATE:
       throw new UserInputError(error.message, {
         userFriendlyMessage: error.userFriendlyMessage,
       });

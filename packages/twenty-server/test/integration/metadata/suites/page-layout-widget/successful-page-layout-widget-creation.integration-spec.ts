@@ -15,18 +15,14 @@ import {
   type EachTestingContext,
   eachTestingContextFilter,
 } from 'twenty-shared/testing';
-import {
-  AggregateOperations,
-  PageLayoutTabLayoutMode,
-  type PageLayoutWidgetGridPosition,
-  WidgetType,
-} from 'twenty-shared/types';
+import { AggregateOperations } from 'twenty-shared/types';
 
 import { AxisNameDisplay } from 'src/engine/metadata-modules/page-layout-widget/enums/axis-name-display.enum';
 import { BarChartLayout } from 'src/engine/metadata-modules/page-layout-widget/enums/bar-chart-layout.enum';
 import { ChartNumberFormat } from 'src/engine/metadata-modules/page-layout-widget/enums/chart-number-format.enum';
 import { GraphOrderBy } from 'src/engine/metadata-modules/page-layout-widget/enums/graph-order-by.enum';
 import { WidgetConfigurationType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-configuration-type.type';
+import { WidgetType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-type.enum';
 import { type AllPageLayoutWidgetConfiguration } from 'src/engine/metadata-modules/page-layout-widget/types/all-page-layout-widget-configuration.type';
 
 type StaticTestContext = {
@@ -34,7 +30,12 @@ type StaticTestContext = {
     title: string;
     type: WidgetType;
     configuration: AllPageLayoutWidgetConfiguration;
-    position: PageLayoutWidgetGridPosition;
+    gridPosition: {
+      row: number;
+      column: number;
+      rowSpan: number;
+      columnSpan: number;
+    };
   };
 };
 
@@ -44,7 +45,6 @@ type GraphTestContext = {
 };
 
 const DEFAULT_GRID_POSITION = {
-  layoutMode: PageLayoutTabLayoutMode.GRID as const,
   row: 0,
   column: 0,
   rowSpan: 1,
@@ -59,7 +59,7 @@ const STATIC_TEST_CASES: EachTestingContext<StaticTestContext>[] = [
         title: 'Iframe Widget',
         type: WidgetType.IFRAME,
         configuration: TEST_IFRAME_CONFIG,
-        position: DEFAULT_GRID_POSITION,
+        gridPosition: DEFAULT_GRID_POSITION,
       },
     },
   },
@@ -72,7 +72,7 @@ const STATIC_TEST_CASES: EachTestingContext<StaticTestContext>[] = [
         configuration: {
           configurationType: WidgetConfigurationType.IFRAME,
         },
-        position: DEFAULT_GRID_POSITION,
+        gridPosition: DEFAULT_GRID_POSITION,
       },
     },
   },
@@ -84,7 +84,7 @@ const STATIC_TEST_CASES: EachTestingContext<StaticTestContext>[] = [
         title: 'Rich Text Widget',
         type: WidgetType.STANDALONE_RICH_TEXT,
         configuration: TEST_STANDALONE_RICH_TEXT_CONFIG,
-        position: DEFAULT_GRID_POSITION,
+        gridPosition: DEFAULT_GRID_POSITION,
       },
     },
   },
@@ -96,7 +96,7 @@ const STATIC_TEST_CASES: EachTestingContext<StaticTestContext>[] = [
         title: 'Rich Text Widget Minimal',
         type: WidgetType.STANDALONE_RICH_TEXT,
         configuration: TEST_STANDALONE_RICH_TEXT_CONFIG_MINIMAL,
-        position: DEFAULT_GRID_POSITION,
+        gridPosition: DEFAULT_GRID_POSITION,
       },
     },
   },
@@ -375,7 +375,7 @@ describe('Page layout widget creation should succeed', () => {
           objectMetadataId: testSetup.objectMetadataId,
           configuration: buildConfiguration(),
           pageLayoutTabId: testSetup.pageLayoutTabId,
-          position: DEFAULT_GRID_POSITION,
+          gridPosition: DEFAULT_GRID_POSITION,
         },
       });
 

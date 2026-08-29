@@ -23,7 +23,6 @@ export const runFrontComponentStory = ({
       userId: null,
       recordId: null,
       selectedRecordIds: [],
-      timelineActivityId: null,
       colorScheme: 'light',
     },
   },

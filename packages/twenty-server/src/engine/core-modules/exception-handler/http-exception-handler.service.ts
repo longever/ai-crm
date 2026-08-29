@@ -18,9 +18,10 @@ import { CustomError } from 'twenty-shared/utils';
 
 import { PostgresException } from 'src/engine/api/graphql/workspace-query-runner/utils/postgres-exception';
 import { ExceptionHandlerService } from 'src/engine/core-modules/exception-handler/exception-handler.service';
-import { hasRestResponse } from 'src/engine/core-modules/exception-handler/utils/has-rest-response.util';
-import { TwentyOrmException } from 'src/engine/twenty-orm/exceptions/twenty-orm.exception';
-import { isTwentyOrmUserInputError } from 'src/engine/twenty-orm/utils/is-twenty-orm-user-input-error.util';
+import {
+  TwentyORMException,
+  TwentyORMExceptionCode,
+} from 'src/engine/twenty-orm/exceptions/twenty-orm.exception';
 import { handleException } from 'src/engine/utils/global-exception-handler.util';
 
 interface RequestAndParams {
@@ -44,8 +45,6 @@ const getErrorNameFromStatusCode = (statusCode: number) => {
       return 'MethodNotAllowedException';
     case 409:
       return 'ConflictException';
-    case 416:
-      return 'RequestedRangeNotSatisfiableException';
     case 422:
       return 'UnprocessableEntityException';
     case 500:
@@ -96,8 +95,14 @@ export class HttpExceptionHandlerService {
     }
 
     if (
-      exception instanceof TwentyOrmException &&
-      isTwentyOrmUserInputError(exception)
+      exception instanceof TwentyORMException &&
+      [
+        TwentyORMExceptionCode.INVALID_INPUT,
+        TwentyORMExceptionCode.DUPLICATE_ENTRY_DETECTED,
+        TwentyORMExceptionCode.CONNECT_UNIQUE_CONSTRAINT_ERROR,
+        TwentyORMExceptionCode.CONNECT_NOT_ALLOWED,
+        TwentyORMExceptionCode.CONNECT_RECORD_NOT_FOUND,
+      ].includes(exception.code)
     ) {
       exception = new BadRequestException(exception.message);
       statusCode = 400;
@@ -116,10 +121,6 @@ export class HttpExceptionHandlerService {
       statusCode,
       shouldBeCapturedBySentry,
     });
-
-    if (hasRestResponse(exception)) {
-      return response.status(statusCode).send(exception.getResponseBody());
-    }
 
     return response.status(statusCode).send({
       statusCode,

@@ -24,10 +24,9 @@ const StyledChipDropZone = styled.div`
   &::before,
   &::after {
     background-color: ${themeCssVariables.color.blue};
-    border-radius: ${themeCssVariables.border.radius.pill};
+    border-radius: ${themeCssVariables.border.radius.sm};
     bottom: 0;
     content: '';
-    corner-shape: round;
     opacity: 0;
     position: absolute;
     top: 0;

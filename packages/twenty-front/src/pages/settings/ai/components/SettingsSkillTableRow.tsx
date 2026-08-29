@@ -29,7 +29,7 @@ export const SettingsSkillTableRow = ({
 }: SettingsSkillTableRowProps) => {
   const { theme } = useContext(ThemeContext);
   const { getIcon } = useIcons();
-  const Icon = getIcon(skill.icon ?? 'IconBook');
+  const Icon = getIcon(skill.icon ?? 'IconSparkles');
 
   return (
     <TableRow

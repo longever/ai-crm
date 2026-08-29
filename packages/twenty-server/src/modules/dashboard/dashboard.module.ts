@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ActorModule } from 'src/engine/core-modules/actor/actor.module';
 import { AuthModule } from 'src/engine/core-modules/auth/auth.module';
 import { PageLayoutModule } from 'src/engine/metadata-modules/page-layout/page-layout.module';
+import { TwentyORMModule } from 'src/engine/twenty-orm/twenty-orm.module';
 import { WorkspaceCacheStorageModule } from 'src/engine/workspace-cache-storage/workspace-cache-storage.module';
 import { ChartDataModule } from 'src/modules/dashboard/chart-data/chart-data.module';
 import { DashboardController } from 'src/modules/dashboard/controllers/dashboard.controller';
@@ -15,6 +16,7 @@ import { DashboardDuplicationService } from 'src/modules/dashboard/services/dash
     AuthModule,
     ChartDataModule,
     PageLayoutModule,
+    TwentyORMModule,
     WorkspaceCacheStorageModule,
   ],
   controllers: [DashboardController],

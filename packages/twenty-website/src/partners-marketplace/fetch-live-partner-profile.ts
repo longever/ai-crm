@@ -30,7 +30,6 @@ type ApiProfilePartner = {
   country: string | null;
   services: PartnerService[];
   portfolio: PartnerCaseStudy[];
-  superPartner?: boolean | null;
 };
 
 type ApiProfileResponse =
@@ -68,7 +67,6 @@ const mapProfilePartner = (
     services: apiPartner.services ?? [],
     portfolio: apiPartner.portfolio ?? [],
     clients: [],
-    superPartner: apiPartner.superPartner === true,
   };
 };
 

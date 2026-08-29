@@ -3,6 +3,7 @@ import request from 'supertest';
 import { createMockStripeInvoiceFinalizedData } from 'test/integration/billing/utils/create-mock-stripe-invoice-finalized-data.util';
 import {
   getBillingUsageCacheService,
+  getMirroredCreditBalance,
   getSeededBillingWorkspaceId,
   insertCreditGrant,
   listCreditGrants,
@@ -18,8 +19,8 @@ import { type BillingUsageService } from 'src/engine/core-modules/billing/servic
 const client = request(`http://localhost:${APP_PORT}`);
 
 // Whole calendar months, anchored so the period the transition opens is the
-// one running right now. The ledger filters on now(), so periods fixed in the
-// past would read as expired and assert nothing.
+// one running right now. The mirror column and the ledger both filter on now(),
+// so periods fixed in the past would read as expired and assert nothing.
 const PERIOD_BOUNDARY = startOfMonth(new Date());
 const CLOSING_PERIOD_START = subMonths(PERIOD_BOUNDARY, 1);
 const CLOSING_PERIOD_END = PERIOD_BOUNDARY;
@@ -174,6 +175,14 @@ describe('Billing credit rollover (integration)', () => {
     ).toBe(ALLOWANCE_MICRO);
   });
 
+  it('mirrors the resulting balance onto the billing customer', async () => {
+    usageSpy.mockResolvedValue(300_000);
+
+    await postInvoiceFinalized().expect(200);
+
+    expect(await getMirroredCreditBalance(workspaceId)).toBe(700_000);
+  });
+
   // A redelivery must not hand out the credits a second time.
   it('is idempotent when Stripe redelivers the same invoice', async () => {
     usageSpy.mockResolvedValue(300_000);
@@ -188,6 +197,7 @@ describe('Billing credit rollover (integration)', () => {
     expect(
       afterSecond.reduce((total, grant) => total + grant.amountMicro, 0),
     ).toBe(afterFirst.reduce((total, grant) => total + grant.amountMicro, 0));
+    expect(await getMirroredCreditBalance(workspaceId)).toBe(700_000);
   });
 
   // Returning normally would answer 200 and Stripe would never redeliver, so
@@ -198,6 +208,7 @@ describe('Billing credit rollover (integration)', () => {
     await postInvoiceFinalized().expect(500);
 
     expect(await listCreditGrants(workspaceId)).toHaveLength(0);
+    expect(await getMirroredCreditBalance(workspaceId)).toBe(0);
   });
 
   it('adds the carried balance to a warm usage counter', async () => {

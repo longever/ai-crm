@@ -178,6 +178,7 @@ export class LineChartDataService {
                   subFieldName: configuration.secondaryAxisGroupBySubFieldName,
                 }
               : undefined,
+          workspaceId,
           authContext,
           flatObjectMetadataMaps,
           flatFieldMetadataMaps,

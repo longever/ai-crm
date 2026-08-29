@@ -43,7 +43,7 @@ const listWorkflowRunsSchema = z.object({
 type ListWorkflowRunsInput = z.infer<typeof listWorkflowRunsSchema>;
 
 export const createListWorkflowRunsTool = (
-  deps: Pick<WorkflowToolDependencies, 'workspaceOrmManager'>,
+  deps: Pick<WorkflowToolDependencies, 'globalWorkspaceOrmManager'>,
   context: ListWorkflowRunsToolContext,
 ) => ({
   name: 'list_workflow_runs' as const,
@@ -54,10 +54,11 @@ export const createListWorkflowRunsTool = (
     try {
       const authContext = buildSystemAuthContext(context.workspaceId);
 
-      return await deps.workspaceOrmManager.executeInWorkspaceContext(
+      return await deps.globalWorkspaceOrmManager.executeInWorkspaceContext(
         async () => {
           const workflowRunRepository =
-            deps.workspaceOrmManager.getRepository<WorkflowRunWorkspaceEntity>(
+            await deps.globalWorkspaceOrmManager.getRepository<WorkflowRunWorkspaceEntity>(
+              context.workspaceId,
               'workflowRun',
               context.rolePermissionConfig,
             );

@@ -1,8 +1,6 @@
 import { type CSSProperties } from 'react';
 
-import { COLORS, FONT } from 'src/modules/shared/front-components/palette';
-
-import { Field, TextInput, UrlInput } from '../my-profile/form-fields';
+import { COLORS, Field, FONT, TextInput, UrlInput } from '../my-profile/form-fields';
 import { MarkdownEditor } from '../my-profile/markdown-editor';
 import { type CaseStudyRow } from './case-study-rows';
 

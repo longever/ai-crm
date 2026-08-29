@@ -117,7 +117,7 @@ export const SettingsSkillForm = ({ mode }: { mode: 'create' | 'edit' }) => {
     label: '',
     description: '',
     content: '',
-    icon: 'IconBook',
+    icon: 'IconSparkles',
     isLabelSyncedWithName: true,
   });
 
@@ -149,7 +149,7 @@ export const SettingsSkillForm = ({ mode }: { mode: 'create' | 'edit' }) => {
           label: skill.label,
           description: skill.description ?? '',
           content: skill.content,
-          icon: skill.icon ?? 'IconBook',
+          icon: skill.icon ?? 'IconSparkles',
           isLabelSyncedWithName,
         };
         setFormValues(initialValues);
@@ -383,7 +383,7 @@ export const SettingsSkillForm = ({ mode }: { mode: 'create' | 'edit' }) => {
       label: '',
       description: '',
       content: '',
-      icon: 'IconBook',
+      icon: 'IconSparkles',
       isLabelSyncedWithName: true,
     });
     navigate(SettingsPath.AI);
@@ -416,7 +416,7 @@ export const SettingsSkillForm = ({ mode }: { mode: 'create' | 'edit' }) => {
     />
   );
 
-  const SkillIcon = getIcon(formValues.icon || 'IconBook');
+  const SkillIcon = getIcon(formValues.icon || 'IconSparkles');
 
   return (
     <SettingsPageLayout
@@ -457,7 +457,7 @@ export const SettingsSkillForm = ({ mode }: { mode: 'create' | 'edit' }) => {
               <StyledFormContainer>
                 <StyledIconNameRow>
                   <IconPicker
-                    selectedIconKey={formValues.icon || 'IconBook'}
+                    selectedIconKey={formValues.icon || 'IconSparkles'}
                     onChange={({ iconKey }) =>
                       handleFieldChange('icon', iconKey)
                     }

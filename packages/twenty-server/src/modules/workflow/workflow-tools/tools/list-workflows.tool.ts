@@ -27,7 +27,7 @@ const listWorkflowsSchema = z.object({
 type ListWorkflowsInput = z.infer<typeof listWorkflowsSchema>;
 
 export const createListWorkflowsTool = (
-  deps: Pick<WorkflowToolDependencies, 'workspaceOrmManager'>,
+  deps: Pick<WorkflowToolDependencies, 'globalWorkspaceOrmManager'>,
   context: ListWorkflowsToolContext,
 ) => ({
   name: 'list_workflows' as const,
@@ -38,10 +38,11 @@ export const createListWorkflowsTool = (
     try {
       const authContext = buildSystemAuthContext(context.workspaceId);
 
-      return await deps.workspaceOrmManager.executeInWorkspaceContext(
+      return await deps.globalWorkspaceOrmManager.executeInWorkspaceContext(
         async () => {
           const workflowRepository =
-            deps.workspaceOrmManager.getRepository<WorkflowWorkspaceEntity>(
+            await deps.globalWorkspaceOrmManager.getRepository<WorkflowWorkspaceEntity>(
+              context.workspaceId,
               'workflow',
               context.rolePermissionConfig,
             );
@@ -60,9 +61,7 @@ export const createListWorkflowsTool = (
             .take(parameters.limit)
             .skip(parameters.offset);
 
-          const workflows =
-            await queryBuilder.getMany<WorkflowWorkspaceEntity>();
-          const totalCount = await queryBuilder.getCount();
+          const [workflows, totalCount] = await queryBuilder.getManyAndCount();
 
           return {
             success: true,

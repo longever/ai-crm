@@ -1,44 +1,64 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
-import { IsNull, Not } from 'typeorm';
+import { NonNullableRequired } from 'twenty-shared/types';
+import { IsNull, Not, Repository } from 'typeorm';
 
 import { WorkspaceCacheProvider } from 'src/engine/workspace-cache/interfaces/workspace-cache-provider.service';
 
+import { ApplicationEntity } from 'src/engine/core-modules/application/application.entity';
+import { AgentEntity } from 'src/engine/metadata-modules/ai/ai-agent/entities/agent.entity';
 import { FlatRoleTargetByAgentIdMaps } from 'src/engine/metadata-modules/flat-agent/types/flat-role-target-by-agent-id-maps.type';
 import { fromRoleTargetEntityToFlatRoleTarget } from 'src/engine/metadata-modules/flat-role-target/utils/from-role-target-entity-to-flat-role-target.util';
+import { RoleTargetEntity } from 'src/engine/metadata-modules/role-target/role-target.entity';
+import { RoleEntity } from 'src/engine/metadata-modules/role/role.entity';
+import { InjectWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/inject-workspace-scoped-repository.decorator';
+import { WorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/workspace-scoped-repository';
 import { WorkspaceCache } from 'src/engine/workspace-cache/decorators/workspace-cache.decorator';
-import { type WorkspaceCacheProviderContext } from 'src/engine/workspace-cache/types/workspace-cache-provider-context.type';
-import { type WorkspaceCacheRowsRequirement } from 'src/engine/workspace-cache/types/workspace-cache-rows-requirement.type';
 import { createIdToUniversalIdentifierMap } from 'src/engine/workspace-cache/utils/create-id-to-universal-identifier-map.util';
-
-const FLAT_ROLE_TARGET_BY_AGENT_ID_ROWS_REQUIREMENT = {
-  roleTarget: {
-    columns: true,
-    groupBy: ['agentId'],
-    where: { agentId: Not(IsNull()) },
-  },
-  application: ['id', 'universalIdentifier'],
-  role: ['id', 'universalIdentifier'],
-  agent: ['id', 'universalIdentifier'],
-} as const satisfies WorkspaceCacheRowsRequirement;
 
 @Injectable()
 @WorkspaceCache('flatRoleTargetByAgentIdMaps', { packingPonderation: 1 })
 export class WorkspaceFlatRoleTargetByAgentIdService extends WorkspaceCacheProvider<FlatRoleTargetByAgentIdMaps> {
-  override readonly rowsRequirement =
-    FLAT_ROLE_TARGET_BY_AGENT_ID_ROWS_REQUIREMENT;
+  constructor(
+    @InjectWorkspaceScopedRepository(RoleTargetEntity)
+    private readonly roleTargetRepository: WorkspaceScopedRepository<RoleTargetEntity>,
+    @InjectRepository(ApplicationEntity)
+    private readonly applicationRepository: Repository<ApplicationEntity>,
+    @InjectWorkspaceScopedRepository(RoleEntity)
+    private readonly roleRepository: WorkspaceScopedRepository<RoleEntity>,
+    @InjectWorkspaceScopedRepository(AgentEntity)
+    private readonly agentRepository: WorkspaceScopedRepository<AgentEntity>,
+  ) {
+    super();
+  }
 
-  computeForCache({
-    rows,
-  }: WorkspaceCacheProviderContext<
-    typeof FLAT_ROLE_TARGET_BY_AGENT_ID_ROWS_REQUIREMENT
-  >): FlatRoleTargetByAgentIdMaps {
-    const {
-      roleTarget: roleTargets,
-      application: applications,
-      role: roles,
-      agent: agents,
-    } = rows;
+  async computeForCache(
+    workspaceId: string,
+  ): Promise<FlatRoleTargetByAgentIdMaps> {
+    const [roleTargetEntities, applications, roles, agents] = await Promise.all(
+      [
+        this.roleTargetRepository.find(workspaceId, {
+          where: {
+            agentId: Not(IsNull()),
+          },
+          withDeleted: true,
+        }),
+        this.applicationRepository.find({
+          where: { workspaceId },
+          select: ['id', 'universalIdentifier'],
+          withDeleted: true,
+        }),
+        this.roleRepository.find(workspaceId, {
+          select: ['id', 'universalIdentifier'],
+          withDeleted: true,
+        }),
+        this.agentRepository.find(workspaceId, {
+          select: ['id', 'universalIdentifier'],
+          withDeleted: true,
+        }),
+      ],
+    );
 
     const applicationIdToUniversalIdentifierMap =
       createIdToUniversalIdentifierMap(applications);
@@ -49,16 +69,18 @@ export class WorkspaceFlatRoleTargetByAgentIdService extends WorkspaceCacheProvi
 
     const flatRoleTargetByAgentIdMaps: FlatRoleTargetByAgentIdMaps = {};
 
-    for (const [agentId, agentRoleTargets] of roleTargets.byAgentId) {
-      const roleTargetEntity = agentRoleTargets[agentRoleTargets.length - 1];
+    for (const roleTargetEntity of roleTargetEntities as Array<
+      Omit<RoleTargetEntity, 'agentId'> &
+        NonNullableRequired<Pick<RoleTargetEntity, 'agentId'>>
+    >) {
+      const flatRoleTarget = fromRoleTargetEntityToFlatRoleTarget({
+        entity: roleTargetEntity,
+        applicationIdToUniversalIdentifierMap,
+        roleIdToUniversalIdentifierMap,
+        agentIdToUniversalIdentifierMap,
+      });
 
-      flatRoleTargetByAgentIdMaps[agentId] =
-        fromRoleTargetEntityToFlatRoleTarget({
-          entity: roleTargetEntity,
-          applicationIdToUniversalIdentifierMap,
-          roleIdToUniversalIdentifierMap,
-          agentIdToUniversalIdentifierMap,
-        });
+      flatRoleTargetByAgentIdMaps[roleTargetEntity.agentId] = flatRoleTarget;
     }
 
     return flatRoleTargetByAgentIdMaps;

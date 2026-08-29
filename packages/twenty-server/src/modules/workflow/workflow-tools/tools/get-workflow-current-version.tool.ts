@@ -29,7 +29,7 @@ type GetWorkflowCurrentVersionInput = z.infer<
 >;
 
 export const createGetWorkflowCurrentVersionTool = (
-  deps: Pick<WorkflowToolDependencies, 'workspaceOrmManager'>,
+  deps: Pick<WorkflowToolDependencies, 'globalWorkspaceOrmManager'>,
   context: GetWorkflowCurrentVersionToolContext,
 ) => ({
   name: 'get_workflow_current_version' as const,
@@ -40,10 +40,11 @@ export const createGetWorkflowCurrentVersionTool = (
     try {
       const authContext = buildSystemAuthContext(context.workspaceId);
 
-      return await deps.workspaceOrmManager.executeInWorkspaceContext(
+      return await deps.globalWorkspaceOrmManager.executeInWorkspaceContext(
         async () => {
           const workflowRepository =
-            deps.workspaceOrmManager.getRepository<WorkflowWorkspaceEntity>(
+            await deps.globalWorkspaceOrmManager.getRepository<WorkflowWorkspaceEntity>(
+              context.workspaceId,
               'workflow',
               context.rolePermissionConfig,
             );
@@ -60,7 +61,8 @@ export const createGetWorkflowCurrentVersionTool = (
           }
 
           const workflowVersionRepository =
-            deps.workspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
+            await deps.globalWorkspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
+              context.workspaceId,
               'workflowVersion',
               context.rolePermissionConfig,
             );

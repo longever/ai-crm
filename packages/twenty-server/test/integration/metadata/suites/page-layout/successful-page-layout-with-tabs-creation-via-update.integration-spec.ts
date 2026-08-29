@@ -5,15 +5,12 @@ import { createOnePageLayout } from 'test/integration/metadata/suites/page-layou
 import { destroyOnePageLayout } from 'test/integration/metadata/suites/page-layout/utils/destroy-one-page-layout.util';
 import { updateOnePageLayoutWithTabsAndWidgets } from 'test/integration/metadata/suites/page-layout/utils/update-one-page-layout-with-tabs-and-widgets.util';
 import { extractRecordIdsAndDatesAsExpectAny } from 'test/utils/extract-record-ids-and-dates-as-expect-any';
-import {
-  AggregateOperations,
-  PageLayoutTabLayoutMode,
-  PageLayoutType,
-  WidgetType,
-} from 'twenty-shared/types';
+import { AggregateOperations } from 'twenty-shared/types';
 import { v4 } from 'uuid';
 
 import { WidgetConfigurationType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-configuration-type.type';
+import { WidgetType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-type.enum';
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 describe('Page layout with tabs creation via update should succeed', () => {
   let testFieldMetadataIds: {
@@ -99,8 +96,7 @@ describe('Page layout with tabs creation via update should succeed', () => {
                 title: 'Existing Tab Widget',
                 type: WidgetType.GRAPH,
                 objectMetadataId: testFieldMetadataIds.objectMetadataId,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
+                gridPosition: {
                   row: 0,
                   column: 0,
                   rowSpan: 1,
@@ -127,8 +123,7 @@ describe('Page layout with tabs creation via update should succeed', () => {
                 title: 'New Tab Iframe Widget',
                 type: WidgetType.IFRAME,
                 objectMetadataId: null,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
+                gridPosition: {
                   row: 0,
                   column: 0,
                   rowSpan: 1,

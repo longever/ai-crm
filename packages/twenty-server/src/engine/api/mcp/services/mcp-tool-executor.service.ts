@@ -14,9 +14,11 @@ import { isToolOutputSuccessful } from 'src/engine/core-modules/tool-provider/ut
 import { resolveToolName } from 'src/engine/core-modules/tool-provider/utils/resolve-tool-name.util';
 
 import { JSON_RPC_ERROR_CODE } from 'src/engine/api/mcp/constants/json-rpc-error-code.const';
-import { MCP_PROGRESS_NOTIFICATION_METHOD } from 'src/engine/api/mcp/constants/mcp-progress-notification.const';
+import {
+  MCP_PROGRESS_NOTIFICATION_METHOD,
+  TOOL_CALL_PROGRESS_TOKEN_PREFIX,
+} from 'src/engine/api/mcp/constants/mcp-progress-notification.const';
 import { type McpToolAnnotations } from 'src/engine/api/mcp/types/mcp-tool-annotations.type';
-import { getProgressToken } from 'src/engine/api/mcp/utils/get-progress-token.util';
 import { wrapJsonRpcResponse } from 'src/engine/api/mcp/utils/wrap-jsonrpc-response.util';
 
 type McpToolDefinition = ToolSet[string] & {
@@ -59,14 +61,12 @@ export class McpToolExecutorService {
       });
     }
 
-    const progressToken = getProgressToken(params);
-
-    if (isDefined(sseWriter) && isDefined(progressToken)) {
+    if (isDefined(sseWriter)) {
       sseWriter({
         jsonrpc: '2.0',
         method: MCP_PROGRESS_NOTIFICATION_METHOD,
         params: {
-          progressToken,
+          progressToken: `${TOOL_CALL_PROGRESS_TOKEN_PREFIX}${String(id)}`,
           progress: 0,
           total: 1,
         },

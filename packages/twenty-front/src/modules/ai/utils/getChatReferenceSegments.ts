@@ -1,6 +1,5 @@
 import { type ChatReferenceMatch } from '@/ai/types/ChatReferenceMatch';
 import { findChatReferences } from '@/ai/utils/findChatReferences';
-import { replaceMalformedChatReferencesWithDisplayName } from '@/ai/utils/replaceMalformedChatReferencesWithDisplayName';
 
 export const getChatReferenceSegments = (
   text: string,
@@ -11,11 +10,7 @@ export const getChatReferenceSegments = (
 
   for (const reference of references) {
     if (reference.index > lastIndex) {
-      segments.push(
-        replaceMalformedChatReferencesWithDisplayName(
-          text.slice(lastIndex, reference.index),
-        ),
-      );
+      segments.push(text.slice(lastIndex, reference.index));
     }
 
     segments.push(reference);
@@ -23,9 +18,7 @@ export const getChatReferenceSegments = (
   }
 
   if (lastIndex < text.length) {
-    segments.push(
-      replaceMalformedChatReferencesWithDisplayName(text.slice(lastIndex)),
-    );
+    segments.push(text.slice(lastIndex));
   }
 
   return segments;

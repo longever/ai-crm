@@ -337,9 +337,8 @@ const buildFieldWidget = ({
   type: WidgetType.FIELD,
   title,
   objectMetadataId,
-  position: {
-    layoutMode: PageLayoutTabLayoutMode.GRID,
-    __typename: 'PageLayoutWidgetGridPosition',
+  gridPosition: {
+    __typename: 'GridPosition',
     row: 0,
     column: 0,
     rowSpan: 1,

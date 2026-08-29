@@ -1,6 +1,7 @@
 import {
+  type GridPosition,
+  PageLayoutTabLayoutMode,
   type PageLayoutWidget,
-  type PageLayoutWidgetGridPosition,
   WidgetConfigurationType,
   WidgetType,
 } from '~/generated-metadata/graphql';
@@ -10,7 +11,7 @@ export const createDefaultIframeWidget = (
   pageLayoutTabId: string,
   title: string,
   url: string | null,
-  position: PageLayoutWidgetGridPosition,
+  gridPosition: GridPosition,
   objectMetadataId?: string | null,
 ): PageLayoutWidget => {
   return {
@@ -27,9 +28,14 @@ export const createDefaultIframeWidget = (
       configurationType: WidgetConfigurationType.IFRAME,
       url,
     },
+    gridPosition,
     position: {
-      ...position,
       __typename: 'PageLayoutWidgetGridPosition',
+      layoutMode: PageLayoutTabLayoutMode.GRID,
+      row: gridPosition.row,
+      column: gridPosition.column,
+      rowSpan: gridPosition.rowSpan,
+      columnSpan: gridPosition.columnSpan,
     },
     objectMetadataId: objectMetadataId ?? null,
     createdAt: new Date().toISOString(),

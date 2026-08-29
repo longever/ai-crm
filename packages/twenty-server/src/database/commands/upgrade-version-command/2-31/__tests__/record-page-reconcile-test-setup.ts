@@ -7,12 +7,10 @@ import {
   getSystemViewUniversalIdentifier,
   getSystemViewFieldGroupUniversalIdentifier,
 } from 'twenty-shared/application';
-import {
-  PageLayoutType,
-  ViewKey,
-} from 'twenty-shared/types';
+import { ViewKey } from 'twenty-shared/types';
 
 import { WidgetConfigurationType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-configuration-type.type';
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 export const WORKSPACE_ID = '20202020-0000-4000-8000-000000000001';
 export const STANDARD_APPLICATION_UNIVERSAL_IDENTIFIER =

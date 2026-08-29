@@ -14,11 +14,8 @@ import { createOnePageLayout } from 'test/integration/metadata/suites/page-layou
 import { destroyOnePageLayout } from 'test/integration/metadata/suites/page-layout/utils/destroy-one-page-layout.util';
 import { updateOnePageLayout } from 'test/integration/metadata/suites/page-layout/utils/update-one-page-layout.util';
 
-import {
-  PageLayoutTabLayoutMode,
-  PageLayoutType,
-  WidgetType,
-} from 'twenty-shared/types';
+import { WidgetType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-type.enum';
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 type TestContext = {
   pageLayoutId: string;
@@ -54,8 +51,7 @@ const createTestContext = async (): Promise<TestContext> => {
       title: 'Widget for Dashboard Sync Test',
       type: WidgetType.IFRAME,
       pageLayoutTabId: tabId,
-      position: {
-        layoutMode: PageLayoutTabLayoutMode.GRID,
+      gridPosition: {
         row: 0,
         column: 0,
         rowSpan: 1,
@@ -136,8 +132,7 @@ describe('Dashboard updatedAt should sync when linked page layout entities chang
             title: 'New Widget for Dashboard Sync Test',
             type: WidgetType.IFRAME,
             pageLayoutTabId: context.tabId,
-            position: {
-              layoutMode: PageLayoutTabLayoutMode.GRID,
+            gridPosition: {
               row: 1,
               column: 0,
               rowSpan: 1,

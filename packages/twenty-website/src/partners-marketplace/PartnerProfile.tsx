@@ -1,6 +1,5 @@
 import { msg } from '@lingui/core/macro';
 import { styled } from '@linaria/react';
-import { type ReactNode } from 'react';
 
 import { getServerI18n } from '@/platform/i18n/get-server-i18n';
 import {
@@ -109,13 +108,7 @@ const RailColumn = styled.aside`
   }
 `;
 
-export function PartnerProfile({
-  cta,
-  partner,
-}: {
-  cta: ReactNode;
-  partner: MarketplacePartner;
-}) {
+export function PartnerProfile({ partner }: { partner: MarketplacePartner }) {
   const i18n = getServerI18n();
 
   return (
@@ -149,9 +142,9 @@ export function PartnerProfile({
             />
             <PartnerProfileCtas
               calendarLink={partner.calendarLink}
-              cta={cta}
               links={partner.links}
               linkUrls={partner.linkUrls}
+              slug={partner.slug}
             />
             <PartnerRatesPanel
               hourlyRateUsd={partner.hourlyRateUsd}

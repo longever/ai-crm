@@ -1,10 +1,7 @@
 import { type FilterableTimelineActivity } from '@/activities/timeline-activities/types/FilterableTimelineActivity';
 import { type TimelineActivityType } from '@/activities/timeline-activities/types/TimelineActivityType';
-import { type TimelineActivityTypeMaps } from '@/activities/timeline-activities/types/TimelineActivityTypeMaps';
 import { filterOutInvalidTimelineActivities } from '@/activities/timeline-activities/utils/filterOutInvalidTimelineActivities';
 import { type EnrichedObjectMetadataItem } from '@/object-metadata/types/EnrichedObjectMetadataItem';
-
-type TestTimelineActivity = FilterableTimelineActivity & { id: string };
 
 const mainObjectMetadataItem = {
   nameSingular: 'company',
@@ -42,64 +39,51 @@ const timelineActivityTypeById = new Map<string, TimelineActivityType>([
     UPDATED_TYPE_ID,
     {
       id: UPDATED_TYPE_ID,
-      universalIdentifier: UPDATED_TYPE_ID,
       name: 'recordUpdated',
       label: 'updated',
       action: 'updated',
       icon: null,
+      renderer: null,
       objectUniversalIdentifier: null,
-      frontComponentUniversalIdentifier: null,
     },
   ],
   [
     LINKED_TYPE_ID,
     {
       id: LINKED_TYPE_ID,
-      universalIdentifier: LINKED_TYPE_ID,
       name: 'recordLinked',
       label: 'was linked by',
       action: 'linked',
       icon: null,
+      renderer: null,
       objectUniversalIdentifier: null,
-      frontComponentUniversalIdentifier: null,
     },
   ],
   [
     NOTE_UPDATED_TYPE_ID,
     {
       id: NOTE_UPDATED_TYPE_ID,
-      universalIdentifier: NOTE_UPDATED_TYPE_ID,
       name: 'noteUpdated',
       label: 'updated a related note',
       action: 'updated',
       icon: null,
+      renderer: 'activity',
       objectUniversalIdentifier: NOTE_OBJECT_UNIVERSAL_IDENTIFIER,
-      frontComponentUniversalIdentifier: null,
     },
   ],
 ]);
 
-const timelineActivityTypeMaps: TimelineActivityTypeMaps = {
-  byId: timelineActivityTypeById,
-  byUniversalIdentifier: new Map(
-    [...timelineActivityTypeById.values()].map((timelineActivityType) => [
-      timelineActivityType.universalIdentifier,
-      timelineActivityType,
-    ]),
-  ),
-};
-
-const filter = (events: TestTimelineActivity[]) =>
+const filter = (events: FilterableTimelineActivity[]) =>
   filterOutInvalidTimelineActivities(
     events,
     'company',
     [mainObjectMetadataItem, noteObjectMetadataItem, taskObjectMetadataItem],
-    timelineActivityTypeMaps,
+    timelineActivityTypeById,
   );
 
 describe('filterOutInvalidTimelineActivities', () => {
   it('keeps update diffs as-is and trims fields not in the readable fields', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       {
         id: '1',
         timelineActivityTypeId: UPDATED_TYPE_ID,
@@ -144,7 +128,7 @@ describe('filterOutInvalidTimelineActivities', () => {
   });
 
   it('drops update events whose diff has no readable fields', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       {
         id: '1',
         timelineActivityTypeId: UPDATED_TYPE_ID,
@@ -158,7 +142,7 @@ describe('filterOutInvalidTimelineActivities', () => {
   });
 
   it('drops update events that have no diff', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       { id: '1', timelineActivityTypeId: UPDATED_TYPE_ID, properties: {} },
     ];
 
@@ -166,7 +150,7 @@ describe('filterOutInvalidTimelineActivities', () => {
   });
 
   it('keeps non-update events that have no diff', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       { id: '1', timelineActivityTypeId: LINKED_TYPE_ID, properties: {} },
       { id: '2', timelineActivityTypeId: LINKED_TYPE_ID, properties: {} },
     ];
@@ -175,7 +159,7 @@ describe('filterOutInvalidTimelineActivities', () => {
   });
 
   it('keeps linked note/task rows that carry no diff', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       {
         id: '1',
         timelineActivityTypeId: UPDATED_TYPE_ID,
@@ -194,7 +178,7 @@ describe('filterOutInvalidTimelineActivities', () => {
   });
 
   it('validates linked note diffs against the note readable fields', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       {
         id: '1',
         timelineActivityTypeId: UPDATED_TYPE_ID,
@@ -219,7 +203,7 @@ describe('filterOutInvalidTimelineActivities', () => {
   });
 
   it('resolves the linked object from the type for a historical row', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       {
         id: '1',
         timelineActivityTypeId: NOTE_UPDATED_TYPE_ID,
@@ -243,14 +227,13 @@ describe('filterOutInvalidTimelineActivities', () => {
     ]);
   });
 
-  it('falls back to the type universal identifier after an object reinstall', () => {
-    const events: TestTimelineActivity[] = [
+  it('resolves the linked object from name for a row written by an old pod', () => {
+    const events = [
       {
         id: '1',
-        timelineActivityTypeId: NOTE_UPDATED_TYPE_ID,
-        timelineActivityTypeSnapshot:
-          timelineActivityTypeMaps.byId.get(NOTE_UPDATED_TYPE_ID),
-        linkedObjectMetadataId: 'stale-installation-id',
+        timelineActivityTypeId: null,
+        linkedObjectMetadataId: null,
+        name: 'linked-note.updated',
         properties: {
           diff: {
             title: { before: 'a', after: 'b' },
@@ -262,14 +245,17 @@ describe('filterOutInvalidTimelineActivities', () => {
 
     expect(filter(events)).toEqual([
       {
-        ...events[0],
+        id: '1',
+        timelineActivityTypeId: null,
+        linkedObjectMetadataId: null,
+        name: 'linked-note.updated',
         properties: { diff: { title: { before: 'a', after: 'b' } } },
       },
     ]);
   });
 
   it('drops linked note updates whose diff has no readable note fields', () => {
-    const events: TestTimelineActivity[] = [
+    const events = [
       {
         id: '1',
         timelineActivityTypeId: UPDATED_TYPE_ID,

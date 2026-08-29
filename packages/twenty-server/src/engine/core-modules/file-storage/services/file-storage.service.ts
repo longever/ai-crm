@@ -11,7 +11,6 @@ import { ApplicationEntity } from 'src/engine/core-modules/application/applicati
 import { findActiveFlatApplicationById } from 'src/engine/core-modules/application/utils/find-active-flat-application-by-id.util';
 import { findActiveFlatApplicationByUniversalIdentifier } from 'src/engine/core-modules/application/utils/find-active-flat-application-by-universal-identifier.util';
 import { FileStorageDriverFactory } from 'src/engine/core-modules/file-storage/file-storage-driver.factory';
-import { type ByteRange } from 'src/engine/core-modules/file-storage/types/byte-range.type';
 import {
   FileStorageException,
   FileStorageExceptionCode,
@@ -268,7 +267,6 @@ export class FileStorageService {
   async createPendingFile({
     fileFolder,
     applicationUniversalIdentifier,
-    applicationId,
     workspaceId,
     resourcePath,
     fileId,
@@ -276,18 +274,15 @@ export class FileStorageService {
     mimeType,
     settings,
   }: ResourceIdentifier & {
-    applicationId?: string;
     fileId: string;
     size: number;
     mimeType: string;
     settings: FileSettings;
   }): Promise<FileEntity> {
-    const resolvedApplicationId =
-      applicationId ??
-      (await this.resolveApplicationIdOrThrow({
-        applicationUniversalIdentifier,
-        workspaceId,
-      }));
+    const applicationId = await this.resolveApplicationIdOrThrow({
+      applicationUniversalIdentifier,
+      workspaceId,
+    });
 
     const { filePath } = this.validateAndBuildFileStoragePathOrThrow({
       workspaceId,
@@ -300,7 +295,7 @@ export class FileStorageService {
       workspaceId,
       {
         path: filePath,
-        applicationId: resolvedApplicationId,
+        applicationId,
         id: fileId,
         mimeType,
         size,
@@ -378,18 +373,13 @@ export class FileStorageService {
     });
   }
 
-  readFile(
-    params: ResourceIdentifier & { byteRange?: ByteRange },
-  ): Promise<Readable> {
+  readFile(params: ResourceIdentifier): Promise<Readable> {
     const driver = this.fileStorageDriverFactory.getCurrentDriver();
 
     const { onStorageFilePath } =
       this.validateAndBuildFileStoragePathOrThrow(params);
 
-    return driver.readFile({
-      filePath: onStorageFilePath,
-      byteRange: params.byteRange,
-    });
+    return driver.readFile({ filePath: onStorageFilePath });
   }
 
   downloadFile(

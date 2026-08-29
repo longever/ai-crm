@@ -4,6 +4,7 @@ export const FLAT_PAGE_LAYOUT_WIDGET_EDITABLE_PROPERTIES = [
   'title',
   'type',
   'objectMetadataId',
+  'gridPosition',
   'position',
   'configuration',
   'conditionalDisplay',

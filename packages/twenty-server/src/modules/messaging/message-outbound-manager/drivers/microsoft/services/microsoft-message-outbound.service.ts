@@ -7,9 +7,7 @@ import { type ConnectedAccountEntity } from 'src/engine/metadata-modules/connect
 import { toMicrosoftRecipients } from 'src/modules/messaging/message-import-manager/utils/to-microsoft-recipients.util';
 import { type SendMessageInput } from 'src/modules/messaging/message-outbound-manager/types/send-message-input.type';
 import { type SendMessageResult } from 'src/modules/messaging/message-outbound-manager/types/send-message-result.type';
-import { getConnectedAccountSendableHandleOrThrow } from 'src/modules/messaging/message-outbound-manager/utils/get-connected-account-sendable-handle-or-throw.util';
 import { type Client as MicrosoftGraphClient } from '@microsoft/microsoft-graph-client';
-import { isNonEmptyString } from '@sniptt/guards';
 import { isDefined } from 'twenty-shared/utils';
 
 @Injectable()
@@ -32,11 +30,7 @@ export class MicrosoftMessageOutboundService implements MessageOutboundDriver {
       id: messageId,
       internetMessageId,
       conversationId,
-    } = await this.createDraftMessage({
-      microsoftClient,
-      sendMessageInput,
-      connectedAccount,
-    });
+    } = await this.createDraftMessage(microsoftClient, sendMessageInput);
 
     await microsoftClient.api(`/me/messages/${messageId}/send`).post({});
 
@@ -55,11 +49,7 @@ export class MicrosoftMessageOutboundService implements MessageOutboundDriver {
       connectedAccount.id,
     );
 
-    await this.createDraftMessage({
-      microsoftClient,
-      sendMessageInput,
-      connectedAccount,
-    });
+    await this.createDraftMessage(microsoftClient, sendMessageInput);
   }
 
   async sendDraft(
@@ -88,30 +78,22 @@ export class MicrosoftMessageOutboundService implements MessageOutboundDriver {
     return sendResult;
   }
 
-  private async createDraftMessage({
-    microsoftClient,
-    sendMessageInput,
-    connectedAccount,
-  }: {
-    microsoftClient: MicrosoftGraphClient;
-    sendMessageInput: SendMessageInput;
-    connectedAccount: ConnectedAccountEntity;
-  }): Promise<{
+  private async createDraftMessage(
+    microsoftClient: MicrosoftGraphClient,
+    sendMessageInput: SendMessageInput,
+  ): Promise<{
     id: string;
     internetMessageId?: string;
     conversationId?: string;
   }> {
     const parentMessageGraphId = sendMessageInput.inReplyTo
-      ? await this.findMessageByInternetMessageId({
+      ? await this.findMessageByInternetMessageId(
           microsoftClient,
-          internetMessageId: sendMessageInput.inReplyTo,
-        })
+          sendMessageInput.inReplyTo,
+        )
       : undefined;
 
-    const message = this.composeMicrosoftMessage({
-      sendMessageInput,
-      connectedAccount,
-    });
+    const message = this.composeMicrosoftMessage(sendMessageInput);
 
     if (isDefined(parentMessageGraphId)) {
       const reply = await microsoftClient
@@ -139,13 +121,10 @@ export class MicrosoftMessageOutboundService implements MessageOutboundDriver {
     };
   }
 
-  private async findMessageByInternetMessageId({
-    microsoftClient,
-    internetMessageId,
-  }: {
-    microsoftClient: MicrosoftGraphClient;
-    internetMessageId: string;
-  }): Promise<string | undefined> {
+  private async findMessageByInternetMessageId(
+    microsoftClient: MicrosoftGraphClient,
+    internetMessageId: string,
+  ): Promise<string | undefined> {
     const escapedInternetMessageId = internetMessageId.split("'").join("''");
 
     const response = await microsoftClient
@@ -158,29 +137,11 @@ export class MicrosoftMessageOutboundService implements MessageOutboundDriver {
     return response?.value?.[0]?.id;
   }
 
-  private composeMicrosoftMessage({
-    sendMessageInput,
-    connectedAccount,
-  }: {
-    sendMessageInput: SendMessageInput;
-    connectedAccount: ConnectedAccountEntity;
-  }): Record<string, unknown> {
-    const from = isNonEmptyString(sendMessageInput.fromHandle)
-      ? {
-          from: {
-            emailAddress: {
-              address: getConnectedAccountSendableHandleOrThrow({
-                connectedAccount,
-                requestedFromHandle: sendMessageInput.fromHandle,
-              }),
-            },
-          },
-        }
-      : {};
-
+  private composeMicrosoftMessage(
+    sendMessageInput: SendMessageInput,
+  ): Record<string, unknown> {
     return {
       subject: sendMessageInput.subject,
-      ...from,
       body: {
         contentType: 'HTML',
         content: sendMessageInput.html,

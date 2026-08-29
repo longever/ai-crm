@@ -2,16 +2,12 @@ import { styled } from '@linaria/react';
 
 import { ActivityList } from '@/activities/components/ActivityList';
 import { type Task } from '@/activities/types/Task';
-import { SelectDisplay } from 'twenty-ui/data-display';
-import { type ThemeColor } from 'twenty-ui/theme';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { TaskRow } from './TaskRow';
 
 type TaskListProps = {
   title: string;
-  titleColor: ThemeColor | 'transparent';
   tasks: Task[];
-  isFirst: boolean;
 };
 
 const StyledContainer = styled.div`
@@ -21,21 +17,22 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  padding: 8px ${themeCssVariables.spacing[6]};
+  width: calc(100% - ${themeCssVariables.spacing[12]});
 `;
 
-const StyledTitleBar = styled.div<{ isFirst: boolean }>`
+const StyledTitleBar = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: ${themeCssVariables.spacing[3]};
-  margin-top: ${({ isFirst }) =>
-    isFirst ? '0' : themeCssVariables.spacing[4]};
+  margin-bottom: ${themeCssVariables.spacing[4]};
+  margin-top: ${themeCssVariables.spacing[4]};
   place-items: center;
   width: 100%;
 `;
 
 const StyledTitle = styled.span`
-  display: flex;
+  color: ${themeCssVariables.font.color.primary};
+  font-weight: ${themeCssVariables.font.weight.semiBold};
 `;
 
 const StyledCount = styled.span`
@@ -43,20 +40,14 @@ const StyledCount = styled.span`
   margin-left: ${themeCssVariables.spacing[2]};
 `;
 
-export const TaskList = ({
-  title,
-  titleColor,
-  tasks,
-  isFirst,
-}: TaskListProps) => (
+export const TaskList = ({ title, tasks }: TaskListProps) => (
   <>
     {tasks.length > 0 && (
       <StyledContainer>
-        <StyledTitleBar isFirst={isFirst}>
+        <StyledTitleBar>
           {title && (
             <StyledTitle>
-              <SelectDisplay color={titleColor} label={title} />
-              <StyledCount>{tasks.length}</StyledCount>
+              {title} <StyledCount>{tasks.length}</StyledCount>
             </StyledTitle>
           )}
         </StyledTitleBar>

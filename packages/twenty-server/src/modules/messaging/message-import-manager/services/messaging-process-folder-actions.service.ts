@@ -6,7 +6,7 @@ import { In, Repository } from 'typeorm';
 
 import { type MessageChannelEntity } from 'src/engine/metadata-modules/message-channel/entities/message-channel.entity';
 import { MessageFolderEntity } from 'src/engine/metadata-modules/message-folder/entities/message-folder.entity';
-import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 import { MessageFolderPendingSyncAction } from 'twenty-shared/types';
 import { MessagingDeleteFolderMessagesService } from 'src/modules/messaging/message-import-manager/services/messaging-delete-folder-messages.service';
@@ -23,7 +23,7 @@ export class MessagingProcessFolderActionsService {
   );
 
   constructor(
-    private readonly workspaceOrmManager: WorkspaceOrmManager,
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
     @InjectRepository(MessageFolderEntity)
     private readonly messageFolderRepository: Repository<MessageFolderEntity>,
     private readonly messagingDeleteFolderMessagesService: MessagingDeleteFolderMessagesService,
@@ -49,7 +49,7 @@ export class MessagingProcessFolderActionsService {
       `WorkspaceId: ${workspaceId}, MessageChannelId: ${messageChannel.id} - Processing ${foldersWithPendingActions.length} folders with pending actions`,
     );
 
-    const messageExternalIdsToImport = new Set<string>();
+    const messageExternalIdsToImport: string[] = [];
     const folderIdsToDelete: string[] = [];
     const processedFolderIds: string[] = [];
     const failedFolderIds: Array<{ folderId: string; error: Error }> = [];
@@ -82,9 +82,9 @@ export class MessagingProcessFolderActionsService {
                 folder,
               );
 
-            for (const messageExternalId of folderMessageExternalIdsToImport) {
-              messageExternalIdsToImport.add(messageExternalId);
-            }
+            messageExternalIdsToImport.push(
+              ...folderMessageExternalIdsToImport,
+            );
 
             this.logger.debug(
               `WorkspaceId: ${workspaceId}, MessageChannelId: ${messageChannel.id}, FolderId: ${folder.id} - Completed FOLDER_IMPORT action`,
@@ -112,7 +112,7 @@ export class MessagingProcessFolderActionsService {
     if (processedFolderIds.length > 0 || folderIdsToDelete.length > 0) {
       const authContext = buildSystemAuthContext(workspaceId);
 
-      await this.workspaceOrmManager.executeInWorkspaceContext(
+      await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
         async () => {
           if (processedFolderIds.length > 0) {
             await this.messageFolderRepository.update(
@@ -142,7 +142,7 @@ export class MessagingProcessFolderActionsService {
     }
 
     return {
-      messageExternalIdsToImport: [...messageExternalIdsToImport],
+      messageExternalIdsToImport: [...new Set(messageExternalIdsToImport)],
     };
   }
 }

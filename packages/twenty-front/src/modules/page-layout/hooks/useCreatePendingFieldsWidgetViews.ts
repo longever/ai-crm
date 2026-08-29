@@ -71,7 +71,7 @@ export const useCreatePendingFieldsWidgetViews = () => {
             input: {
               id: viewId,
               name: viewName,
-              icon: 'IconListDetails',
+              icon: 'IconList',
               objectMetadataId,
               type: ViewType.FIELDS_WIDGET,
             },

@@ -18,10 +18,7 @@ import { useStore } from 'jotai';
 import { useCallback } from 'react';
 import { isDefined } from 'twenty-shared/utils';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  PageLayoutTabLayoutMode,
-  WidgetType,
-} from '~/generated-metadata/graphql';
+import { WidgetType } from '~/generated-metadata/graphql';
 
 export const useCreatePageLayoutRecordTableWidget = (
   pageLayoutIdFromProps?: string,
@@ -80,8 +77,7 @@ export const useCreatePageLayoutRecordTableWidget = (
         id: widgetId,
         pageLayoutTabId: activeTabId,
         title: objectMetadata?.labelPlural ?? 'Record Table',
-        position: {
-          layoutMode: PageLayoutTabLayoutMode.GRID,
+        gridPosition: {
           row: position.y,
           column: position.x,
           rowSpan: position.h,

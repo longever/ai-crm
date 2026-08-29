@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import MailComposer from 'nodemailer/lib/mail-composer';
-import { isNonEmptyString } from '@sniptt/guards';
 import { isDefined } from 'twenty-shared/utils';
 import { Repository } from 'typeorm';
 
@@ -20,7 +19,6 @@ import { type SendMessageInput } from 'src/modules/messaging/message-outbound-ma
 import { type SendMessageResult } from 'src/modules/messaging/message-outbound-manager/types/send-message-result.type';
 import { extractMessageIdFromBuffer } from 'src/modules/messaging/message-outbound-manager/utils/extract-message-id-from-buffer.util';
 import { formatMessageFromHeader } from 'src/modules/messaging/message-outbound-manager/utils/format-message-from-header.util';
-import { getConnectedAccountSendableHandleOrThrow } from 'src/modules/messaging/message-outbound-manager/utils/get-connected-account-sendable-handle-or-throw.util';
 import { toMailComposerOptions } from 'src/modules/messaging/message-outbound-manager/utils/to-mail-composer-options.util';
 
 @Injectable()
@@ -50,12 +48,7 @@ export class ImapSmtpMessageOutboundService implements MessageOutboundDriver {
     this.assertHandleIsDefined(handle);
 
     const from = formatMessageFromHeader({
-      fromEmail: isNonEmptyString(sendMessageInput.fromHandle)
-        ? getConnectedAccountSendableHandleOrThrow({
-            connectedAccount,
-            requestedFromHandle: sendMessageInput.fromHandle,
-          })
-        : handle,
+      fromEmail: handle,
       fromName: connectionParameters?.name,
     });
 
@@ -122,12 +115,7 @@ export class ImapSmtpMessageOutboundService implements MessageOutboundDriver {
     }
 
     const from = formatMessageFromHeader({
-      fromEmail: isNonEmptyString(sendMessageInput.fromHandle)
-        ? getConnectedAccountSendableHandleOrThrow({
-            connectedAccount,
-            requestedFromHandle: sendMessageInput.fromHandle,
-          })
-        : handle,
+      fromEmail: handle,
       fromName: connectionParameters?.name,
     });
 

@@ -11,16 +11,15 @@ import {
   type WorkspaceIteratorReport,
 } from 'src/database/commands/command-runners/workspace-iterator.service';
 import { ApplicationInstallService } from 'src/engine/core-modules/application/application-install/application-install.service';
+import { ApplicationEntity } from 'src/engine/core-modules/application/application.entity';
 import { ApplicationRegistrationEntity } from 'src/engine/core-modules/application/application-registration/application-registration.entity';
 import { ApplicationRegistrationService } from 'src/engine/core-modules/application/application-registration/application-registration.service';
 import { ApplicationRegistrationSourceType } from 'src/engine/core-modules/application/application-registration/enums/application-registration-source-type.enum';
-import { ApplicationEntity } from 'src/engine/core-modules/application/application.entity';
 import {
   ApplicationException,
   ApplicationExceptionCode,
 } from 'src/engine/core-modules/application/application.exception';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
-import { WorkspaceVersionService } from 'src/engine/workspace-manager/workspace-version/services/workspace-version.service';
 
 const npmPackageMetadataSchema = z.object({
   version: z.string(),
@@ -39,7 +38,6 @@ export class ApplicationUpgradeService {
     private readonly applicationRegistrationService: ApplicationRegistrationService,
     private readonly twentyConfigService: TwentyConfigService,
     private readonly workspaceIteratorService: WorkspaceIteratorService,
-    private readonly workspaceVersionService: WorkspaceVersionService,
   ) {}
 
   async checkForUpdates(
@@ -130,7 +128,6 @@ export class ApplicationUpgradeService {
     appRegistration: ApplicationRegistrationEntity;
     targetVersion: string | null;
     applicationsToUpgrade: ApplicationEntity[];
-    skippedNonProvisionedWorkspaceIds: string[];
   }> {
     const appRegistration = await this.appRegistrationRepository.findOneOrFail({
       where: { id: applicationRegistrationId },
@@ -143,7 +140,6 @@ export class ApplicationUpgradeService {
         appRegistration,
         targetVersion: null,
         applicationsToUpgrade: [],
-        skippedNonProvisionedWorkspaceIds: [],
       };
     }
 
@@ -157,34 +153,18 @@ export class ApplicationUpgradeService {
       },
     });
 
-    const outdatedApplications = applications.filter(
+    let applicationsToUpgrade = applications.filter(
       (application) => application.version !== targetVersion,
     );
 
-    const provisionedWorkspaceIds = new Set(
-      await this.workspaceVersionService.getProvisionedWorkspaceIds(),
-    );
+    if (isDefined(workspaceCountLimit)) {
+      applicationsToUpgrade = applicationsToUpgrade.slice(
+        0,
+        workspaceCountLimit,
+      );
+    }
 
-    const provisionedApplications = outdatedApplications.filter((application) =>
-      provisionedWorkspaceIds.has(application.workspaceId),
-    );
-
-    const skippedNonProvisionedWorkspaceIds = outdatedApplications
-      .filter(
-        (application) => !provisionedWorkspaceIds.has(application.workspaceId),
-      )
-      .map((application) => application.workspaceId);
-
-    const applicationsToUpgrade = isDefined(workspaceCountLimit)
-      ? provisionedApplications.slice(0, workspaceCountLimit)
-      : provisionedApplications;
-
-    return {
-      appRegistration,
-      targetVersion,
-      applicationsToUpgrade,
-      skippedNonProvisionedWorkspaceIds,
-    };
+    return { appRegistration, targetVersion, applicationsToUpgrade };
   }
 
   async upgradeApplications({

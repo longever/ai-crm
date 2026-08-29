@@ -21,7 +21,7 @@ export const computeStandardTimelineActivityViews = (
         type: ViewType.TABLE,
         key: ViewKey.INDEX,
         position: 0,
-        icon: 'IconTable',
+        icon: 'IconList',
       },
     }),
   };

@@ -11,7 +11,6 @@ import {
 } from '@/ui/input/components/internal/date/components/DatePicker';
 import { DatePickerInput } from '@/ui/input/components/internal/date/components/DatePickerInput';
 import { useUserTimezone } from '@/ui/input/components/internal/date/hooks/useUserTimezone';
-import { type FormFieldInputVariant } from '@/ui/input/types/FormFieldInputVariant';
 
 import { useCloseDropdown } from '@/ui/layout/dropdown/hooks/useCloseDropdown';
 import { OverlayContainer } from '@/ui/layout/overlay/components/OverlayContainer';
@@ -78,7 +77,6 @@ type FormDateFieldInputProps = {
   placeholder?: string;
   VariablePicker?: VariablePickerComponent;
   readonly?: boolean;
-  variant?: FormFieldInputVariant;
 };
 
 export const FormDateFieldInput = ({
@@ -87,7 +85,6 @@ export const FormDateFieldInput = ({
   onChange,
   VariablePicker,
   readonly,
-  variant = 'default',
 }: FormDateFieldInputProps) => {
   const instanceId = useId();
 
@@ -275,7 +272,6 @@ export const FormDateFieldInput = ({
             ref={refs.setReference}
             formFieldInputInstanceId={instanceId}
             hasRightElement={isDefined(VariablePicker) && !readonly}
-            variant={variant}
           >
             {draftValue.type === 'static' ? (
               <StyledDateInputTextContainer
@@ -286,7 +282,6 @@ export const FormDateFieldInput = ({
                   date={plainDateValue}
                   onChange={handleInputChange}
                   readonly={readonly}
-                  variant={variant}
                 />
               </StyledDateInputTextContainer>
             ) : (

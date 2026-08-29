@@ -230,7 +230,6 @@ export class LocalDriver implements LogicFunctionDriver {
             data: (result ?? null) as object | null,
             logs,
             duration,
-            billedDurationMs: duration,
             status: LogicFunctionExecutionStatus.SUCCESS,
           };
         }
@@ -239,7 +238,6 @@ export class LocalDriver implements LogicFunctionDriver {
           data: null,
           logs,
           duration,
-          billedDurationMs: duration,
           error: {
             errorType: errorType ?? 'UnhandledError',
             errorMessage: error || 'Unknown error',

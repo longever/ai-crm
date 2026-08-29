@@ -1,5 +1,5 @@
 import { isNonEmptyString } from '@sniptt/guards';
-import { isDefined, isNonEmptyArray } from 'twenty-shared/utils';
+import { isNonEmptyArray } from 'twenty-shared/utils';
 
 import { type ToolIndexEntry } from 'src/engine/core-modules/tool-provider/types/tool-index-entry.type';
 import { buildToolCatalogSection } from 'src/engine/core-modules/tool-provider/utils/build-tool-catalog-section.util';
@@ -10,14 +10,13 @@ import { buildSkillCatalogSection } from 'src/engine/metadata-modules/ai/ai-chat
 import { buildUploadedFilesSection } from 'src/engine/metadata-modules/ai/ai-chat/utils/build-uploaded-files-section.util';
 import { buildUserContextSection } from 'src/engine/metadata-modules/ai/ai-chat/utils/build-user-context-section.util';
 import { buildWorkspaceInstructionsSection } from 'src/engine/metadata-modules/ai/ai-chat/utils/build-workspace-instructions-section.util';
-import { type UploadedFileReference } from 'src/engine/metadata-modules/ai/ai-chat/types/uploaded-file-reference.type';
 import { type FlatSkill } from 'src/engine/metadata-modules/flat-skill/types/flat-skill.type';
 
 export const buildFullSystemPrompt = ({
   toolCatalog,
   skillCatalog,
   preloadedTools,
-  uploadedFilesContext,
+  storedFiles,
   workspaceInstructions,
   userContext,
   isWorkspaceSetupThread,
@@ -25,10 +24,10 @@ export const buildFullSystemPrompt = ({
   toolCatalog: ToolIndexEntry[];
   skillCatalog: FlatSkill[];
   preloadedTools: string[];
-  uploadedFilesContext?: {
-    uploadedFiles: UploadedFileReference[];
-    codeInterpreterFiles: UploadedFileReference[];
-  };
+  storedFiles?: Array<{
+    filename: string;
+    fileId: string;
+  }>;
   workspaceInstructions?: string;
   userContext?: UserContext;
   isWorkspaceSetupThread?: boolean;
@@ -63,11 +62,8 @@ export const buildFullSystemPrompt = ({
     parts.push(skillSection);
   }
 
-  if (
-    isDefined(uploadedFilesContext) &&
-    isNonEmptyArray(uploadedFilesContext.uploadedFiles)
-  ) {
-    parts.push(buildUploadedFilesSection(uploadedFilesContext));
+  if (isNonEmptyArray(storedFiles)) {
+    parts.push(buildUploadedFilesSection(storedFiles));
   }
 
   return parts.join('\n');

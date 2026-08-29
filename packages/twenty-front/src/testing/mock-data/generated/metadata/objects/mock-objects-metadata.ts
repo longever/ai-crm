@@ -14024,8 +14024,7 @@ export const mockedStandardObjectMetadataQueryResult: ObjectMetadataItemsQuery =
               "defaultValue": null,
               "options": null,
               "settings": {
-                "relationType": "ONE_TO_MANY",
-                "junctionTargetFieldId": "02f05d27-8a15-4035-8bb3-8b6c7ee7b959"
+                "relationType": "ONE_TO_MANY"
               },
               "isLabelSyncedWithName": false,
               "morphId": null,
@@ -18135,8 +18134,7 @@ export const mockedStandardObjectMetadataQueryResult: ObjectMetadataItemsQuery =
               "defaultValue": null,
               "options": null,
               "settings": {
-                "relationType": "ONE_TO_MANY",
-                "junctionTargetFieldId": "0199b767-c816-43e5-ba5a-4bb7d4c25d23"
+                "relationType": "ONE_TO_MANY"
               },
               "isLabelSyncedWithName": false,
               "morphId": null,

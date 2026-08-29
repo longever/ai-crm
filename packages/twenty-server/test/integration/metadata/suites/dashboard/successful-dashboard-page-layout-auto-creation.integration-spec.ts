@@ -10,7 +10,7 @@ import { createOnePageLayout } from 'test/integration/metadata/suites/page-layou
 import { destroyOnePageLayout } from 'test/integration/metadata/suites/page-layout/utils/destroy-one-page-layout.util';
 import { findOnePageLayout } from 'test/integration/metadata/suites/page-layout/utils/find-one-page-layout.util';
 
-import { PageLayoutType } from 'twenty-shared/types';
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 describe('Dashboard page layout auto-creation should succeed', () => {
   describe('createOne dashboard without pageLayoutId', () => {

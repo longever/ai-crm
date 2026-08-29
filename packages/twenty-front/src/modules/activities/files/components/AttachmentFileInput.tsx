@@ -11,24 +11,19 @@ const StyledFileInput = styled.input`
 type AttachmentFileInputProps = {
   ref?: Ref<HTMLInputElement>;
   targetableObject: ActivityTargetableObject;
-  onUploadComplete?: () => void;
 };
 
 export const AttachmentFileInput = ({
   ref,
   targetableObject,
-  onUploadComplete,
 }: AttachmentFileInputProps) => {
   const { uploadAttachmentFiles } = useUploadAttachmentFiles();
 
-  const handleFileInputChange = async (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (isDefined(event.target.files)) {
       const files = Array.from(event.target.files);
       event.target.value = '';
-      await uploadAttachmentFiles({ files, targetableObject });
-      onUploadComplete?.();
+      uploadAttachmentFiles({ files, targetableObject });
     }
   };
 

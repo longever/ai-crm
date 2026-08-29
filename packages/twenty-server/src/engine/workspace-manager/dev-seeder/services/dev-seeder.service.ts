@@ -18,7 +18,7 @@ import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.ent
 import { ObjectMetadataEntity } from 'src/engine/metadata-modules/object-metadata/object-metadata.entity';
 import { WorkspaceCacheStorageService } from 'src/engine/workspace-cache-storage/workspace-cache-storage.service';
 import { WorkspaceCacheService } from 'src/engine/workspace-cache/services/workspace-cache.service';
-import { WorkspaceSchemaService } from 'src/engine/workspace-datasource/workspace-schema.service';
+import { WorkspaceDataSourceService } from 'src/engine/workspace-datasource/workspace-datasource.service';
 import { seedBillingCustomers } from 'src/engine/workspace-manager/dev-seeder/core/billing/utils/seed-billing-customers.util';
 import { seedBillingSubscriptions } from 'src/engine/workspace-manager/dev-seeder/core/billing/utils/seed-billing-subscriptions.util';
 import {
@@ -53,7 +53,7 @@ export class DevSeederService {
   constructor(
     private readonly workspaceCacheStorageService: WorkspaceCacheStorageService,
     private readonly twentyConfigService: TwentyConfigService,
-    private readonly workspaceSchemaService: WorkspaceSchemaService,
+    private readonly workspaceDataSourceService: WorkspaceDataSourceService,
     private readonly twentyStandardApplicationService: TwentyStandardApplicationService,
     private readonly devSeederMetadataService: DevSeederMetadataService,
     private readonly devSeederPermissionsService: DevSeederPermissionsService,
@@ -99,7 +99,9 @@ export class DevSeederService {
     await this.applicationRegistrationService.createCliRegistrationIfNotExists();
 
     const schemaName =
-      await this.workspaceSchemaService.createWorkspaceDBSchema(workspaceId);
+      await this.workspaceDataSourceService.createWorkspaceDBSchema(
+        workspaceId,
+      );
 
     const { featureFlagsMap } = await this.workspaceCacheService.getOrRecompute(
       workspaceId,

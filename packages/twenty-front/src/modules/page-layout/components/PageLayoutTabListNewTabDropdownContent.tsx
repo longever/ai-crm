@@ -1,4 +1,4 @@
-import { useCurrentPageLayoutOrThrow } from '@/page-layout/hooks/useCurrentPageLayoutOrThrow';
+import { usePageLayoutTabsFilteredByFeatureFlags } from '@/page-layout/hooks/usePageLayoutTabsFilteredByFeatureFlags';
 import { useUpdatePageLayoutTab } from '@/page-layout/hooks/useUpdatePageLayoutTab';
 import { pageLayoutTabSettingsOpenTabIdComponentState } from '@/page-layout/states/pageLayoutTabSettingsOpenTabIdComponentState';
 import { isReactivatableTab } from '@/page-layout/utils/isReactivatableTab';
@@ -32,7 +32,8 @@ export const PageLayoutTabListNewTabDropdownContent = ({
   const { getIcon } = useIcons();
   const { closeDropdown } = useCloseDropdown();
 
-  const { currentPageLayout } = useCurrentPageLayoutOrThrow();
+  const { featureFilteredPageLayoutTabs } =
+    usePageLayoutTabsFilteredByFeatureFlags();
   const { updatePageLayoutTab } = useUpdatePageLayoutTab();
 
   const setActiveTabId = useSetAtomComponentState(activeTabIdComponentState);
@@ -42,7 +43,7 @@ export const PageLayoutTabListNewTabDropdownContent = ({
   const { navigatePageLayoutSidePanel } = useNavigatePageLayoutSidePanel();
 
   const inactiveTabs = sortTabsByPosition(
-    currentPageLayout.tabs.filter(isReactivatableTab),
+    featureFilteredPageLayoutTabs.filter(isReactivatableTab),
   );
 
   const handleCreateEmptyTab = useCallback(() => {

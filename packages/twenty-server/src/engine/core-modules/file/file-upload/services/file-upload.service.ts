@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Readable, Transform } from 'stream';
+import { type Readable, Transform } from 'stream';
 import { pipeline } from 'stream/promises';
 
 import { msg } from '@lingui/core/macro';
 import { isNonEmptyString } from '@sniptt/guards';
 import bytes from 'bytes';
-import { FileFolder } from 'twenty-shared/types';
+import { ApiPath, FileFolder } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
@@ -15,23 +15,29 @@ import { v4 } from 'uuid';
 import { settings } from 'src/engine/constants/settings';
 import { ApplicationEntity } from 'src/engine/core-modules/application/application.entity';
 import { ApplicationService } from 'src/engine/core-modules/application/application.service';
+import { FileUploadTokenJwtPayload } from 'src/engine/core-modules/auth/types/file-upload-token-jwt-payload.type';
+import { JwtTokenTypeEnum } from 'src/engine/core-modules/auth/types/jwt-token-type.enum';
 import { FileStorageService } from 'src/engine/core-modules/file-storage/services/file-storage.service';
 import { FileWithSignedUrlDTO } from 'src/engine/core-modules/file/dtos/file-with-sign-url.dto';
 import { FileEntity } from 'src/engine/core-modules/file/entities/file.entity';
+import { FILE_CONTENT_SNIFF_BYTE_COUNT } from 'src/engine/core-modules/file/file-upload/constants/file-content-sniff.constant';
 import { FileUploadTargetDTO } from 'src/engine/core-modules/file/file-upload/dtos/file-upload-target.dto';
 import {
   FileUploadException,
   FileUploadExceptionCode,
 } from 'src/engine/core-modules/file/file-upload/file-upload.exception';
-import { FileUploadCompletionService } from 'src/engine/core-modules/file/file-upload/services/file-upload-completion.service';
-import { FileUploadTargetService } from 'src/engine/core-modules/file/file-upload/services/file-upload-target.service';
 import { FileUrlService } from 'src/engine/core-modules/file/file-url/file-url.service';
 import { FILE_STATUS } from 'src/engine/core-modules/file/types/file-status.types';
 import { buildFileInfo } from 'src/engine/core-modules/file/utils/build-file-info.utils';
+import { extractFileInfoOrThrow } from 'src/engine/core-modules/file/utils/extract-file-info-or-throw.utils';
 import { removeFileFolderFromFileEntityPath } from 'src/engine/core-modules/file/utils/remove-file-folder-from-file-entity-path.utils';
+import { fileFolderConfigs } from 'src/engine/core-modules/file/interfaces/file-folder.interface';
+import { JwtWrapperService } from 'src/engine/core-modules/jwt/services/jwt-wrapper.service';
+import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 import { FieldMetadataEntity } from 'src/engine/metadata-modules/field-metadata/field-metadata.entity';
 import { InjectWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/inject-workspace-scoped-repository.decorator';
 import { WorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/workspace-scoped-repository';
+import { readReadablePrefix } from 'src/utils/read-readable-prefix';
 
 export const DIRECT_UPLOAD_FILE_FOLDERS = [
   FileFolder.FilesField,
@@ -46,8 +52,8 @@ export class FileUploadService {
   constructor(
     private readonly fileStorageService: FileStorageService,
     private readonly fileUrlService: FileUrlService,
-    private readonly fileUploadTargetService: FileUploadTargetService,
-    private readonly fileUploadCompletionService: FileUploadCompletionService,
+    private readonly jwtWrapperService: JwtWrapperService,
+    private readonly twentyConfigService: TwentyConfigService,
     private readonly applicationService: ApplicationService,
     @InjectRepository(ApplicationEntity)
     private readonly applicationRepository: Repository<ApplicationEntity>,
@@ -127,17 +133,59 @@ export class FileUploadService {
       },
     });
 
-    return this.fileUploadTargetService.buildUploadTarget({
+    const expiresInSeconds = this.twentyConfigService.get(
+      'STORAGE_S3_PRESIGNED_URL_EXPIRES_IN',
+    );
+    const expiresAt = new Date(Date.now() + expiresInSeconds * 1000);
+
+    const presignedUploadUrl =
+      await this.fileStorageService.getPresignedUploadUrl({
+        fileFolder,
+        applicationUniversalIdentifier,
+        workspaceId,
+        resourcePath,
+        contentType: mimeType,
+        contentLength: size,
+        expiresInSeconds,
+      });
+
+    if (isDefined(presignedUploadUrl)) {
+      return {
+        fileId,
+        uploadUrl: presignedUploadUrl,
+        contentType: mimeType,
+        expiresAt,
+      };
+    }
+
+    // No presign support (local storage, or S3 without presign enabled):
+    // fall back to the token-authenticated streaming endpoint on the server.
+    const payload: FileUploadTokenJwtPayload = {
       workspaceId,
       fileId,
-      fileFolder,
-      applicationUniversalIdentifier,
-      resourcePath,
-      contentType: mimeType,
-      size,
+      sub: workspaceId,
+      type: JwtTokenTypeEnum.FILE_UPLOAD,
+    };
+
+    const token = await this.jwtWrapperService.signAsyncOrThrow(payload, {
+      expiresIn: expiresInSeconds,
     });
+
+    const serverUrl = this.twentyConfigService.get('SERVER_URL');
+
+    return {
+      fileId,
+      uploadUrl: `${serverUrl}/${ApiPath.FileUpload}/${fileId}?token=${token}`,
+      // octet-stream keeps the request body away from the server's json/text
+      // body parsers; the real mime type is already on the file record.
+      contentType: 'application/octet-stream',
+      expiresAt,
+    };
   }
 
+  // Streams the request body straight to the storage driver, bounded by the
+  // size declared at createFileUpload time. Memory usage stays constant no
+  // matter how large the file is.
   async receiveFileStream({
     workspaceId,
     fileId,
@@ -200,6 +248,8 @@ export class FileUploadService {
         }),
       ]);
     } catch (error) {
+      // The storage-side pipeline can lose the rejection race to the limiter:
+      // surface the size violation over the resulting stream teardown error.
       if (receivedBytes > declaredSize) {
         throw new FileUploadException(
           `Upload exceeds declared size of ${declaredSize} bytes`,
@@ -214,6 +264,10 @@ export class FileUploadService {
     }
 
     if (receivedBytes !== declaredSize) {
+      // The short object stays in storage but the record stays PENDING, so it
+      // can never be served or attached: the client retries against the same
+      // upload url (overwriting it), and the pending-file cleanup cron
+      // (follow-up PR) reaps whatever is abandoned.
       throw new FileUploadException(
         `Uploaded ${receivedBytes} bytes but ${declaredSize} were declared`,
         FileUploadExceptionCode.FILE_SIZE_MISMATCH,
@@ -224,6 +278,8 @@ export class FileUploadService {
     }
   }
 
+  // Verifies the bytes actually landed in storage with the declared size and
+  // flips the file to UPLOADED. Idempotent: confirming twice is a no-op.
   async completeFileUpload({
     workspaceId,
     fileId,
@@ -234,6 +290,8 @@ export class FileUploadService {
     const file = await this.findFileOrThrow({ workspaceId, fileId });
     const [fileFolder] = file.path.split('/');
 
+    // Restrict to files created through createFileUpload so this mutation
+    // cannot be used to mint signed download urls for arbitrary files.
     if (
       !DIRECT_UPLOAD_FILE_FOLDERS.includes(
         fileFolder as (typeof DIRECT_UPLOAD_FILE_FOLDERS)[number],
@@ -249,6 +307,9 @@ export class FileUploadService {
     }
 
     if (file.status === FILE_STATUS.UPLOADED) {
+      // Idempotent retry of a confirm that already succeeded. Only files not
+      // yet attached to a record qualify: this cannot be used to mint signed
+      // urls for files that went through the legacy flow and got attached.
       if (!file.settings?.isTemporaryFile) {
         throw new FileUploadException(
           `File ${fileId} is not awaiting an upload confirmation`,
@@ -271,23 +332,106 @@ export class FileUploadService {
       file,
     });
 
-    const completedFile =
-      await this.fileUploadCompletionService.completeUploadedFile({
-        workspaceId,
-        file,
-        storageLocation: {
-          fileFolder: fileFolder as FileFolder,
-          applicationUniversalIdentifier: application.universalIdentifier,
-          workspaceId,
-          resourcePath,
+    const metadata = await this.fileStorageService.getFileMetadata({
+      fileFolder: fileFolder as FileFolder,
+      applicationUniversalIdentifier: application.universalIdentifier,
+      workspaceId,
+      resourcePath,
+    });
+
+    if (!isDefined(metadata)) {
+      throw new FileUploadException(
+        `File ${fileId} has not been uploaded to storage yet`,
+        FileUploadExceptionCode.FILE_NOT_UPLOADED,
+        {
+          userFriendlyMessage: msg`The file has not been uploaded yet. Please upload it before confirming.`,
         },
-      });
+      );
+    }
+
+    if (metadata.size !== Number(file.size)) {
+      throw new FileUploadException(
+        `File ${fileId} has ${metadata.size} bytes in storage but ${file.size} were declared`,
+        FileUploadExceptionCode.FILE_SIZE_MISMATCH,
+        {
+          userFriendlyMessage: msg`The uploaded file does not match the declared size. Please retry the upload.`,
+        },
+      );
+    }
+
+    const mimeType = await this.detectUploadedMimeTypeOrThrow({
+      fileFolder: fileFolder as FileFolder,
+      applicationUniversalIdentifier: application.universalIdentifier,
+      workspaceId,
+      resourcePath,
+      filename: file.path,
+    });
+
+    this.assertMimeTypeAllowedForFolder(fileFolder as FileFolder, mimeType);
+
+    await this.fileRepository.update(
+      workspaceId,
+      { id: fileId },
+      { status: FILE_STATUS.UPLOADED, mimeType },
+    );
 
     return this.toFileWithSignedUrl({
-      file: { ...file, ...completedFile, status: FILE_STATUS.UPLOADED },
+      file: { ...file, status: FILE_STATUS.UPLOADED, mimeType },
       fileFolder: fileFolder as FileFolder,
       workspaceId,
     });
+  }
+
+  private async detectUploadedMimeTypeOrThrow({
+    fileFolder,
+    applicationUniversalIdentifier,
+    workspaceId,
+    resourcePath,
+    filename,
+  }: {
+    fileFolder: FileFolder;
+    applicationUniversalIdentifier: string;
+    workspaceId: string;
+    resourcePath: string;
+    filename: string;
+  }): Promise<string> {
+    const stream = await this.fileStorageService.readFile({
+      fileFolder,
+      applicationUniversalIdentifier,
+      workspaceId,
+      resourcePath,
+    });
+
+    const prefix = await readReadablePrefix(
+      stream,
+      FILE_CONTENT_SNIFF_BYTE_COUNT,
+    );
+
+    const { mimeType } = await extractFileInfoOrThrow({
+      file: prefix,
+      filename,
+    });
+
+    return mimeType;
+  }
+
+  private assertMimeTypeAllowedForFolder(
+    fileFolder: FileFolder,
+    mimeType: string,
+  ): void {
+    const { allowedMimeTypes } = fileFolderConfigs[fileFolder];
+
+    if (!allowedMimeTypes || allowedMimeTypes.includes(mimeType)) {
+      return;
+    }
+
+    throw new FileUploadException(
+      `MIME type ${mimeType} is not allowed in file folder ${fileFolder}`,
+      FileUploadExceptionCode.BAD_REQUEST,
+      {
+        userFriendlyMessage: msg`This file format is not supported.`,
+      },
+    );
   }
 
   private async resolveUploadLocation({

@@ -1,11 +1,11 @@
 import { FieldMetadataType } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 
 type ValidateEnumValueCompatibilityArgs = {
-  workspaceMemberFieldMetadata: OrmFlatFieldMetadata;
-  targetFieldMetadata: OrmFlatFieldMetadata;
+  workspaceMemberFieldMetadata: FlatFieldMetadata;
+  targetFieldMetadata: FlatFieldMetadata;
   predicateValue: unknown;
 };
 

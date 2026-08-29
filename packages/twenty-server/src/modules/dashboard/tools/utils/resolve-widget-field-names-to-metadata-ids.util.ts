@@ -351,7 +351,7 @@ export const resolveWidgetFieldNamesToIds = (
   return {
     title: widget.title,
     type: widget.type,
-    position: widget.position,
+    gridPosition: widget.gridPosition,
     objectMetadataId,
     configuration: isDefined(widget.configuration)
       ? resolveConfigurationFieldNamesToIds(

@@ -26,11 +26,6 @@ describe('saveProfileSchema', () => {
     expect(parsed.success).toBe(false);
   });
 
-  it('rejects an unknown key (superPartner)', () => {
-    const parsed = saveProfileSchema.safeParse({ superPartner: true });
-    expect(parsed.success).toBe(false);
-  });
-
   it('rejects a malformed url', () => {
     const parsed = saveProfileSchema.safeParse({ website: 'not-a-url' });
     expect(parsed.success).toBe(false);

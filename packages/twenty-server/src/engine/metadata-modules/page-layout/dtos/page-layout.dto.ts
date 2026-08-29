@@ -1,8 +1,9 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { PageLayoutType, SerializedRelation } from 'twenty-shared/types';
+import { SerializedRelation } from 'twenty-shared/types';
 
 import { UUIDScalarType } from 'src/engine/api/graphql/workspace-schema-builder/graphql-types/scalars';
 import { PageLayoutTabDTO } from 'src/engine/metadata-modules/page-layout-tab/dtos/page-layout-tab.dto';
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 registerEnumType(PageLayoutType, { name: 'PageLayoutType' });
 

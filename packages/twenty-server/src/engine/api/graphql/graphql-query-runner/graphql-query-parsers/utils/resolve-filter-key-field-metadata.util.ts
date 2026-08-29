@@ -3,11 +3,8 @@ import { isDefined } from 'twenty-shared/utils';
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { findFlatEntityByIdInFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps.util';
 import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
 
-export const resolveFilterKeyFieldMetadata = <
-  T extends OrmFlatFieldMetadata = FlatFieldMetadata,
->({
+export const resolveFilterKeyFieldMetadata = ({
   filterKey,
   fieldIdByName,
   fieldIdByJoinColumnName,
@@ -16,9 +13,9 @@ export const resolveFilterKeyFieldMetadata = <
   filterKey: string;
   fieldIdByName: Record<string, string>;
   fieldIdByJoinColumnName: Record<string, string>;
-  flatFieldMetadataMaps: FlatEntityMaps<T>;
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
 }): {
-  fieldMetadata: T | undefined;
+  fieldMetadata: FlatFieldMetadata | undefined;
   isReferencedByFieldName: boolean;
 } => {
   const isReferencedByFieldName = isDefined(fieldIdByName[filterKey]);

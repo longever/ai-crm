@@ -14,10 +14,10 @@ const FIND_MARKETPLACE_APP_DETAIL_QUERY = `
       description
       author
       category
-      logoUrl
+      logo
       websiteUrl
       aboutDescription
-      galleryImages
+      screenshots
     }
   }
 `;
@@ -31,10 +31,10 @@ type ApiMarketplaceAppDetail = {
   description?: string | null;
   author?: string | null;
   category?: string | null;
-  logoUrl?: string | null;
+  logo?: string | null;
   websiteUrl?: string | null;
   aboutDescription?: string | null;
-  galleryImages?: string[] | null;
+  screenshots?: string[] | null;
 };
 
 type FindMarketplaceAppDetailData = {
@@ -69,11 +69,11 @@ export async function fetchMarketplaceAppDetailBySlug(
       tagline: app.tagline,
       author: detail.author ?? app.author,
       category: detail.category ?? app.category,
-      logoUrl: detail.logoUrl ?? app.logoUrl,
+      logoUrl: detail.logo ?? app.logoUrl,
       sourcePackage: detail.sourcePackage ?? undefined,
       isVetted: detail.isVetted,
       description: detail.aboutDescription ?? detail.description ?? app.tagline,
-      screenshots: detail.galleryImages ?? [],
+      screenshots: detail.screenshots ?? [],
       websiteUrl: detail.websiteUrl ?? undefined,
       latestAvailableVersion: detail.latestAvailableVersion ?? undefined,
     };

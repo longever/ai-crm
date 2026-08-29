@@ -7,7 +7,6 @@ export const buildLogicFunctionTimeoutResult = (
   data: null,
   logs: '',
   duration: timeoutMs,
-  billedDurationMs: timeoutMs,
   status: LogicFunctionExecutionStatus.ERROR,
   error: {
     errorType: 'TimeoutError',

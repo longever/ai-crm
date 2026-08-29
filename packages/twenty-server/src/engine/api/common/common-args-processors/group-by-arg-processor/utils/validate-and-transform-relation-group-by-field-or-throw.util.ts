@@ -14,7 +14,7 @@ import { isCompositeFieldMetadataType } from 'src/engine/metadata-modules/field-
 import { getGroupableSubFieldsForCompositeType } from 'src/engine/metadata-modules/field-metadata/utils/get-groupable-sub-fields-for-composite-type.util';
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { findFlatEntityByIdInFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps.util';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 import { buildFieldMapsFromFlatObjectMetadata } from 'src/engine/metadata-modules/flat-field-metadata/utils/build-field-maps-from-flat-object-metadata.util';
 import { type FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata.type';
 
@@ -27,9 +27,9 @@ const getNestedFieldMetadataDetails = ({
 }: {
   fieldNames: Record<string, unknown>;
   fieldName: string;
-  fieldMetadata: OrmFlatFieldMetadata;
+  fieldMetadata: FlatFieldMetadata;
   flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata>;
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
 }) => {
   const nestedFieldGroupByDefinitions = fieldNames[fieldName];
 
@@ -130,8 +130,8 @@ const validateAndTransformNestedCompositeFieldOrThrow = ({
 }: {
   nestedFieldGroupByDefinition: unknown;
   nestedFieldName: string;
-  fieldMetadata: OrmFlatFieldMetadata;
-  nestedFieldMetadata: OrmFlatFieldMetadata;
+  fieldMetadata: FlatFieldMetadata;
+  nestedFieldMetadata: FlatFieldMetadata;
   groupByFields: GroupByField[];
 }) => {
   if (!isPlainObject(nestedFieldGroupByDefinition)) {
@@ -183,9 +183,9 @@ export const validateAndTransformRelationGroupByFieldOrThrow = ({
 }: {
   fieldNames: Record<string, unknown>;
   fieldName: string;
-  fieldMetadata: OrmFlatFieldMetadata;
+  fieldMetadata: FlatFieldMetadata;
   flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata>;
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
   groupByFields: GroupByField[];
 }) => {
   const { nestedFieldGroupByDefinition, nestedFieldMetadata, nestedFieldName } =

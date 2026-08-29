@@ -1,21 +1,18 @@
 import { styled } from '@linaria/react';
 import { t } from '@lingui/core/macro';
 
+import { ActivityTargetsInlineCell } from '@/activities/inline-cell/components/ActivityTargetsInlineCell';
 import { getActivitySummary } from '@/activities/utils/getActivitySummary';
 import { beautifyExactDate, hasDatePassed } from '~/utils/date-utils';
 
 import { ActivityRow } from '@/activities/components/ActivityRow';
-import { useActivityFieldComponentInstanceId } from '@/activities/hooks/useActivityFieldComponentInstanceId';
+import { useActivityTargetsComponentInstanceId } from '@/activities/inline-cell/hooks/useActivityTargetsComponentInstanceId';
 import { type Task } from '@/activities/types/Task';
-import { useObjectMorphJunctionConfigOrThrow } from '@/object-record/record-field/ui/hooks/useObjectMorphJunctionConfigOrThrow';
 import { useOpenRecordInSidePanel } from '@/side-panel/hooks/useOpenRecordInSidePanel';
 import { CoreObjectNameSingular } from 'twenty-shared/types';
 import { StopPropagationContainer } from '@/object-record/record-board/record-board-card/components/StopPropagationContainer';
 import { RecordFieldsScopeContextProvider } from '@/object-record/record-field-list/contexts/RecordFieldsScopeContext';
 import { FieldContextProvider } from '@/object-record/record-field/ui/components/FieldContextProvider';
-import { RecordFieldComponentInstanceContext } from '@/object-record/record-field/ui/states/contexts/RecordFieldComponentInstanceContext';
-import { RecordInlineCell } from '@/object-record/record-inline-cell/components/RecordInlineCell';
-import { getRecordFieldInputInstanceId } from '@/object-record/utils/getRecordFieldInputId';
 import { useContext } from 'react';
 import { IconCalendar } from 'twenty-ui/icon';
 import { OverflowingTextWithTooltip } from 'twenty-ui/surfaces';
@@ -96,17 +93,10 @@ export const TaskRow = ({ task }: { task: Task }) => {
 
   const { completeTask } = useCompleteTask(task);
 
-  const junctionFieldName = useObjectMorphJunctionConfigOrThrow({
-    objectNameSingular: CoreObjectNameSingular.Task,
-  }).junctionField.name;
-
-  const instanceIdPrefix =
-    useActivityFieldComponentInstanceId('task-row-targets');
-  const componentInstanceId = getRecordFieldInputInstanceId({
-    recordId: task.id,
-    fieldName: junctionFieldName,
-    prefix: instanceIdPrefix,
-  });
+  const baseComponentInstanceId = `task-row-targets-${task.id}`;
+  const componentInstanceId = useActivityTargetsComponentInstanceId(
+    baseComponentInstanceId,
+  );
 
   return (
     <ActivityRow
@@ -150,11 +140,8 @@ export const TaskRow = ({ task }: { task: Task }) => {
             <FieldContextProvider
               objectNameSingular={CoreObjectNameSingular.Task}
               objectRecordId={task.id}
-              fieldMetadataName={junctionFieldName}
+              fieldMetadataName="taskTargets"
               fieldPosition={0}
-              showLabel={false}
-              maxWidth={200}
-              isDisplayModeFixHeight
             >
               <RecordFieldsScopeContextProvider
                 value={{
@@ -162,11 +149,13 @@ export const TaskRow = ({ task }: { task: Task }) => {
                 }}
               >
                 <StopPropagationContainer>
-                  <RecordFieldComponentInstanceContext.Provider
-                    value={{ instanceId: componentInstanceId }}
-                  >
-                    <RecordInlineCell instanceIdPrefix={instanceIdPrefix} />
-                  </RecordFieldComponentInstanceContext.Provider>
+                  <ActivityTargetsInlineCell
+                    activityObjectNameSingular={CoreObjectNameSingular.Task}
+                    activityRecordId={task.id}
+                    showLabel={false}
+                    maxWidth={200}
+                    componentInstanceId={componentInstanceId}
+                  />
                 </StopPropagationContainer>
               </RecordFieldsScopeContextProvider>
             </FieldContextProvider>

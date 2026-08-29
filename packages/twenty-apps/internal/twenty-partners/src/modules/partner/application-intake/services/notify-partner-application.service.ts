@@ -17,7 +17,7 @@ export async function notifyPartnerApplication(
     const client = new CoreApiClient();
     const res = await findPartnerForEmbed(client, partnerId);
 
-    const node = res.partners?.edges?.[0]?.node;
+    const node = res.partner;
     if (!node) return {};
 
     const applicantNode = node.persons?.edges?.[0]?.node;

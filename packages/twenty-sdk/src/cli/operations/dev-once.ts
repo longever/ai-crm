@@ -311,24 +311,35 @@ const innerAppDevOnce = async (
     applicationUniversalIdentifier: manifest.application.universalIdentifier,
   });
 
-  const uploadFailures = await fileUploader.uploadFiles(
-    Array.from(buildResult.builtFileInfos.values()).map((builtFileInfo) => ({
-      builtPath: builtFileInfo.builtPath,
-      fileFolder: builtFileInfo.fileFolder,
-    })),
+  const uploadErrors: string[] = [];
+
+  const uploadPromises = Array.from(buildResult.builtFileInfos.values()).map(
+    async (builtFileInfo) => {
+      if (verbose) {
+        onProgress?.(`Uploading ${builtFileInfo.builtPath}`);
+      }
+
+      const result = await fileUploader.uploadFile({
+        builtPath: builtFileInfo.builtPath,
+        fileFolder: builtFileInfo.fileFolder,
+      });
+
+      if (!result.success) {
+        uploadErrors.push(
+          `Failed to upload ${builtFileInfo.builtPath}: ${serializeError(result.error)}`,
+        );
+      }
+    },
   );
 
-  if (uploadFailures.length > 0) {
+  await Promise.all(uploadPromises);
+
+  if (uploadErrors.length > 0) {
     return {
       success: false,
       error: {
         code: APP_ERROR_CODES.SYNC_FAILED,
-        message: uploadFailures
-          .map(
-            (failure) =>
-              `Failed to upload ${failure.builtPath}: ${failure.error}`,
-          )
-          .join('\n'),
+        message: uploadErrors.join('\n'),
       },
     };
   }

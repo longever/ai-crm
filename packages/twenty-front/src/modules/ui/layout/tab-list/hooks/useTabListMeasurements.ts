@@ -8,7 +8,6 @@ import { calculateVisibleTabCount } from '@/ui/layout/tab-list/utils/calculateVi
 type UseTabListMeasurementsOptions = {
   visibleTabs: SingleTabProps[];
   hasAddButton?: boolean;
-  rightPadding?: number;
 };
 
 type UseTabListMeasurementsResult = {
@@ -25,7 +24,6 @@ type UseTabListMeasurementsResult = {
 export const useTabListMeasurements = ({
   visibleTabs,
   hasAddButton = false,
-  rightPadding = 0,
 }: UseTabListMeasurementsOptions): UseTabListMeasurementsResult => {
   const [tabWidthsById, setTabWidthsById] = useState<TabWidthsById>({});
   const [containerWidth, setContainerWidth] = useState(0);
@@ -39,7 +37,6 @@ export const useTabListMeasurements = ({
       containerWidth,
       moreButtonWidth,
       addButtonWidth: hasAddButton ? addButtonWidth : 0,
-      rightPadding,
     });
   }, [
     visibleTabs,
@@ -48,7 +45,6 @@ export const useTabListMeasurements = ({
     moreButtonWidth,
     addButtonWidth,
     hasAddButton,
-    rightPadding,
   ]);
 
   const hiddenTabs = useMemo(() => {

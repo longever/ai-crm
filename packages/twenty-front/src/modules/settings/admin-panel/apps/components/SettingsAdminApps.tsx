@@ -6,7 +6,6 @@ import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { Dropdown } from '@/ui/layout/dropdown/components/Dropdown';
 import { DropdownContent } from '@/ui/layout/dropdown/components/DropdownContent';
 import { DropdownMenuItemsContainer } from '@/ui/layout/dropdown/components/DropdownMenuItemsContainer';
-import { DropdownMenuSectionLabel } from '@/ui/layout/dropdown/components/DropdownMenuSectionLabel';
 import { Table } from '@/ui/layout/table/components/Table';
 import { TableBody } from '@/ui/layout/table/components/TableBody';
 import { TableCell } from '@/ui/layout/table/components/TableCell';
@@ -57,31 +56,12 @@ const TABLE_GRID = '1fr 100px 100px 100px 40px';
 const TABLE_GRID_MOBILE = '3fr 3fr 1fr 1fr 40px';
 const PAGE_SIZE = 25;
 
-const SOURCE_TYPE_FILTER_OPTIONS: {
-  sourceType: ApplicationRegistrationSourceType;
-  label: string;
-}[] = [
-  { sourceType: ApplicationRegistrationSourceType.NPM, label: 'NPM' },
-  { sourceType: ApplicationRegistrationSourceType.TARBALL, label: 'Tarball' },
-  { sourceType: ApplicationRegistrationSourceType.OAUTH_ONLY, label: 'OAuth' },
-  { sourceType: ApplicationRegistrationSourceType.LOCAL, label: 'Local' },
-];
-
 export const SettingsAdminApps = () => {
   const apolloAdminClient = useApolloAdminClient();
   const { enqueueSuccessSnackBar, enqueueErrorSnackBar } = useSnackBar();
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
   const [showPreInstalledOnly, setShowPreInstalledOnly] = useState(false);
-  const [sourceTypeFilters, setSourceTypeFilters] = useState<
-    ApplicationRegistrationSourceType[]
-  >([ApplicationRegistrationSourceType.NPM]);
-  const [isListedFilter, setIsListedFilter] = useState<boolean | undefined>(
-    undefined,
-  );
-  const [isConfiguredFilter, setIsConfiguredFilter] = useState<
-    boolean | undefined
-  >(undefined);
 
   const { data, loading, fetchMore } = useQuery(
     FindAllApplicationRegistrationsDocument,
@@ -93,25 +73,9 @@ export const SettingsAdminApps = () => {
         offset: 0,
         searchTerm: debouncedSearchQuery,
         isPreInstalledOnly: showPreInstalledOnly,
-        sourceTypes:
-          sourceTypeFilters.length > 0 ? sourceTypeFilters : undefined,
-        isListed: isListedFilter,
-        isConfigured: isConfiguredFilter,
       },
     },
   );
-
-  const toggleSourceTypeFilter = (
-    sourceType: ApplicationRegistrationSourceType,
-  ) => {
-    setSourceTypeFilters((currentFilters) =>
-      currentFilters.includes(sourceType)
-        ? currentFilters.filter(
-            (currentSourceType) => currentSourceType !== sourceType,
-          )
-        : [...currentFilters, sourceType],
-    );
-  };
 
   const [syncMarketplaceCatalog, { loading: isSyncing }] = useMutation(
     SyncMarketplaceCatalogDocument,
@@ -131,10 +95,9 @@ export const SettingsAdminApps = () => {
     }
   };
 
-  const registrations =
-    data?.findAllApplicationRegistrations.registrations ?? [];
-
-  const totalCount = data?.findAllApplicationRegistrations.totalCount ?? 0;
+  const registrations = [
+    ...(data?.findAllApplicationRegistrations.registrations ?? []),
+  ].sort((a, b) => Number(a.isConfigured) - Number(b.isConfigured));
 
   const hasMore = data?.findAllApplicationRegistrations.hasMore ?? false;
 
@@ -203,7 +166,7 @@ export const SettingsAdminApps = () => {
       <Section>
         <H2Title
           title={t`All App Registrations`}
-          description={t`All application registrations across the platform, including orphaned marketplace apps (${totalCount} matching)`}
+          description={t`All application registrations across the platform, including orphaned marketplace apps`}
         />
         <SearchInput
           placeholder={t`Search registrations...`}
@@ -225,60 +188,6 @@ export const SettingsAdminApps = () => {
                       }
                       toggled={showPreInstalledOnly}
                       text={t`Pre-installed only`}
-                      toggleSize="small"
-                    />
-                    <DropdownMenuSectionLabel label={t`Source`} />
-                    {SOURCE_TYPE_FILTER_OPTIONS.map(({ sourceType, label }) => (
-                      <MenuItemToggle
-                        key={sourceType}
-                        onToggleChange={() =>
-                          toggleSourceTypeFilter(sourceType)
-                        }
-                        toggled={sourceTypeFilters.includes(sourceType)}
-                        text={label}
-                        toggleSize="small"
-                      />
-                    ))}
-                    <DropdownMenuSectionLabel label={t`Listed`} />
-                    <MenuItemToggle
-                      onToggleChange={() =>
-                        setIsListedFilter(
-                          isListedFilter === true ? undefined : true,
-                        )
-                      }
-                      toggled={isListedFilter === true}
-                      text={t`Listed`}
-                      toggleSize="small"
-                    />
-                    <MenuItemToggle
-                      onToggleChange={() =>
-                        setIsListedFilter(
-                          isListedFilter === false ? undefined : false,
-                        )
-                      }
-                      toggled={isListedFilter === false}
-                      text={t`Not listed`}
-                      toggleSize="small"
-                    />
-                    <DropdownMenuSectionLabel label={t`Configured`} />
-                    <MenuItemToggle
-                      onToggleChange={() =>
-                        setIsConfiguredFilter(
-                          isConfiguredFilter === true ? undefined : true,
-                        )
-                      }
-                      toggled={isConfiguredFilter === true}
-                      text={t`Configured`}
-                      toggleSize="small"
-                    />
-                    <MenuItemToggle
-                      onToggleChange={() =>
-                        setIsConfiguredFilter(
-                          isConfiguredFilter === false ? undefined : false,
-                        )
-                      }
-                      toggled={isConfiguredFilter === false}
-                      text={t`Not configured`}
                       toggleSize="small"
                     />
                   </DropdownMenuItemsContainer>

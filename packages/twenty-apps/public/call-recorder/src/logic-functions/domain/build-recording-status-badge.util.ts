@@ -11,7 +11,7 @@ import {
   RECORDING_STATUS_BADGE_WIDTH,
 } from 'src/logic-functions/constants/recording-status-badge-config';
 
-type SharpFactory = typeof import('sharp').default;
+type SharpFactory = typeof import('sharp');
 
 export const buildRecordingStatusBadgeSvg = (): string => {
   const dotRadius = RECORDING_STATUS_BADGE_DOT_DIAMETER / 2;

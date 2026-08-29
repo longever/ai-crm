@@ -33,11 +33,6 @@ export class OAuthDiscoveryController {
       ? cleanServerUrl(this.domainServerConfigService.getBaseUrl().toString())
       : issuer;
 
-    const authorizationEndpoint =
-      authorizeBase === issuer
-        ? `${issuer}/authorize`
-        : `${authorizeBase}/authorize?iss=${encodeURIComponent(issuer)}`;
-
     const cliRegistration =
       await this.applicationRegistrationService.findOneByUniversalIdentifier(
         TWENTY_CLI_APPLICATION_REGISTRATION.universalIdentifier,
@@ -45,7 +40,7 @@ export class OAuthDiscoveryController {
 
     return {
       issuer,
-      authorization_endpoint: authorizationEndpoint,
+      authorization_endpoint: `${authorizeBase}/authorize`,
       token_endpoint: `${issuer}/${ApiPath.OAuth}/token`,
       registration_endpoint: `${issuer}/${ApiPath.OAuth}/register`,
       revocation_endpoint: `${issuer}/${ApiPath.OAuth}/revoke`,

@@ -62,7 +62,6 @@ const StyledDelete = styled.button<{ variant: SortOrFilterChipVariant }>`
   border: none;
   box-sizing: border-box;
   color: inherit;
-  corner-shape: round;
   cursor: pointer;
   display: flex;
   font-size: ${themeCssVariables.font.size.sm};
@@ -83,7 +82,7 @@ const StyledDelete = styled.button<{ variant: SortOrFilterChipVariant }>`
           return themeCssVariables.accent.secondary;
       }
     }};
-    border-radius: ${themeCssVariables.border.radius.smRound};
+    border-radius: ${themeCssVariables.border.radius.sm};
   }
 `;
 

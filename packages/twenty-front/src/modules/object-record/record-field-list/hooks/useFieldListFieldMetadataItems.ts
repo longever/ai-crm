@@ -4,8 +4,10 @@ import { useObjectMetadataItems } from '@/object-metadata/hooks/useObjectMetadat
 import { useObjectPermissions } from '@/object-record/hooks/useObjectPermissions';
 import { categorizeRelationFields } from '@/object-record/record-field-list/utils/categorizeRelationFields';
 import { isFieldCellSupported } from '@/object-record/utils/isFieldCellSupported';
+import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
 import groupBy from 'lodash.groupby';
 import { CoreObjectNameSingular, FieldMetadataType } from 'twenty-shared/types';
+import { FeatureFlagKey } from '~/generated-metadata/graphql';
 
 type UseFieldListFieldMetadataItemsProps = {
   objectNameSingular: string;
@@ -34,6 +36,10 @@ export const useFieldListFieldMetadataItems = ({
   });
 
   const { objectMetadataItems } = useObjectMetadataItems();
+
+  const isJunctionRelationsEnabled = useIsFeatureEnabled(
+    FeatureFlagKey.IS_JUNCTION_RELATIONS_ENABLED,
+  );
 
   const availableFieldMetadataItems = objectMetadataItem.readableFields
     .filter(
@@ -77,12 +83,17 @@ export const useFieldListFieldMetadataItems = ({
         : 'inlineFieldMetadataItems',
   );
 
-  const { inlineRelationFields, junctionRelationFields, boxedRelationFields } =
-    categorizeRelationFields({
-      relationFields: relationFieldMetadataItems ?? [],
-      objectMetadataItems,
-      objectPermissionsByObjectMetadataId,
-    });
+  const {
+    activityTargetFields,
+    inlineRelationFields,
+    junctionRelationFields,
+    boxedRelationFields,
+  } = categorizeRelationFields({
+    relationFields: relationFieldMetadataItems ?? [],
+    objectNameSingular,
+    objectPermissionsByObjectMetadataId,
+    isJunctionRelationsEnabled,
+  });
 
   const allInlineFieldMetadataItems = [
     ...(inlineFieldMetadataItems ?? []),
@@ -91,6 +102,7 @@ export const useFieldListFieldMetadataItems = ({
 
   return {
     inlineFieldMetadataItems: allInlineFieldMetadataItems,
+    legacyActivityTargetFieldMetadataItems: activityTargetFields,
     junctionRelationFieldMetadataItems: junctionRelationFields,
     boxedRelationFieldMetadataItems: boxedRelationFields,
   };

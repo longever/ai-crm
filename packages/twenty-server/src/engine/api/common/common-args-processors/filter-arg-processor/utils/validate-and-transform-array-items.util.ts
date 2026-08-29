@@ -1,10 +1,10 @@
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import type { FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 
 import { validateAndTransformValueByFieldType } from './validate-and-transform-value-by-field-type.util';
 
 export const validateAndTransformArrayItems = (
   values: unknown[],
-  fieldMetadata: OrmFlatFieldMetadata,
+  fieldMetadata: FlatFieldMetadata,
   fieldName: string,
 ): unknown[] => {
   return values.map((item) => {

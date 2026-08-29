@@ -48,20 +48,7 @@ describe('convertPageLayoutToTabLayouts', () => {
                 aggregateFieldMetadataId: 'id',
                 displayDataLabel: false,
               },
-              gridPosition: {
-                row: 9,
-                column: 9,
-                rowSpan: 9,
-                columnSpan: 9,
-              },
-              position: {
-                __typename: 'PageLayoutWidgetGridPosition' as const,
-                layoutMode: PageLayoutTabLayoutMode.GRID,
-                row: 0,
-                column: 0,
-                rowSpan: 2,
-                columnSpan: 2,
-              },
+              gridPosition: { row: 0, column: 0, rowSpan: 2, columnSpan: 2 },
               objectMetadataId: 'object-metadata-1',
               createdAt: '2025-01-01T00:00:00.000Z',
               updatedAt: '2025-01-01T00:00:00.000Z',
@@ -85,13 +72,7 @@ describe('convertPageLayoutToTabLayouts', () => {
                 orderBy: GraphOrderBy.VALUE_DESC,
                 displayDataLabel: false,
               },
-              gridPosition: {
-                row: 2,
-                column: 0,
-                rowSpan: 2,
-                columnSpan: 2,
-              },
-              position: null,
+              gridPosition: { row: 2, column: 0, rowSpan: 2, columnSpan: 2 },
               objectMetadataId: 'object-metadata-1',
               createdAt: '2025-01-01T00:00:00.000Z',
               updatedAt: '2025-01-01T00:00:00.000Z',
@@ -124,7 +105,7 @@ describe('convertPageLayoutToTabLayouts', () => {
     });
   });
 
-  it('should use default widget size when position is undefined', () => {
+  it('should use default widget size when gridPosition is undefined', () => {
     const pageLayout: PageLayout = {
       id: 'page-layout-1',
       applicationId: 'application-id-mock',
@@ -158,6 +139,7 @@ describe('convertPageLayoutToTabLayouts', () => {
                 configurationType: WidgetConfigurationType.FRONT_COMPONENT,
                 frontComponentId: 'my-component',
               },
+              gridPosition: undefined as any,
               position: {
                 __typename: 'PageLayoutWidgetCanvasPosition' as const,
                 layoutMode: PageLayoutTabLayoutMode.CANVAS,
@@ -223,14 +205,7 @@ describe('convertPageLayoutToTabLayouts', () => {
                 configurationType: WidgetConfigurationType.STANDALONE_RICH_TEXT,
                 body: { blocknote: '[]' },
               },
-              position: {
-                __typename: 'PageLayoutWidgetGridPosition' as const,
-                layoutMode: PageLayoutTabLayoutMode.GRID,
-                row: 0,
-                column: 0,
-                rowSpan: 4,
-                columnSpan: 4,
-              },
+              gridPosition: { row: 0, column: 0, rowSpan: 4, columnSpan: 4 },
               objectMetadataId: null,
               createdAt: '2025-01-01T00:00:00.000Z',
               updatedAt: '2025-01-01T00:00:00.000Z',
@@ -292,14 +267,7 @@ describe('convertPageLayoutToTabLayouts', () => {
                 configurationType: WidgetConfigurationType.IFRAME,
                 url: 'https://example.com',
               },
-              position: {
-                __typename: 'PageLayoutWidgetGridPosition' as const,
-                layoutMode: PageLayoutTabLayoutMode.GRID,
-                row: 0,
-                column: 0,
-                rowSpan: 6,
-                columnSpan: 6,
-              },
+              gridPosition: { row: 0, column: 0, rowSpan: 6, columnSpan: 6 },
               objectMetadataId: null,
               createdAt: '2025-01-01T00:00:00.000Z',
               updatedAt: '2025-01-01T00:00:00.000Z',

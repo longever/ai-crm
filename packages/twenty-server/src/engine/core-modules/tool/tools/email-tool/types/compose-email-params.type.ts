@@ -10,7 +10,6 @@ export type ComposeEmailParams = {
   subject: string;
   body: string | EmailDocument;
   connectedAccountId?: string;
-  fromHandle?: string;
   files?: Array<EmailAttachment>;
   inReplyTo?: string;
 };

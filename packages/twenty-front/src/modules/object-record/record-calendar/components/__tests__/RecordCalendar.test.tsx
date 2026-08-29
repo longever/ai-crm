@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { Temporal } from 'temporal-polyfill';
-import { recordCalendarSelectedDateComponentState } from '@/object-record/record-calendar/states/recordCalendarSelectedDateComponentState';
 
 import { RecordCalendar } from '@/object-record/record-calendar/components/RecordCalendar';
-import { ViewCalendarLayout } from '~/generated-metadata/graphql';
+import {
+  FeatureFlagKey,
+  ViewCalendarLayout,
+} from '~/generated-metadata/graphql';
 
 jest.mock(
   '@/object-record/record-calendar/components/RecordCalendarTopBar',
@@ -12,73 +13,23 @@ jest.mock(
   }),
 );
 jest.mock(
-  '@/object-record/record-calendar/components/RecordCalendarDragDropContext',
+  '@/object-record/record-calendar/day/components/RecordCalendarDay',
   () => ({
-    RecordCalendarDragDropContext: ({
-      children,
-    }: {
-      children: React.ReactNode;
-    }) => children,
+    RecordCalendarDay: () => <div data-testid="calendar-day" />,
   }),
 );
 jest.mock(
-  '@/object-record/record-calendar/components/RecordCalendarEscapeHotkeyEffect',
-  () => ({ RecordCalendarEscapeHotkeyEffect: () => null }),
-);
-jest.mock(
-  '@/object-record/record-calendar/components/RecordCalendarAddNew',
+  '@/object-record/record-calendar/month/components/RecordCalendarMonth',
   () => ({
-    RecordCalendarAddNew: () => null,
+    RecordCalendarMonth: () => <div data-testid="calendar-month" />,
   }),
 );
 jest.mock(
-  '@/object-record/record-calendar/record-calendar-card/components/RecordCalendarCard',
+  '@/object-record/record-calendar/week/components/RecordCalendarWeek',
   () => ({
-    RecordCalendarCard: ({ recordId }: { recordId: string }) => (
-      <article>{recordId}</article>
-    ),
+    RecordCalendarWeek: () => <div data-testid="calendar-week" />,
   }),
 );
-jest.mock(
-  '@/object-record/record-calendar/record-calendar-card/hooks/useIsRecordCalendarCardDragDisabled',
-  () => ({
-    useIsRecordCalendarCardDragDisabled: () => false,
-  }),
-);
-jest.mock(
-  '@/ui/utilities/drag-and-drop/components/DragDropItemSortableCell',
-  () => ({
-    DragDropItemSortableCell: ({ children }: { children: React.ReactNode }) =>
-      children,
-  }),
-);
-jest.mock(
-  '@/ui/utilities/drag-and-drop/components/DragDropItemDropTarget',
-  () => ({
-    DragDropItemDropTarget: () => null,
-  }),
-);
-jest.mock('@dnd-kit/react', () => ({
-  useDroppable: () => ({ isDropTarget: false, ref: jest.fn() }),
-}));
-jest.mock('@/ui/input/components/internal/date/hooks/useUserTimezone', () => ({
-  useUserTimezone: () => ({ userTimezone: 'Europe/Paris' }),
-}));
-jest.mock(
-  '@/ui/utilities/state/jotai/hooks/useAtomComponentFamilySelectorValue',
-  () => ({
-    useAtomComponentFamilySelectorValue: (
-      _state: unknown,
-      { day }: { day: Temporal.PlainDate },
-    ) => [day.toString()],
-  }),
-);
-jest.mock('@/ui/utilities/state/jotai/hooks/useAtomStateValue', () => {
-  const { enUS } = jest.requireActual('date-fns/locale');
-  return {
-    useAtomStateValue: () => ({ calendarStartDay: 1, localeCatalog: enUS }),
-  };
-});
 jest.mock('@/ui/utilities/scroll/components/ScrollWrapper', () => ({
   ScrollWrapper: ({ children }: { children: React.ReactNode }) => children,
 }));
@@ -105,39 +56,58 @@ jest.mock(
     useAtomComponentStateValue: jest.fn(),
   }),
 );
+jest.mock('@/workspace/hooks/useIsFeatureEnabled', () => ({
+  useIsFeatureEnabled: jest.fn(),
+}));
 
 const useAtomComponentStateValueMock = jest.requireMock(
   '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue',
 ).useAtomComponentStateValue;
+const useIsFeatureEnabledMock = jest.requireMock(
+  '@/workspace/hooks/useIsFeatureEnabled',
+).useIsFeatureEnabled;
 
 describe('RecordCalendar', () => {
-  const renderCalendar = (calendarLayout: ViewCalendarLayout) => {
-    useAtomComponentStateValueMock.mockImplementation((state: unknown) =>
-      state === recordCalendarSelectedDateComponentState
-        ? Temporal.PlainDate.from('2026-07-15')
-        : calendarLayout,
-    );
-    return render(<RecordCalendar />);
-  };
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useAtomComponentStateValueMock.mockReturnValue(ViewCalendarLayout.WEEK);
+  });
 
-  beforeEach(() => jest.clearAllMocks());
+  it.each([ViewCalendarLayout.DAY, ViewCalendarLayout.WEEK])(
+    'renders month when a persisted %s layout is disabled',
+    (calendarLayout) => {
+      useAtomComponentStateValueMock.mockReturnValue(calendarLayout);
+      useIsFeatureEnabledMock.mockReturnValue(false);
 
-  it.each([
-    [ViewCalendarLayout.DAY, 1, '2026-07-15', '2026-07-15'],
-    [ViewCalendarLayout.WEEK, 7, '2026-07-13', '2026-07-19'],
-    [ViewCalendarLayout.MONTH, 35, '2026-06-29', '2026-08-02'],
-  ])(
-    'renders %s with the same record cards for each visible day',
-    (layout, count, firstDay, lastDay) => {
-      renderCalendar(layout);
+      render(<RecordCalendar />);
 
-      const cards = screen.getAllByRole('article');
-      expect(cards).toHaveLength(count);
-      expect(cards[0]).toHaveTextContent(firstDay);
-      expect(cards[cards.length - 1]).toHaveTextContent(lastDay);
-      expect(screen.getByText('Wed')).toBeInTheDocument();
-      expect(screen.queryByText('All day')).not.toBeInTheDocument();
-      expect(screen.queryByText(/\d{1,2}:00/)).not.toBeInTheDocument();
+      expect(screen.getByTestId('calendar-month')).toBeInTheDocument();
+      expect(screen.queryByTestId('calendar-day')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('calendar-week')).not.toBeInTheDocument();
+      expect(useIsFeatureEnabledMock).toHaveBeenCalledWith(
+        FeatureFlagKey.IS_CALENDAR_WEEK_VIEW_ENABLED,
+      );
     },
   );
+
+  it('renders day when the day layout is enabled', () => {
+    useAtomComponentStateValueMock.mockReturnValue(ViewCalendarLayout.DAY);
+    useIsFeatureEnabledMock.mockReturnValue(true);
+
+    render(<RecordCalendar />);
+
+    expect(screen.getByTestId('calendar-day')).toBeInTheDocument();
+    expect(screen.queryByTestId('calendar-week')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('calendar-month')).not.toBeInTheDocument();
+  });
+
+  it('renders week when the week layout is enabled', () => {
+    useIsFeatureEnabledMock.mockReturnValue(true);
+
+    render(<RecordCalendar />);
+
+    expect(screen.getByTestId('calendar-week')).toBeInTheDocument();
+    expect(screen.queryByTestId('calendar-day')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('calendar-month')).not.toBeInTheDocument();
+  });
 });

@@ -33,10 +33,7 @@ describe('useResolveDefaultEmailRecipient', () => {
       (args: { objectNameSingular: string }) => {
         if (args.objectNameSingular === CoreObjectNameSingular.Person) {
           return {
-            record: {
-              id: 'person-id',
-              emails: { primaryEmail: 'person@example.com' },
-            },
+            record: { emails: { primaryEmail: 'person@example.com' } },
             loading: false,
           };
         }
@@ -53,18 +50,12 @@ describe('useResolveDefaultEmailRecipient', () => {
     );
 
     expect(result.current.defaultTo).toBe('person@example.com');
-    expect(result.current.defaultRecipientPersonId).toBe('person-id');
     expect(result.current.loading).toBe(false);
   });
 
   it('should return the first company employee email for a Company record', () => {
     mockUseFindManyRecords.mockReturnValue({
-      records: [
-        {
-          id: 'employee-id',
-          emails: { primaryEmail: 'employee@company.com' },
-        },
-      ],
+      records: [{ emails: { primaryEmail: 'employee@company.com' } }],
       loading: false,
     });
 
@@ -76,7 +67,6 @@ describe('useResolveDefaultEmailRecipient', () => {
     );
 
     expect(result.current.defaultTo).toBe('employee@company.com');
-    expect(result.current.defaultRecipientPersonId).toBe('employee-id');
   });
 
   it('should return the opportunity point of contact email', () => {
@@ -86,7 +76,6 @@ describe('useResolveDefaultEmailRecipient', () => {
           return {
             record: {
               pointOfContact: {
-                id: 'contact-id',
                 emails: { primaryEmail: 'contact@opp.com' },
               },
             },
@@ -106,7 +95,6 @@ describe('useResolveDefaultEmailRecipient', () => {
     );
 
     expect(result.current.defaultTo).toBe('contact@opp.com');
-    expect(result.current.defaultRecipientPersonId).toBe('contact-id');
   });
 
   it('should return empty string for unknown object types', () => {

@@ -42,8 +42,6 @@ export const graphQLErrorCodesToFilter = [
   ErrorCode.CONFLICT,
   ErrorCode.BAD_USER_INPUT,
   ErrorCode.METADATA_VALIDATION_FAILED,
-  ErrorCode.RATE_LIMITED,
-  ErrorCode.QUOTA_EXHAUSTED,
 ];
 
 export const handleExceptionAndConvertToGraphQLError = (

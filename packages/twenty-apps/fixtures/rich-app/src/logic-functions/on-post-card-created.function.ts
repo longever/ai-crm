@@ -1,22 +1,6 @@
-import {
-  defineLogicFunction,
-  type DatabaseEventPayload,
-  type ObjectRecordCreateEvent,
-} from 'twenty-sdk/define';
-import { createTimelineActivity } from 'twenty-sdk/logic-function';
+import { defineLogicFunction } from 'twenty-sdk/define';
 
-import { POST_CARD_UNIVERSAL_IDENTIFIER } from '../objects/post-card.object';
-
-const handler = async (
-  payload: DatabaseEventPayload<ObjectRecordCreateEvent<{ id: string }>>,
-) => {
-  await createTimelineActivity({
-    timelineActivityTypeUniversalIdentifier:
-      'f4fa646c-6e11-4d8f-a6be-c3b7a2fc7500',
-    targetObjectUniversalIdentifier: POST_CARD_UNIVERSAL_IDENTIFIER,
-    targetRecordId: payload.properties.after.id,
-  });
-
+const handler = async () => {
   return { processed: true };
 };
 

@@ -2,7 +2,6 @@ import { useObjectMetadataItem } from '@/object-metadata/hooks/useObjectMetadata
 import { RecordFieldsScopeContextProvider } from '@/object-record/record-field-list/contexts/RecordFieldsScopeContext';
 import { RecordFieldListComponentInstanceContext } from '@/object-record/record-field-list/states/contexts/RecordFieldListComponentInstanceContext';
 import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
-import { StyledWidgetScrollContainer } from '@/ui/layout/components/WidgetContentContainer';
 import { FieldsWidgetCellEditModePortal } from '@/page-layout/widgets/fields/components/FieldsWidgetCellEditModePortal';
 import { FieldsWidgetCellHoveredPortal } from '@/page-layout/widgets/fields/components/FieldsWidgetCellHoveredPortal';
 import { FieldsWidgetFieldList } from '@/page-layout/widgets/fields/components/FieldsWidgetFieldList';
@@ -23,6 +22,13 @@ import {
 } from 'twenty-ui/feedback';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { type FieldsConfiguration } from '~/generated-metadata/graphql';
+
+const StyledContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 const StyledPropertyBox = styled.div`
   align-self: stretch;
@@ -100,7 +106,7 @@ export const FieldsWidget = ({ widget }: FieldsWidgetProps) => {
   if (!hasFieldsToDisplay) {
     return (
       <SidePanelProvider value={{ isInSidePanel }}>
-        <StyledWidgetScrollContainer>
+        <StyledContainer>
           <AnimatedPlaceholderEmptyContainer>
             <AnimatedPlaceholder type="noRecord" />
             <AnimatedPlaceholderEmptyTextContainer>
@@ -112,14 +118,14 @@ export const FieldsWidget = ({ widget }: FieldsWidgetProps) => {
               </AnimatedPlaceholderEmptySubTitle>
             </AnimatedPlaceholderEmptyTextContainer>
           </AnimatedPlaceholderEmptyContainer>
-        </StyledWidgetScrollContainer>
+        </StyledContainer>
       </SidePanelProvider>
     );
   }
 
   return (
     <RecordFieldsScopeContextProvider value={{ scopeInstanceId: instanceId }}>
-      <StyledWidgetScrollContainer>
+      <StyledContainer>
         <RecordFieldListComponentInstanceContext.Provider
           value={{
             instanceId,
@@ -172,7 +178,7 @@ export const FieldsWidget = ({ widget }: FieldsWidgetProps) => {
             flattenedFieldMetadataItems={flattenedFieldMetadataItems}
           />
         </RecordFieldListComponentInstanceContext.Provider>
-      </StyledWidgetScrollContainer>
+      </StyledContainer>
     </RecordFieldsScopeContextProvider>
   );
 };

@@ -26,10 +26,6 @@ const StyledSkeletonSubSectionContent = styled.div`
   justify-content: center;
 `;
 
-const StyledSkeletonColumn = styled(Skeleton)`
-  corner-shape: round;
-`;
-
 export const SKELETON_LOADER_HEIGHT_SIZES = {
   standard: {
     xs: 13,
@@ -53,7 +49,7 @@ const SkeletonColumnLoader = ({ height }: { height: number }) => {
       highlightColor={theme.background.transparent.lighter}
       borderRadius={80}
     >
-      <StyledSkeletonColumn width={24} height={height} />
+      <Skeleton width={24} height={height} />
     </SkeletonTheme>
   );
 };

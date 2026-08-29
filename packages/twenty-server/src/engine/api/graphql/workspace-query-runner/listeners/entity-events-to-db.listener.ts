@@ -23,7 +23,6 @@ import { CallDatabaseEventTriggerJobsJob } from 'src/engine/core-modules/logic-f
 import { WorkspaceEventBatch } from 'src/engine/workspace-event-emitter/types/workspace-event-batch.type';
 import { ObjectRecordEventPublisher } from 'src/engine/subscriptions/object-record-event/object-record-event-publisher';
 import { UpsertTimelineActivityFromInternalEvent } from 'src/modules/timeline/jobs/upsert-timeline-activity-from-internal-event.job';
-import { TimelineActivityRoutingPlanService } from 'src/modules/timeline/services/timeline-activity-routing-plan.service';
 
 @Injectable()
 export class EntityEventsToDbListener {
@@ -35,7 +34,6 @@ export class EntityEventsToDbListener {
     @InjectMessageQueue(MessageQueue.triggerQueue)
     private readonly triggerQueueService: MessageQueueService,
     private readonly objectRecordEventPublisher: ObjectRecordEventPublisher,
-    private readonly timelineActivityRoutingPlanService: TimelineActivityRoutingPlanService,
   ) {}
 
   @OnDatabaseBatchEvent('*', DatabaseEventAction.CREATED)
@@ -81,12 +79,6 @@ export class EntityEventsToDbListener {
     }
 
     const isAuditLogBatchEvent = batchEvent.objectMetadata?.isAuditLogged;
-    const shouldCreateTimelineActivity =
-      action !== DatabaseEventAction.DESTROYED &&
-      (await this.timelineActivityRoutingPlanService.shouldProcessEvent({
-        flatObjectMetadata: batchEvent.objectMetadata,
-        workspaceId: batchEvent.workspaceId,
-      }));
 
     const batchEventForWebhook = {
       ...batchEvent,
@@ -115,24 +107,20 @@ export class EntityEventsToDbListener {
       ),
     );
 
-    if (shouldCreateTimelineActivity) {
+    if (isAuditLogBatchEvent && action !== DatabaseEventAction.DESTROYED) {
+      promises.push(
+        this.entityEventsToDbQueueService.add<WorkspaceEventBatch<T>>(
+          CreateEventLogFromInternalEvent.name,
+          batchEvent,
+        ),
+      );
+
       promises.push(
         this.entityEventsToDbQueueService.add<
           WorkspaceEventBatch<ObjectRecordNonDestructiveEvent>
         >(
           UpsertTimelineActivityFromInternalEvent.name,
           batchEvent as WorkspaceEventBatch<ObjectRecordNonDestructiveEvent>,
-          { retryLimit: 1 },
-        ),
-      );
-    }
-
-    if (isAuditLogBatchEvent && action !== DatabaseEventAction.DESTROYED) {
-      promises.push(
-        this.entityEventsToDbQueueService.add<WorkspaceEventBatch<T>>(
-          CreateEventLogFromInternalEvent.name,
-          batchEvent,
-          { retryLimit: 1 },
         ),
       );
     }

@@ -6,7 +6,7 @@ import crypto from 'crypto';
 import { isNonEmptyString } from '@sniptt/guards';
 import * as bcrypt from 'bcrypt';
 import { type Manifest } from 'twenty-shared/application';
-import { isDefined, isNonEmptyArray } from 'twenty-shared/utils';
+import { isDefined } from 'twenty-shared/utils';
 import { ILike, IsNull, type FindOptionsWhere, type Repository } from 'typeorm';
 import { type QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { v4 } from 'uuid';
@@ -216,17 +216,11 @@ export class ApplicationRegistrationService {
     offset,
     searchTerm,
     isPreInstalledOnly,
-    sourceTypes,
-    isListed,
-    isConfigured,
   }: {
     limit: number;
     offset: number;
     searchTerm?: string;
     isPreInstalledOnly?: boolean;
-    sourceTypes?: ApplicationRegistrationSourceType[];
-    isListed?: boolean;
-    isConfigured?: boolean;
   }): Promise<PaginatedApplicationRegistrationsDTO> {
     const safeLimit = Math.min(
       Math.max(limit, 1),
@@ -244,22 +238,12 @@ export class ApplicationRegistrationService {
         ),
       )
       .orderBy('registration.createdAt', 'DESC')
-      .addOrderBy('registration.id', 'ASC');
+      .addOrderBy('registration.id', 'ASC')
+      .skip(safeOffset)
+      .take(safeLimit);
 
     if (isPreInstalledOnly === true) {
       queryBuilder.andWhere('registration."isPreInstalled" = true');
-    }
-
-    if (isNonEmptyArray(sourceTypes)) {
-      queryBuilder.andWhere('registration."sourceType" IN (:...sourceTypes)', {
-        sourceTypes,
-      });
-    }
-
-    if (isDefined(isListed)) {
-      queryBuilder.andWhere('registration."isListed" = :isListed', {
-        isListed,
-      });
     }
 
     if (isDefined(trimmedSearch) && trimmedSearch.length > 0) {
@@ -271,35 +255,7 @@ export class ApplicationRegistrationService {
       );
     }
 
-    // Configuration status is computed from variables and installs, not stored
-    // on the registration, so this filter paginates in memory.
-    if (isDefined(isConfigured)) {
-      const allRegistrations = await queryBuilder.getMany();
-
-      const configuredStatuses =
-        await this.applicationRegistrationVariableService.isConfiguredBatch(
-          allRegistrations.map((registration) => registration.id),
-        );
-
-      const filteredRegistrations = allRegistrations.filter(
-        (registration) =>
-          (configuredStatuses.get(registration.id) ?? false) === isConfigured,
-      );
-
-      return {
-        registrations: filteredRegistrations.slice(
-          safeOffset,
-          safeOffset + safeLimit,
-        ),
-        totalCount: filteredRegistrations.length,
-        hasMore: safeOffset + safeLimit < filteredRegistrations.length,
-      };
-    }
-
-    const [registrations, totalCount] = await queryBuilder
-      .skip(safeOffset)
-      .take(safeLimit)
-      .getManyAndCount();
+    const [registrations, totalCount] = await queryBuilder.getManyAndCount();
 
     return {
       registrations,

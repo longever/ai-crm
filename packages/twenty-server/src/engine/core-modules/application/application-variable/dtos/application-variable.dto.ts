@@ -23,10 +23,6 @@ export class ApplicationVariableEntityDTO {
   @Field()
   description: string;
 
-  @IsString()
-  @Field()
-  label: string;
-
   @IsBoolean()
   @Field()
   isSecret: boolean;

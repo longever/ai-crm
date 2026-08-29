@@ -1,31 +1,19 @@
 import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
-import { WidgetCardShell } from '@/page-layout/widgets/components/WidgetCardShell';
-import { useWidgetRendererState } from '@/page-layout/widgets/hooks/useWidgetRendererState';
+import { NonRecordPageWidgetRenderer } from '@/page-layout/widgets/components/NonRecordPageWidgetRenderer';
+import { RecordPageWidgetRenderer } from '@/page-layout/widgets/components/RecordPageWidgetRenderer';
+import { useLayoutRenderingContext } from '@/ui/layout/contexts/LayoutRenderingContext';
+import { PageLayoutType } from '~/generated-metadata/graphql';
 
 type WidgetRendererProps = {
   widget: PageLayoutWidget;
 };
 
 export const WidgetRenderer = ({ widget }: WidgetRendererProps) => {
-  const state = useWidgetRendererState(widget);
+  const { layoutType } = useLayoutRenderingContext();
 
-  const isWidgetEditable = state.isPageLayoutInEditMode;
+  if (layoutType === PageLayoutType.RECORD_PAGE) {
+    return <RecordPageWidgetRenderer widget={widget} />;
+  }
 
-  return (
-    <WidgetCardShell
-      widget={widget}
-      variant={state.variant}
-      isEditable={isWidgetEditable}
-      isEditing={state.isEditing}
-      isDragging={state.isDragging}
-      isResizing={state.isResizing}
-      showHeader={state.showHeader}
-      hasAccess={state.hasAccess}
-      restriction={state.restriction}
-      onClick={isWidgetEditable ? state.handleClick : undefined}
-      onRemove={state.handleRemove}
-      onMouseEnter={state.handleMouseEnter}
-      onMouseLeave={state.handleMouseLeave}
-    />
-  );
+  return <NonRecordPageWidgetRenderer widget={widget} />;
 };

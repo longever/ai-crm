@@ -10,7 +10,6 @@ import {
   type FieldRichTextConfiguration,
   type FieldsConfiguration,
   type FilesConfiguration,
-  type FormFieldConfiguration,
   type FrontComponentConfiguration,
   type IframeConfiguration,
   type LineChartConfiguration,
@@ -93,9 +92,6 @@ type WidgetConfigurationTypenameMap = {
   };
   FieldsConfiguration: Omit<FieldsConfiguration, 'configurationType'> & {
     configurationType: WidgetConfigurationType.FIELDS;
-  };
-  FormFieldConfiguration: Omit<FormFieldConfiguration, 'configurationType'> & {
-    configurationType: WidgetConfigurationType.FORM_FIELD;
   };
   FilesConfiguration: Omit<FilesConfiguration, 'configurationType'> & {
     configurationType: WidgetConfigurationType.FILES;

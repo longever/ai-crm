@@ -4,7 +4,6 @@ import { DiscoveryModule } from '@nestjs/core';
 import { MessageQueueCoreModule } from 'src/engine/core-modules/message-queue/message-queue-core.module';
 import { MessageQueueMetadataAccessor } from 'src/engine/core-modules/message-queue/message-queue-metadata.accessor';
 import { MessageQueueExplorer } from 'src/engine/core-modules/message-queue/message-queue.explorer';
-import { EventLoopStallMonitorService } from 'src/engine/core-modules/message-queue/services/event-loop-stall-monitor.service';
 import {
   type ASYNC_OPTIONS_TYPE,
   type OPTIONS_TYPE,
@@ -24,11 +23,7 @@ export class MessageQueueModule {
     return {
       module: MessageQueueModule,
       imports: [DiscoveryModule],
-      providers: [
-        MessageQueueExplorer,
-        MessageQueueMetadataAccessor,
-        EventLoopStallMonitorService,
-      ],
+      providers: [MessageQueueExplorer, MessageQueueMetadataAccessor],
     };
   }
 

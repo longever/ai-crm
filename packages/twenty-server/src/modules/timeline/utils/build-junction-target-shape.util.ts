@@ -5,17 +5,23 @@ import { getJoinColumnNameForRelationField } from 'src/engine/metadata-modules/f
 import { isFieldMetadataSettingsOfType } from 'src/engine/metadata-modules/field-metadata/utils/is-field-metadata-settings-of-type.util';
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { findFlatEntityByIdInFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps.util';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
+import { findAllOthersMorphRelationFlatFieldMetadatasOrThrow } from 'src/engine/metadata-modules/flat-field-metadata/utils/find-all-others-morph-relation-flat-field-metadatas-or-throw.util';
+import { isFlatFieldMetadataOfType } from 'src/engine/metadata-modules/flat-field-metadata/utils/is-flat-field-metadata-of-type.util';
 import { type FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata.type';
+import { type TimelineActivityRuleTargetJoinColumn } from 'src/modules/timeline/types/timeline-activity-rule-target-join-column.type';
 import { type TimelineActivityRuleTargetShape } from 'src/modules/timeline/types/timeline-activity-rule-target-shape.type';
-import { buildTimelineActivityTargetJoinColumns } from 'src/modules/timeline/utils/build-timeline-activity-target-join-columns.util';
 
 type BuildJunctionTargetShapeArgs = {
-  relationFlatFieldMetadata: OrmFlatFieldMetadata;
+  relationFlatFieldMetadata: FlatFieldMetadata;
   flatObjectMetadataMaps: FlatEntityMaps<FlatObjectMetadata>;
-  flatFieldMetadataMaps: FlatEntityMaps<OrmFlatFieldMetadata>;
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>;
 };
 
+// A junction relation is a ONE_TO_MANY field declaring, through
+// settings.junctionTargetFieldId, which field of the junction object leads to
+// the far side. When that field is a morph relation the whole morph group is
+// expanded, so one rule reaches every target type.
 export const buildJunctionTargetShape = ({
   relationFlatFieldMetadata,
   flatObjectMetadataMaps,
@@ -80,13 +86,48 @@ export const buildJunctionTargetShape = ({
     return undefined;
   }
 
-  const targetJoinColumns = buildTimelineActivityTargetJoinColumns({
-    targetFlatFieldMetadata: junctionTargetFlatFieldMetadata,
-    flatObjectMetadataMaps,
-    flatFieldMetadataMaps,
-  });
+  const junctionTargetFlatFieldMetadatas = isFlatFieldMetadataOfType(
+    junctionTargetFlatFieldMetadata,
+    FieldMetadataType.MORPH_RELATION,
+  )
+    ? [
+        junctionTargetFlatFieldMetadata,
+        ...findAllOthersMorphRelationFlatFieldMetadatasOrThrow({
+          flatFieldMetadata: junctionTargetFlatFieldMetadata,
+          flatFieldMetadataMaps,
+          flatObjectMetadata: junctionFlatObjectMetadata,
+        }),
+      ]
+    : [junctionTargetFlatFieldMetadata];
 
-  if (targetJoinColumns.length === 0) {
+  const junctionTargetJoinColumns = junctionTargetFlatFieldMetadatas
+    .map(
+      (flatFieldMetadata): TimelineActivityRuleTargetJoinColumn | undefined => {
+        const targetObjectMetadataId =
+          flatFieldMetadata.relationTargetObjectMetadataId;
+
+        if (!isDefined(targetObjectMetadataId)) {
+          return undefined;
+        }
+
+        const targetFlatObjectMetadata = findFlatEntityByIdInFlatEntityMaps({
+          flatEntityId: targetObjectMetadataId,
+          flatEntityMaps: flatObjectMetadataMaps,
+        });
+
+        if (!isDefined(targetFlatObjectMetadata)) {
+          return undefined;
+        }
+
+        return {
+          joinColumnName: getJoinColumnNameForRelationField(flatFieldMetadata),
+          targetObjectNameSingular: targetFlatObjectMetadata.nameSingular,
+        };
+      },
+    )
+    .filter(isDefined);
+
+  if (junctionTargetJoinColumns.length === 0) {
     return undefined;
   }
 
@@ -95,6 +136,6 @@ export const buildJunctionTargetShape = ({
     junctionObjectMetadataId: junctionFlatObjectMetadata.id,
     junctionObjectNameSingular: junctionFlatObjectMetadata.nameSingular,
     junctionSourceJoinColumnName,
-    targetJoinColumns,
+    junctionTargetJoinColumns,
   };
 };

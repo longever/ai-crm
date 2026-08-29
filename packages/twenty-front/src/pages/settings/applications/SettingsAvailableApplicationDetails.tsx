@@ -21,14 +21,14 @@ import { InlineBanner } from 'twenty-ui/feedback';
 import {
   IconBook,
   IconBox,
-  IconBrandTypescript,
   IconCommand,
   IconEyeOff,
+  IconGraph,
   IconInfoCircle,
   IconLego,
-  IconLayoutGridAdd,
   IconListDetails,
   IconLock,
+  IconShield,
 } from 'twenty-ui/icon';
 import {
   ApplicationRegistrationSourceType,
@@ -150,13 +150,13 @@ export const SettingsAvailableApplicationDetails = () => {
       many: t`fields`,
     },
     {
-      icon: IconBrandTypescript,
+      icon: IconCommand,
       count: (manifest?.logicFunctions ?? []).length,
       one: t`logic function`,
       many: t`logic functions`,
     },
     {
-      icon: IconLayoutGridAdd,
+      icon: IconGraph,
       count: (manifest?.frontComponents ?? []).filter(
         (fc) =>
           !(manifest?.commandMenuItems ?? [])
@@ -179,7 +179,7 @@ export const SettingsAvailableApplicationDetails = () => {
       many: t`commands`,
     },
     {
-      icon: IconLock,
+      icon: IconShield,
       count: (detail?.roles ?? []).filter(
         (role) =>
           role.universalIdentifier !== detail?.defaultRoleUniversalIdentifier,

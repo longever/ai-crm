@@ -9,14 +9,11 @@ import path, { dirname, join } from 'path';
 import { type Readable } from 'stream';
 import { pipeline } from 'stream/promises';
 
-import { isDefined } from 'twenty-shared/utils';
-
 import { type StorageDriver } from 'src/engine/core-modules/file-storage/drivers/interfaces/storage-driver.interface';
 import {
   FileStorageException,
   FileStorageExceptionCode,
 } from 'src/engine/core-modules/file-storage/interfaces/file-storage-exception';
-import { type ByteRange } from 'src/engine/core-modules/file-storage/types/byte-range.type';
 
 export interface LocalDriverOptions {
   storagePath: string;
@@ -44,10 +41,7 @@ export class LocalDriver implements StorageDriver {
     }
   }
 
-  async readFile(params: {
-    filePath: string;
-    byteRange?: ByteRange;
-  }): Promise<Readable> {
+  async readFile(params: { filePath: string }): Promise<Readable> {
     const joinedPath = join(this.options.storagePath, params.filePath);
     let filePath: string;
 
@@ -63,12 +57,7 @@ export class LocalDriver implements StorageDriver {
     this.assertRealPathIsWithinStorage(filePath);
 
     try {
-      return createReadStream(
-        filePath,
-        isDefined(params.byteRange)
-          ? { start: params.byteRange.startByte, end: params.byteRange.endByte }
-          : undefined,
-      );
+      return createReadStream(filePath);
     } catch (error) {
       if (error.code === 'ENOENT') {
         throw new FileStorageException(

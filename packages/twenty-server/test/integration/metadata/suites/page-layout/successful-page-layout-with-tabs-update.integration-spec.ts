@@ -8,17 +8,13 @@ import {
   type EachTestingContext,
   eachTestingContextFilter,
 } from 'twenty-shared/testing';
-import {
-  AggregateOperations,
-  PageLayoutTabLayoutMode,
-  PageLayoutType,
-  type PageLayoutWidgetGridPosition,
-  WidgetType,
-} from 'twenty-shared/types';
+import { AggregateOperations } from 'twenty-shared/types';
 import { v4 } from 'uuid';
 
 import { WidgetConfigurationType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-configuration-type.type';
+import { WidgetType } from 'src/engine/metadata-modules/page-layout-widget/enums/widget-type.enum';
 import { type AllPageLayoutWidgetConfiguration } from 'src/engine/metadata-modules/page-layout-widget/types/all-page-layout-widget-configuration.type';
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 
 const MOCK_IFRAME_CONFIGURATION = {
   configurationType: WidgetConfigurationType.IFRAME,
@@ -42,7 +38,12 @@ type TestContext = {
       title: string;
       type: WidgetType;
       objectMetadataId: string | null;
-      position: PageLayoutWidgetGridPosition;
+      gridPosition: {
+        row: number;
+        column: number;
+        rowSpan: number;
+        columnSpan: number;
+      };
       configuration: AllPageLayoutWidgetConfiguration;
     }>;
   }>;
@@ -77,8 +78,7 @@ describe('Page layout with tabs update should succeed', () => {
                 title: 'Pie Chart Widget',
                 type: WidgetType.GRAPH,
                 objectMetadataId: testFieldMetadataIds.objectMetadataId,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
+                gridPosition: {
                   row: 0,
                   column: 0,
                   rowSpan: 1,
@@ -113,8 +113,7 @@ describe('Page layout with tabs update should succeed', () => {
                 title: 'Pie Chart Widget',
                 type: WidgetType.GRAPH,
                 objectMetadataId: testFieldMetadataIds.objectMetadataId,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
+                gridPosition: {
                   row: 0,
                   column: 0,
                   rowSpan: 1,
@@ -141,8 +140,7 @@ describe('Page layout with tabs update should succeed', () => {
                 title: 'Iframe Widget',
                 type: WidgetType.IFRAME,
                 objectMetadataId: null,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
+                gridPosition: {
                   row: 0,
                   column: 0,
                   rowSpan: 1,
@@ -254,8 +252,7 @@ describe('Page layout with tabs update should succeed', () => {
                 title: 'Iframe Widget',
                 type: WidgetType.IFRAME,
                 objectMetadataId: null,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
+                gridPosition: {
                   row: 0,
                   column: 0,
                   rowSpan: 1,
@@ -300,8 +297,7 @@ describe('Page layout with tabs update should succeed', () => {
                 title: 'Iframe Widget',
                 type: WidgetType.IFRAME,
                 objectMetadataId: null,
-                position: {
-                  layoutMode: PageLayoutTabLayoutMode.GRID,
+                gridPosition: {
                   row: 0,
                   column: 0,
                   rowSpan: 1,

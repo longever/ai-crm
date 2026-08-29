@@ -5,7 +5,6 @@ import {
 
 export type EmailFormData = {
   connectedAccountId: string;
-  fromHandle: string;
   recipients: Required<EmailRecipients>;
   subject: string;
   body: string;

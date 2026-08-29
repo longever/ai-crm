@@ -25,7 +25,6 @@ export const queryAvailablePartners = (client: CoreApiClient) =>
           languagesSpoken: true,
           deploymentExpertise: true,
           partnerTier: true,
-          superPartner: true,
           partnerScope: true,
           region: true,
           calendarLink: { primaryLinkUrl: true },

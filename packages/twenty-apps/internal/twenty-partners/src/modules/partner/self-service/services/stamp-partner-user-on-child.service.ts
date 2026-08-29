@@ -31,7 +31,7 @@ export const stampPartnerUserFromPartner = async (
   childObject: PartnerChildObject,
   childId: string,
 ): Promise<void> => {
-  const partnerUserId = (await getPartnerOwner(client, partnerId)).partners?.edges?.[0]?.node
+  const partnerUserId = (await getPartnerOwner(client, partnerId)).partner
     ?.partnerUserId;
   if (!partnerUserId) return;
 

@@ -1,19 +1,18 @@
 import { type SyncableEntityOptions } from '@/application/syncableEntityOptionsType';
 import {
+  type GridPosition,
   type PageLayoutTabLayoutMode,
   type PageLayoutType,
   type PageLayoutWidgetConditionalDisplay,
-  type PageLayoutWidgetPosition,
   type PageLayoutWidgetUniversalConfiguration,
-  type WidgetType,
 } from '@/types';
 
 export type PageLayoutWidgetManifest = SyncableEntityOptions & {
   title: string;
-  type: `${WidgetType}`;
+  type: string;
   objectUniversalIdentifier?: string;
   conditionalDisplay?: PageLayoutWidgetConditionalDisplay;
-  position?: PageLayoutWidgetPosition;
+  gridPosition?: GridPosition;
   configuration: PageLayoutWidgetUniversalConfiguration;
 };
 

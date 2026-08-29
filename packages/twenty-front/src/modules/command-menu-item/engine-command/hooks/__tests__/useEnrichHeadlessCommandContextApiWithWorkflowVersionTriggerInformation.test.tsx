@@ -38,13 +38,11 @@ const buildBaseContextApi = (
 });
 
 jest.mock('@/object-metadata/hooks/useApolloCoreClient', () => ({
-  useApolloCoreClient: () => ({
-    query: jest.fn().mockResolvedValue({
-      data: {
-        workflowVersionContent: { trigger: { type: 'MANUAL' } },
-      },
-    }),
-  }),
+  useApolloCoreClient: () => ({ query: jest.fn() }),
+}));
+
+jest.mock('@/workspace/hooks/useIsFeatureEnabled', () => ({
+  useIsFeatureEnabled: () => false,
 }));
 
 describe('useEnrichHeadlessCommandContextApiWithWorkflowVersionTriggerInformation', () => {

@@ -15,12 +15,12 @@ type Story = StoryObj<typeof EventRowDate>;
 
 export const Default: Story = {
   args: {
-    happensAt: '2024-03-09T09:30:00.000Z',
+    createdAt: '2024-03-09T09:30:00.000Z',
   },
 };
 
 export const WithoutDate: Story = {
   args: {
-    happensAt: undefined,
+    createdAt: undefined,
   },
 };

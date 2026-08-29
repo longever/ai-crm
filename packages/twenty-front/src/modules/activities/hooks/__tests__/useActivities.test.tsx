@@ -34,6 +34,7 @@ const mockActivity = {
     markdown: 'My Body',
   },
   assignee: null,
+  taskTargets: [],
 } satisfies Task;
 
 describe('useActivities', () => {
@@ -49,7 +50,6 @@ describe('useActivities', () => {
       {
         activityTargets: [{ ...mockActivityTarget, task: mockActivity }],
         loadingActivityTargets: false,
-        activityRelationFieldName: 'task',
       },
     );
 

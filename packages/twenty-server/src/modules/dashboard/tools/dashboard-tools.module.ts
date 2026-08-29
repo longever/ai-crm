@@ -7,6 +7,7 @@ import { WorkspaceManyOrAllFlatEntityMapsCacheModule } from 'src/engine/metadata
 import { PageLayoutTabModule } from 'src/engine/metadata-modules/page-layout-tab/page-layout-tab.module';
 import { PageLayoutWidgetModule } from 'src/engine/metadata-modules/page-layout-widget/page-layout-widget.module';
 import { PageLayoutModule } from 'src/engine/metadata-modules/page-layout/page-layout.module';
+import { TwentyORMModule } from 'src/engine/twenty-orm/twenty-orm.module';
 
 import { DashboardToolWorkspaceService } from './services/dashboard-tool.workspace-service';
 
@@ -17,6 +18,7 @@ import { DashboardToolWorkspaceService } from './services/dashboard-tool.workspa
     PageLayoutTabModule,
     PageLayoutWidgetModule,
     RecordPositionModule,
+    TwentyORMModule,
     ApplicationModule,
     WorkspaceManyOrAllFlatEntityMapsCacheModule,
   ],

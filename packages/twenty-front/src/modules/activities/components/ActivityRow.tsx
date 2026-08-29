@@ -16,10 +16,6 @@ const StyledRowContentContainer = styled.div`
   > div[data-clickable='false'] {
     cursor: default;
   }
-
-  > div[data-hover-highlight]:hover {
-    background: ${themeCssVariables.background.transparent.lighter};
-  }
 `;
 
 export const ActivityRow = ({
@@ -38,11 +34,7 @@ export const ActivityRow = ({
 
   return (
     <StyledRowContentContainer>
-      <CardContent
-        onClick={handleClick}
-        isClickable={disabled !== true}
-        hasHoverHighlight={disabled !== true}
-      >
+      <CardContent onClick={handleClick} isClickable={disabled !== true}>
         {children}
       </CardContent>
     </StyledRowContentContainer>

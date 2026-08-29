@@ -59,9 +59,7 @@ export const TabListHiddenMeasurements = ({
       ))}
 
       <NodeDimension onDimensionChange={onMoreButtonWidthChange}>
-        {/* Measured with the highest count it can ever display, so the widest
-        label is reserved and the last visible tab is never clipped by it. */}
-        <TabMoreButton hiddenTabsCount={visibleTabs.length} active={false} />
+        <TabMoreButton hiddenTabsCount={1} active={false} />
       </NodeDimension>
 
       {onAddButtonWidthChange && (

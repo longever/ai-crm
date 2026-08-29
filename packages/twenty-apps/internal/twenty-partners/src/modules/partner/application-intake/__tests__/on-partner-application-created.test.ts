@@ -15,28 +15,22 @@ import { handler } from '../on-partner-application-created.logic-function';
 const PARTNER_ID = '11111111-1111-1111-1111-111111111111';
 
 const partnerQueryResult = {
-  partners: {
-    edges: [
-      {
-        node: {
-          id: PARTNER_ID,
-          name: 'Analytical Engines Ltd',
-          country: 'FRANCE',
-          partnerScope: ['ADVISORY', 'SOLUTIONING'],
-          skills: ['Onboarding', 'Migration'],
-          languagesSpoken: ['ENGLISH', 'FRENCH'],
-          persons: {
-            edges: [
-              {
-                node: {
-                  name: { firstName: 'Ada', lastName: 'Lovelace' },
-                },
-              },
-            ],
+  partner: {
+    id: PARTNER_ID,
+    name: 'Analytical Engines Ltd',
+    country: 'FRANCE',
+    partnerScope: ['ADVISORY', 'SOLUTIONING'],
+    skills: ['Onboarding', 'Migration'],
+    languagesSpoken: ['ENGLISH', 'FRENCH'],
+    persons: {
+      edges: [
+        {
+          node: {
+            name: { firstName: 'Ada', lastName: 'Lovelace' },
           },
         },
-      },
-    ],
+      ],
+    },
   },
 };
 

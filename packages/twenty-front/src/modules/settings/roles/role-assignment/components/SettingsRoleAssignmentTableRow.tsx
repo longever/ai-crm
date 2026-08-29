@@ -73,7 +73,7 @@ export const SettingsRoleAssignmentTableRow = ({
         );
       }
       case 'agent': {
-        const Icon = getIcon(roleTarget.data.icon || 'IconLego');
+        const Icon = getIcon(roleTarget.data.icon || 'IconRobot');
         return <Icon size={theme.icon.size.md} stroke={theme.icon.stroke.sm} />;
       }
       case 'apiKey': {

@@ -24,7 +24,7 @@ import { Avatar } from 'twenty-ui/data-display';
 import {
   IconArrowUpRight,
   IconChevronRight,
-  IconHierarchy,
+  IconHierarchy2,
   IconListDetails,
 } from 'twenty-ui/icon';
 import { AppTooltip, TooltipDelay } from 'twenty-ui/surfaces';
@@ -201,7 +201,7 @@ export const SettingsWorkspaceMembersTeamTab = () => {
                   }}
                 />
                 <MenuItem
-                  LeftIcon={IconHierarchy}
+                  LeftIcon={IconHierarchy2}
                   text={t`See data model settings`}
                   onClick={() => {
                     navigateSettings(SettingsPath.ObjectDetail, {

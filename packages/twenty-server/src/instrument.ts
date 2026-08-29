@@ -1,10 +1,8 @@
-import os from 'os';
 import process from 'process';
 
 import { metrics as otelMetrics } from '@opentelemetry/api';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http';
 import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
-import { resourceFromAttributes } from '@opentelemetry/resources';
 import {
   AggregationTemporality,
   ConsoleMetricExporter,
@@ -125,10 +123,6 @@ const prometheusExporter = meterDrivers.includes(MeterDriver.Prometheus)
   : null;
 
 const meterProvider = new MeterProvider({
-  resource: resourceFromAttributes({
-    'service.name': process.env.OTEL_SERVICE_NAME ?? 'twenty-server',
-    'k8s.pod.name': process.env.HOSTNAME ?? os.hostname(),
-  }),
   readers: [
     ...(meterDrivers.includes(MeterDriver.Console)
       ? [

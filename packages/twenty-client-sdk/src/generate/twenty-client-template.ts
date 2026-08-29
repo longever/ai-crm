@@ -1,5 +1,3 @@
-import type { TwentyClientRunAs } from '../shared/twenty-client-run-as.type';
-
 // Ambient type stubs for the genql-generated code this template gets
 // injected into. They enable full typecheck/lint on this file.
 // __STRIPPED_DURING_INJECTION_START__
@@ -7,7 +5,7 @@ type QueryGenqlSelection = Record<string, unknown>;
 type MutationGenqlSelection = Record<string, unknown>;
 type GraphqlOperation = Record<string, unknown>;
 
-type ClientOptions = Omit<RequestInit, 'body' | 'headers'> & {
+type ClientOptions = {
   url?: string;
   headers?: HeadersInit | (() => HeadersInit | Promise<HeadersInit>);
   fetcher?: (
@@ -38,7 +36,12 @@ const APP_APPLICATION_ACCESS_TOKEN_ENV_KEY =
   'TWENTY_APP_APPLICATION_ACCESS_TOKEN';
 const API_KEY_ENV_KEY = 'TWENTY_API_KEY';
 
-export type TwentyGeneratedClientOptions = ClientOptions & {
+// The default acts as the person who triggered the run, limited to their role
+// intersected with the application's, and as the application alone when nobody
+// triggered it. 'application' asks for the application's access either way.
+type TwentyClientRunAs = 'user' | 'application';
+
+type TwentyGeneratedClientOptions = ClientOptions & {
   runAs?: TwentyClientRunAs;
 };
 

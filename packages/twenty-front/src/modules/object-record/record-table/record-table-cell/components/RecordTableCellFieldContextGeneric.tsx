@@ -8,6 +8,7 @@ import { isFieldRelationManyToOne } from '@/object-record/record-field/ui/types/
 import { isFieldRelationOneToMany } from '@/object-record/record-field/ui/types/guards/isFieldRelationOneToMany';
 import { getJunctionConfig } from '@/object-record/record-field/ui/utils/junction/getJunctionConfig';
 import { getTargetObjectMetadataIdsFromField } from '@/object-record/record-field/ui/utils/junction/getTargetObjectMetadataIdsFromField';
+import { hasJunctionConfig } from '@/object-record/record-field/ui/utils/junction/hasJunctionConfig';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { useRecordTableContextOrThrow } from '@/object-record/record-table/contexts/RecordTableContext';
 import { useRecordTableRowContextOrThrow } from '@/object-record/record-table/contexts/RecordTableRowContext';
@@ -63,12 +64,13 @@ export const RecordTableCellFieldContextGeneric = ({
 
     hasObjectReadPermissions = relationObjectPermissions.canReadObjectRecords;
 
-    if (hasObjectReadPermissions) {
+    if (
+      hasObjectReadPermissions &&
+      hasJunctionConfig(fieldDefinition.metadata.settings)
+    ) {
       const junctionConfig = getJunctionConfig({
         settings: fieldDefinition.metadata.settings,
         relationObjectMetadataId,
-        relationTargetFieldMetadataId:
-          fieldDefinition.metadata.relationFieldMetadataId,
         sourceObjectMetadataId: objectMetadataItem.id,
         objectMetadataItems,
       });

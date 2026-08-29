@@ -21,7 +21,7 @@ export const computeStandardCompanyViews = (
         type: ViewType.TABLE,
         key: ViewKey.INDEX,
         position: 0,
-        icon: 'IconTable',
+        icon: 'IconList',
       },
     }),
     companyRecordPageFields: createStandardViewFlatMetadata({
@@ -33,7 +33,7 @@ export const computeStandardCompanyViews = (
         type: ViewType.FIELDS_WIDGET,
         key: null,
         position: 0,
-        icon: 'IconListDetails',
+        icon: 'IconList',
       },
     }),
   };

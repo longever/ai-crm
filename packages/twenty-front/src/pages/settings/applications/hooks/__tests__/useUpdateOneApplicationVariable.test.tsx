@@ -47,7 +47,6 @@ const buildApplication = (variableValue: string): Application => ({
       key: KEY,
       value: variableValue,
       description: '',
-      label: '',
       isSecret: false,
       isDeprecated: false,
       type: 'TEXT',

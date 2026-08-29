@@ -1,6 +1,5 @@
 import { styled } from '@linaria/react';
 
-import { getServerI18n } from '@/platform/i18n/get-server-i18n';
 import {
   EASING,
   FONT_WEIGHT,
@@ -11,10 +10,8 @@ import {
   spacing,
 } from '@/tokens';
 
-import { MARKETPLACE_COPY } from './marketplace-copy';
 import { type MarketplacePartner } from './marketplace-partner';
 import { ProfileEyebrow } from './ProfileEyebrow';
-import { SuperPartnerMark } from './SuperPartnerMark';
 import { titleCaseFallback } from './title-case-fallback';
 
 const Wrapper = styled.div`
@@ -56,8 +53,7 @@ export function PartnerProfileHeader({
 }: {
   partner: MarketplacePartner;
 }) {
-  const i18n = getServerI18n();
-  const locationLine = [
+  const eyebrow = [
     partner.city,
     partner.country ? titleCaseFallback(partner.country) : '',
   ]
@@ -66,15 +62,8 @@ export function PartnerProfileHeader({
 
   return (
     <Wrapper>
-      {partner.superPartner ? (
-        <SuperPartnerMark label={i18n._(MARKETPLACE_COPY.superPartner)} />
-      ) : locationLine ? (
-        <ProfileEyebrow>{locationLine}</ProfileEyebrow>
-      ) : null}
+      {eyebrow && <ProfileEyebrow>{eyebrow}</ProfileEyebrow>}
       <Name id="partner-name">{partner.name}</Name>
-      {partner.superPartner && locationLine ? (
-        <ProfileEyebrow>{locationLine}</ProfileEyebrow>
-      ) : null}
     </Wrapper>
   );
 }

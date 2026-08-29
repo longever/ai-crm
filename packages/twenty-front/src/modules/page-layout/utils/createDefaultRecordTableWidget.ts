@@ -1,6 +1,7 @@
 import {
+  type GridPosition,
+  PageLayoutTabLayoutMode,
   type PageLayoutWidget,
-  type PageLayoutWidgetGridPosition,
   WidgetConfigurationType,
   WidgetType,
 } from '~/generated-metadata/graphql';
@@ -9,13 +10,13 @@ export const createDefaultRecordTableWidget = ({
   id,
   pageLayoutTabId,
   title,
-  position,
+  gridPosition,
   objectMetadataId,
 }: {
   id: string;
   pageLayoutTabId: string;
   title: string;
-  position: PageLayoutWidgetGridPosition;
+  gridPosition: GridPosition;
   objectMetadataId?: string;
 }): PageLayoutWidget => {
   return {
@@ -31,9 +32,14 @@ export const createDefaultRecordTableWidget = ({
     configuration: {
       configurationType: WidgetConfigurationType.RECORD_TABLE,
     },
+    gridPosition,
     position: {
-      ...position,
       __typename: 'PageLayoutWidgetGridPosition',
+      layoutMode: PageLayoutTabLayoutMode.GRID,
+      row: gridPosition.row,
+      column: gridPosition.column,
+      rowSpan: gridPosition.rowSpan,
+      columnSpan: gridPosition.columnSpan,
     },
     objectMetadataId: objectMetadataId ?? null,
     isOverridden: false,

@@ -19,7 +19,6 @@ type SendEmailResult = {
 
 type SendEmailParams = {
   connectedAccountId: string;
-  fromHandle?: string;
   to: string;
   cc?: string;
   bcc?: string;
@@ -47,7 +46,6 @@ export const useSendEmail = () => {
           variables: {
             input: {
               connectedAccountId: params.connectedAccountId,
-              fromHandle: params.fromHandle,
               to: params.to,
               cc: params.cc,
               bcc: params.bcc,

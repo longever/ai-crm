@@ -24,7 +24,7 @@ describe('getShiftedRecordCalendarDateTimeUpdateInput', () => {
     ).toEqual({ startAt: '2026-07-11T15:59:00Z' });
   });
 
-  it('updates only the selected date-time field, leaving other dates untouched', () => {
+  it('shifts both the start and end date-times when an end field is given', () => {
     expect(
       getShiftedRecordCalendarDateTimeUpdateInput({
         record: buildRecord({
@@ -32,12 +32,14 @@ describe('getShiftedRecordCalendarDateTimeUpdateInput', () => {
           endAt: '2026-07-10T18:59:00Z',
         }),
         calendarFieldName: 'startAt',
+        calendarEndFieldName: 'endAt',
         dayOffset: 1,
         timeZone,
         fallbackStartDateTime,
       }),
     ).toEqual({
       startAt: '2026-07-09T15:59:00Z',
+      endAt: '2026-07-11T18:59:00Z',
     });
   });
 
@@ -61,10 +63,27 @@ describe('getShiftedRecordCalendarDateTimeUpdateInput', () => {
           endAt: '2026-07-10T18:59:00Z',
         }),
         calendarFieldName: 'startAt',
+        calendarEndFieldName: 'endAt',
         dayOffset: 1,
         timeZone,
         fallbackStartDateTime,
       }),
     ).toEqual({ startAt: fallbackStartDateTime });
+  });
+
+  it('omits the end when it precedes the start', () => {
+    expect(
+      getShiftedRecordCalendarDateTimeUpdateInput({
+        record: buildRecord({
+          startAt: '2026-07-08T15:59:00Z',
+          endAt: '2026-07-07T18:59:00Z',
+        }),
+        calendarFieldName: 'startAt',
+        calendarEndFieldName: 'endAt',
+        dayOffset: 1,
+        timeZone,
+        fallbackStartDateTime,
+      }),
+    ).toEqual({ startAt: '2026-07-09T15:59:00Z' });
   });
 });

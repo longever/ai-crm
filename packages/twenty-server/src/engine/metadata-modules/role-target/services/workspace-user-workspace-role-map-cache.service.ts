@@ -1,38 +1,36 @@
 import { Injectable } from '@nestjs/common';
 
-import { IsNull, Not } from 'typeorm';
-
 import { isDefined } from 'twenty-shared/utils';
+import { IsNull, Not } from 'typeorm';
 
 import { WorkspaceCacheProvider } from 'src/engine/workspace-cache/interfaces/workspace-cache-provider.service';
 
+import { RoleTargetEntity } from 'src/engine/metadata-modules/role-target/role-target.entity';
 import { UserWorkspaceRoleMap } from 'src/engine/metadata-modules/role-target/types/user-workspace-role-map';
+import { InjectWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/inject-workspace-scoped-repository.decorator';
+import { WorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/workspace-scoped-repository';
 import { WorkspaceCache } from 'src/engine/workspace-cache/decorators/workspace-cache.decorator';
-import { type WorkspaceCacheProviderContext } from 'src/engine/workspace-cache/types/workspace-cache-provider-context.type';
-import { type WorkspaceCacheRowsRequirement } from 'src/engine/workspace-cache/types/workspace-cache-rows-requirement.type';
-
-const USER_WORKSPACE_ROLE_ROWS_REQUIREMENT = {
-  roleTarget: {
-    columns: ['userWorkspaceId', 'roleId'],
-    where: { userWorkspaceId: Not(IsNull()) },
-  },
-} as const satisfies WorkspaceCacheRowsRequirement;
 
 @Injectable()
 @WorkspaceCache('userWorkspaceRoleMap', { packingPonderation: 1 })
 export class WorkspaceUserWorkspaceRoleMapCacheService extends WorkspaceCacheProvider<UserWorkspaceRoleMap> {
-  override readonly rowsRequirement = USER_WORKSPACE_ROLE_ROWS_REQUIREMENT;
+  constructor(
+    @InjectWorkspaceScopedRepository(RoleTargetEntity)
+    private readonly roleTargetRepository: WorkspaceScopedRepository<RoleTargetEntity>,
+  ) {
+    super();
+  }
 
-  computeForCache({
-    rows,
-  }: WorkspaceCacheProviderContext<
-    typeof USER_WORKSPACE_ROLE_ROWS_REQUIREMENT
-  >): UserWorkspaceRoleMap {
-    const { roleTarget: roleTargets } = rows;
+  async computeForCache(workspaceId: string): Promise<UserWorkspaceRoleMap> {
+    const roleTargetsMap = await this.roleTargetRepository.find(workspaceId, {
+      where: {
+        userWorkspaceId: Not(IsNull()),
+      },
+    });
 
-    return roleTargets.reduce((acc, { userWorkspaceId, roleId }) => {
-      if (isDefined(userWorkspaceId)) {
-        acc[userWorkspaceId] = roleId;
+    return roleTargetsMap.reduce((acc, roleTarget) => {
+      if (isDefined(roleTarget.userWorkspaceId)) {
+        acc[roleTarget.userWorkspaceId] = roleTarget.roleId;
       }
 
       return acc;

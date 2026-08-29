@@ -1,12 +1,13 @@
 import { PageLayoutComponentInstanceContext } from '@/page-layout/states/contexts/PageLayoutComponentInstanceContext';
 import { pageLayoutDraftComponentState } from '@/page-layout/states/pageLayoutDraftComponentState';
 import { widgetInsertionContextComponentState } from '@/page-layout/states/widgetInsertionContextComponentState';
-import { reindexWidgetsToVerticalListPositions } from '@/page-layout/utils/reindexWidgetsToVerticalListPositions';
-import { sortWidgetsByVerticalListPosition } from '@/page-layout/utils/sortWidgetsByVerticalListPosition';
+import { isVerticalListPosition } from '@/page-layout/utils/isVerticalListPosition';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
 import { useAtomComponentStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateCallbackState';
 import { useStore } from 'jotai';
 import { useCallback } from 'react';
+import { isDefined } from 'twenty-shared/utils';
+import { PageLayoutTabLayoutMode } from '~/generated-metadata/graphql';
 
 export const useInsertCreatedWidgetAtContext = (
   pageLayoutIdFromProps?: string,
@@ -47,7 +48,19 @@ export const useInsertCreatedWidgetAtContext = (
           return prev;
         }
 
-        const sortedWidgets = sortWidgetsByVerticalListPosition(tab.widgets);
+        const sortedWidgets = tab.widgets.toSorted((widgetA, widgetB) => {
+          const indexA =
+            isDefined(widgetA.position) &&
+            isVerticalListPosition(widgetA.position)
+              ? widgetA.position.index
+              : 0;
+          const indexB =
+            isDefined(widgetB.position) &&
+            isVerticalListPosition(widgetB.position)
+              ? widgetB.position.index
+              : 0;
+          return indexA - indexB;
+        });
 
         const targetIndex = sortedWidgets.findIndex(
           (widget) => widget.id === insertionContext.targetWidgetId,
@@ -76,8 +89,16 @@ export const useInsertCreatedWidgetAtContext = (
 
         widgetsWithoutNew.splice(insertAtIndex, 0, newWidget);
 
-        const reindexedWidgets =
-          reindexWidgetsToVerticalListPositions(widgetsWithoutNew);
+        const reindexedWidgets = widgetsWithoutNew.map(
+          (widget, widgetIndex) => ({
+            ...widget,
+            position: {
+              __typename: 'PageLayoutWidgetVerticalListPosition' as const,
+              layoutMode: PageLayoutTabLayoutMode.VERTICAL_LIST,
+              index: widgetIndex,
+            },
+          }),
+        );
 
         return {
           ...prev,

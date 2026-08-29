@@ -1,5 +1,7 @@
 import { PageLayoutGridLayout } from '@/page-layout/components/PageLayoutGridLayout';
-import { PageLayoutVerticalList } from '@/page-layout/components/PageLayoutVerticalList';
+import { PageLayoutSoloViewer } from '@/page-layout/components/PageLayoutSoloViewer';
+import { PageLayoutVerticalListEditor } from '@/page-layout/components/PageLayoutVerticalListEditor';
+import { PageLayoutVerticalListViewer } from '@/page-layout/components/PageLayoutVerticalListViewer';
 import { usePageLayoutContentContext } from '@/page-layout/contexts/PageLayoutContentContext';
 import { useCurrentPageLayoutOrThrow } from '@/page-layout/hooks/useCurrentPageLayoutOrThrow';
 import { useIsPageLayoutInEditMode } from '@/page-layout/hooks/useIsPageLayoutInEditMode';
@@ -20,9 +22,11 @@ const StyledEmptyStandalonePageContainer = styled.div`
 export const PageLayoutContent = () => {
   const isPageLayoutInEditMode = useIsPageLayoutInEditMode();
 
-  const { layoutMode, tabId } = usePageLayoutContentContext();
+  const { tabId } = usePageLayoutContentContext();
 
   const activeTab = usePageLayoutTabWithVisibleWidgetsOrThrow(tabId);
+
+  const { layoutMode, presentation } = usePageLayoutContentContext();
 
   const { currentPageLayout } = useCurrentPageLayoutOrThrow();
 
@@ -47,15 +51,20 @@ export const PageLayoutContent = () => {
     return <PageLayoutGridLayout tabId={tabId} />;
   }
 
-  const isVerticalListInEditMode = isPageLayoutInEditMode && isRecordPageLayout;
+  // Edit mode always shows the stack structure, whatever the view-mode
+  // presentation is: every tab is edited through the same vertical-list editor.
+  if (isPageLayoutInEditMode && isRecordPageLayout) {
+    return (
+      <PageLayoutVerticalListEditor
+        widgets={activeTab.widgets}
+        trailingElement={<RecordPageAddWidgetSection />}
+      />
+    );
+  }
 
-  return (
-    <PageLayoutVerticalList
-      isInEditMode={isVerticalListInEditMode}
-      widgets={activeTab.widgets}
-      trailingElement={
-        isVerticalListInEditMode ? <RecordPageAddWidgetSection /> : undefined
-      }
-    />
-  );
+  if (presentation === 'solo') {
+    return <PageLayoutSoloViewer widgets={activeTab.widgets} />;
+  }
+
+  return <PageLayoutVerticalListViewer widgets={activeTab.widgets} />;
 };

@@ -4,7 +4,6 @@ import { InjectDataSource } from '@nestjs/typeorm';
 import { isDefined } from 'twenty-shared/utils';
 import { DataSource } from 'typeorm';
 
-import { WorkspaceIteratorService } from 'src/database/commands/command-runners/workspace-iterator.service';
 import { ExceptionHandlerService } from 'src/engine/core-modules/exception-handler/exception-handler.service';
 import { MetricsService } from 'src/engine/core-modules/metrics/metrics.service';
 import { MetricsKeys } from 'src/engine/core-modules/metrics/types/metrics-keys.type';
@@ -17,9 +16,6 @@ import {
 
 type DriftCounts = Record<string, number>;
 
-const CRON_INTERVAL_HOURS = 3;
-const SHARD_TOTAL = 24 / CRON_INTERVAL_HOURS;
-
 // Detect drift between the workspace source-of-truth records and their core
 // mirror. The dual-write is best-effort (async, not transactional), so core can
 // silently fall out of sync; this quantifies that per workspace as metrics.
@@ -30,35 +26,27 @@ export class WorkflowCoreConsistencyService {
   constructor(
     @InjectDataSource()
     private readonly coreDataSource: DataSource,
-    private readonly workspaceIteratorService: WorkspaceIteratorService,
     private readonly workspaceCacheService: WorkspaceCacheService,
     private readonly metricsService: MetricsService,
     private readonly exceptionHandlerService: ExceptionHandlerService,
   ) {}
 
   async runConsistencyCheck(): Promise<void> {
-    const shard = {
-      index:
-        Math.floor(new Date().getUTCHours() / CRON_INTERVAL_HOURS) %
-        SHARD_TOTAL,
-      total: SHARD_TOTAL,
-    };
+    const workspaces: Array<{ workspaceId: string; databaseSchema: string }> =
+      await this.coreDataSource.query(
+        `SELECT id AS "workspaceId", "databaseSchema"
+         FROM core."workspace"
+         WHERE "activationStatus" IN ('ACTIVE', 'SUSPENDED') AND "databaseSchema" IS NOT NULL`,
+      );
 
-    const report = await this.workspaceIteratorService.iterate({
-      shard,
-      callback: async ({ workspaceId, databaseSchema }) => {
-        if (!isDefined(databaseSchema)) {
-          return;
-        }
-
+    for (const { workspaceId, databaseSchema } of workspaces) {
+      try {
         await this.checkWorkspace(workspaceId, databaseSchema);
-      },
-    });
-
-    for (const { workspaceId, error } of report.fail) {
-      this.exceptionHandlerService.captureExceptions([error], {
-        workspace: { id: workspaceId },
-      });
+      } catch (error) {
+        this.exceptionHandlerService.captureExceptions([error], {
+          workspace: { id: workspaceId },
+        });
+      }
     }
   }
 

@@ -11,7 +11,6 @@ import { type WorkflowDiagramStepNodeData } from '@/workflow/workflow-diagram/ty
 import { getWorkflowNodeIconKey } from '@/workflow/workflow-diagram/utils/getWorkflowNodeIconKey';
 import { WorkflowDiagramStepNodeEditableContent } from '@/workflow/workflow-diagram/workflow-nodes/components/WorkflowDiagramStepNodeEditableContent';
 import { useDeleteStep } from '@/workflow/workflow-steps/hooks/useDeleteStep';
-import { useDuplicateStep } from '@/workflow/workflow-steps/hooks/useDuplicateStep';
 import { useContext } from 'react';
 import { isDefined } from 'twenty-shared/utils';
 import { useIcons } from 'twenty-ui/icon';
@@ -24,8 +23,6 @@ export const WorkflowDiagramStepNodeEditable = ({
   data: WorkflowDiagramStepNodeData;
 }) => {
   const { getIcon } = useIcons();
-  const { deleteStep } = useDeleteStep();
-  const { duplicateStep } = useDuplicateStep();
 
   const workflowVisualizerWorkflowId = useAtomComponentStateValue(
     workflowVisualizerWorkflowIdComponentState,
@@ -37,13 +34,11 @@ export const WorkflowDiagramStepNodeEditable = ({
 
   const selected = workflowSelectedNode === id;
 
-  const {
-    openWorkflowEditStepInSidePanel,
-    openWorkflowEditStepTypeInSidePanel,
-    openWorkflowTriggerTypeInSidePanel,
-  } = useSidePanelWorkflowNavigation();
+  const { openWorkflowEditStepInSidePanel } = useSidePanelWorkflowNavigation();
 
   const { resetWorkflowInsertStepIds } = useResetWorkflowInsertStepIds();
+
+  const { deleteStep } = useDeleteStep();
 
   const { commandMenuContextApi } = useContext(CommandMenuContext);
   const isInSidePanel = commandMenuContextApi.isInSidePanel;
@@ -68,20 +63,9 @@ export const WorkflowDiagramStepNodeEditable = ({
         getIcon(getWorkflowNodeIconKey(data)),
         id,
       );
-    }
-  };
 
-  const handleChangeNode = () => {
-    if (!isDefined(workflowVisualizerWorkflowId)) {
       return;
     }
-
-    if (data.nodeType === 'trigger') {
-      openWorkflowTriggerTypeInSidePanel(workflowVisualizerWorkflowId);
-      return;
-    }
-
-    openWorkflowEditStepTypeInSidePanel(workflowVisualizerWorkflowId);
   };
 
   const handleDelete = () => {
@@ -94,12 +78,6 @@ export const WorkflowDiagramStepNodeEditable = ({
       data={data}
       selected={selected}
       onClick={handleClick}
-      onChangeNode={handleChangeNode}
-      onDuplicateNode={
-        data.nodeType === 'action'
-          ? () => duplicateStep({ stepId: data.stepId })
-          : undefined
-      }
       onDelete={handleDelete}
     />
   );

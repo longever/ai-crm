@@ -13,7 +13,7 @@ import { UserRoleService } from 'src/engine/metadata-modules/user-role/user-role
 import { MEMBER_ROLE_LABEL } from 'src/engine/metadata-modules/permissions/constants/member-role-label.constants';
 import { InjectWorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/inject-workspace-scoped-repository.decorator';
 import { WorkspaceScopedRepository } from 'src/engine/twenty-orm/workspace-scoped-repository/workspace-scoped-repository';
-import { WorkspaceSchemaService } from 'src/engine/workspace-datasource/workspace-schema.service';
+import { WorkspaceDataSourceService } from 'src/engine/workspace-datasource/workspace-datasource.service';
 import { STANDARD_ROLE } from 'src/engine/workspace-manager/twenty-standard-application/constants/standard-role.constant';
 import { TwentyStandardApplicationService } from 'src/engine/workspace-manager/twenty-standard-application/services/twenty-standard-application.service';
 
@@ -22,7 +22,7 @@ export class WorkspaceManagerService {
   private readonly logger = new Logger(WorkspaceManagerService.name);
 
   constructor(
-    private readonly workspaceSchemaService: WorkspaceSchemaService,
+    private readonly workspaceDataSourceService: WorkspaceDataSourceService,
     @InjectRepository(UserWorkspaceEntity)
     private readonly userWorkspaceRepository: Repository<UserWorkspaceEntity>,
     private readonly roleService: RoleService,
@@ -45,7 +45,9 @@ export class WorkspaceManagerService {
     const workspaceId = workspace.id;
     const schemaCreationStart = performance.now();
     const schemaName =
-      await this.workspaceSchemaService.createWorkspaceDBSchema(workspaceId);
+      await this.workspaceDataSourceService.createWorkspaceDBSchema(
+        workspaceId,
+      );
 
     const schemaCreationEnd = performance.now();
 

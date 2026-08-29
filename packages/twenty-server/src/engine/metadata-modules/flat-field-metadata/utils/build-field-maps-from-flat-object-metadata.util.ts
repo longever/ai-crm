@@ -4,7 +4,6 @@ import { computeMorphOrRelationFieldJoinColumnName } from 'src/engine/metadata-m
 import { getFlatFieldsFromFlatObjectMetadata } from 'src/engine/api/graphql/workspace-schema-builder/utils/get-flat-fields-for-flat-object-metadata.util';
 import { type FlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/types/flat-entity-maps.type';
 import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
 import { isFlatFieldMetadataOfType } from 'src/engine/metadata-modules/flat-field-metadata/utils/is-flat-field-metadata-of-type.util';
 import { type FlatObjectMetadata } from 'src/engine/metadata-modules/flat-object-metadata/types/flat-object-metadata.type';
 
@@ -18,14 +17,12 @@ export type FieldMapsForObject = {
 // be memoized by identity: several helpers rebuild them per request otherwise
 // (order parsing, cursor encoding per record, cursor conditions per key).
 const fieldMapsCache = new WeakMap<
-  FlatEntityMaps<OrmFlatFieldMetadata>,
+  FlatEntityMaps<FlatFieldMetadata>,
   WeakMap<FlatObjectMetadata, FieldMapsForObject>
 >();
 
-export const buildFieldMapsFromFlatObjectMetadata = <
-  T extends OrmFlatFieldMetadata = FlatFieldMetadata,
->(
-  flatFieldMetadataMaps: FlatEntityMaps<T>,
+export const buildFieldMapsFromFlatObjectMetadata = (
+  flatFieldMetadataMaps: FlatEntityMaps<FlatFieldMetadata>,
   flatObjectMetadata: FlatObjectMetadata,
 ): FieldMapsForObject => {
   const cachedByObjectMetadata = fieldMapsCache.get(flatFieldMetadataMaps);

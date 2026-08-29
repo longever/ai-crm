@@ -1,0 +1,105 @@
+➤ YN0000: · Yarn 4.13.0
+➤ YN0000: ┌ Resolution step
+➤ YN0000: └ Completed in 0s 494ms
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0060: │ @mantine/hooks is listed by your project with version 8.3.18 (p6cf302), which doesn't satisfy what @mantine/core and other dependencies request (8.3.15).
+➤ YN0060: │ @nestjs/common is listed by your project with version 11.1.24 (p60764a), which doesn't satisfy what @graphql-yoga/nestjs and other dependencies request (but they have non-overlapping ranges!).
+➤ YN0060: │ @nestjs/core is listed by your project with version 11.1.24 (p7a89fa), which doesn't satisfy what @graphql-yoga/nestjs and other dependencies request (but they have non-overlapping ranges!).
+➤ YN0060: │ @nestjs/graphql is listed by your project with version 13.4.2 (pcc71e0), which doesn't satisfy what @graphql-yoga/nestjs requests (^12.0.0).
+➤ YN0060: │ @swc/cli is listed by your project with version 0.8.1 (pa2ad83), which doesn't satisfy what @nestjs/cli requests (~0.1.62 || ~0.3.0 || ~0.4.0 || ~0.5.0 || ~0.6.0 || ~0.7.0).
+➤ YN0060: │ @tiptap/core is listed by your project with version 3.4.2 (pe30bc0), which doesn't satisfy what @tiptap/extension-image and other dependencies request (^3.14.0).
+➤ YN0060: │ graphql is listed by your project with version 16.8.1 (pc4e0d6), which doesn't satisfy what @nestjs/graphql and other dependencies request (^16.11.0).
+➤ YN0060: │ graphql is listed by your project with version 16.8.1 (pee0786), which doesn't satisfy what graphiql-explorer (via @graphiql/plugin-explorer) and other dependencies request (but they have non-overlapping ranges!).
+➤ YN0060: │ react is listed by your project with version 19.2.7 (p4f5ba2), which doesn't satisfy what @remote-dom/react and other dependencies request (but they have non-overlapping ranges!).
+➤ YN0060: │ react is listed by your project with version 19.2.7 (pd36df2), which doesn't satisfy what react-textarea-autosize and other dependencies request (but they have non-overlapping ranges!).
+➤ YN0060: │ react-dom is listed by your project with version 19.2.7 (p66e11b), which doesn't satisfy what graphiql-explorer (via @graphiql/plugin-explorer) and other dependencies request (but they have non-overlapping ranges!).
+➤ YN0060: │ react-hook-form is listed by your project with version 7.52.2 (pf89b05), which doesn't satisfy what @hookform/resolvers requests (^7.55.0).
+➤ YN0060: │ redis is listed by your project with version 4.7.0 (pb90dd2), which doesn't satisfy what bullmq and other dependencies request (^5.0.14).
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails [d24c7] doesn't provide @tiptap/pm (p2947ae), requested by @tiptap/core.
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails [d24c7] doesn't provide typescript (pb9db60), requested by vite-plugin-dts.
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails [d24c7] doesn't provide vite (p6dfa07), requested by @lingui/vite-plugin and other dependencies.
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails doesn't provide @tiptap/pm (pa7bc27), requested by @tiptap/core.
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails doesn't provide react (pac8037), requested by @lingui/react and other dependencies.
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails doesn't provide react-dom (p46b0fe), requested by react-email.
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails doesn't provide typescript (p261955), requested by vite-plugin-dts.
+➤ YN0002: │ twenty-emails@workspace:packages/twenty-emails doesn't provide vite (pa1cb9d), requested by @lingui/vite-plugin and other dependencies.
+➤ YN0002: │ twenty-front-component-renderer@workspace:packages/twenty-front-component-renderer doesn't provide monaco-editor (p444494), requested by twenty-ui.
+➤ YN0002: │ twenty-front-component-renderer@workspace:packages/twenty-front-component-renderer doesn't provide react-is (p56a343), requested by recharts.
+➤ YN0002: │ twenty-front-component-renderer@workspace:packages/twenty-front-component-renderer doesn't provide vite (p583a86), requested by @storybook/react-vite.
+➤ YN0002: │ twenty-front-component-renderer@workspace:packages/twenty-front-component-renderer doesn't provide vitest (pe945e5), requested by @storybook/addon-vitest and other dependencies.
+➤ YN0002: │ twenty-front@workspace:packages/twenty-front doesn't provide @tiptap/pm (p391626), requested by @tiptap/core and other dependencies.
+➤ YN0002: │ twenty-front@workspace:packages/twenty-front doesn't provide @types/react (p3d6673), requested by @apollo/client and other dependencies.
+➤ YN0002: │ twenty-front@workspace:packages/twenty-front doesn't provide @types/react-dom (p3226e6), requested by @apollo/client and other dependencies.
+➤ YN0002: │ twenty-front@workspace:packages/twenty-front doesn't provide storybook (p4704ad), requested by @storybook-community/storybook-addon-cookie and other dependencies.
+➤ YN0002: │ twenty-front@workspace:packages/twenty-front doesn't provide typescript (pff0ab9), requested by msw and other dependencies.
+➤ YN0002: │ twenty-front@workspace:packages/twenty-front doesn't provide vite (p33cb8d), requested by @lingui/vite-plugin and other dependencies.
+➤ YN0002: │ twenty-front@workspace:packages/twenty-front doesn't provide vitest (paa7252), requested by @vitest/coverage-istanbul.
+➤ YN0002: │ twenty-sdk@workspace:packages/twenty-sdk doesn't provide monaco-editor (p21502a), requested by twenty-ui.
+➤ YN0002: │ twenty-sdk@workspace:packages/twenty-sdk doesn't provide rollup (pd3c504), requested by rollup-plugin-dts.
+➤ YN0002: │ twenty-sdk@workspace:packages/twenty-sdk doesn't provide vitest (pacdd27), requested by @vitest/coverage-v8.
+➤ YN0002: │ twenty-server@workspace:packages/twenty-server doesn't provide @types/inquirer (pb95bf3), requested by nest-commander.
+➤ YN0002: │ twenty-server@workspace:packages/twenty-server doesn't provide @types/react-dom (p6b1f28), requested by @blocknote/server-util.
+➤ YN0002: │ twenty-server@workspace:packages/twenty-server doesn't provide typescript (p92d011), requested by @nestjs/schematics and other dependencies.
+➤ YN0002: │ twenty-shared@workspace:packages/twenty-shared doesn't provide @babel/core (p391504), requested by @babel/preset-env and other dependencies.
+➤ YN0002: │ twenty-shared@workspace:packages/twenty-shared doesn't provide react (p129351), requested by react-router-dom.
+➤ YN0002: │ twenty-shared@workspace:packages/twenty-shared doesn't provide react-dom (p4a4c2c), requested by react-router-dom.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [8bbfd] doesn't provide @storybook/addon-docs (p0d096d), requested by @storybook-community/storybook-addon-cookie.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [8bbfd] doesn't provide playwright (pe318d2), requested by @vitest/browser-playwright.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [8bbfd] doesn't provide postcss (p180f4e), requested by vite-plugin-sass-dts.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [8bbfd] doesn't provide storybook (pd6b102), requested by @storybook-community/storybook-addon-cookie and other dependencies.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [8bbfd] doesn't provide vite (pea6567), requested by @storybook/react-vite and other dependencies.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ac1a7] doesn't provide @storybook/addon-docs (p771c2b), requested by @storybook-community/storybook-addon-cookie.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ac1a7] doesn't provide playwright (p5fb4d4), requested by @vitest/browser-playwright.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ac1a7] doesn't provide postcss (p14a24c), requested by vite-plugin-sass-dts.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ac1a7] doesn't provide storybook (peca01d), requested by @storybook-community/storybook-addon-cookie and other dependencies.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ac1a7] doesn't provide vite (pa9394a), requested by @storybook/react-vite and other dependencies.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ed680] doesn't provide @storybook/addon-docs (p38db1e), requested by @storybook-community/storybook-addon-cookie.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ed680] doesn't provide playwright (p639c98), requested by @vitest/browser-playwright.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ed680] doesn't provide postcss (pb54ff9), requested by vite-plugin-sass-dts.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ed680] doesn't provide storybook (p925fb3), requested by @storybook-community/storybook-addon-cookie and other dependencies.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui [ed680] doesn't provide vite (pc74694), requested by @storybook/react-vite and other dependencies.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui doesn't provide @storybook/addon-docs (p749c9f), requested by @storybook-community/storybook-addon-cookie.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui doesn't provide monaco-editor (p231c05), requested by @monaco-editor/react.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui doesn't provide playwright (p10cc70), requested by @vitest/browser-playwright.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui doesn't provide postcss (p42de95), requested by vite-plugin-sass-dts.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui doesn't provide storybook (p2dfd3a), requested by @storybook-community/storybook-addon-cookie and other dependencies.
+➤ YN0002: │ twenty-ui@workspace:packages/twenty-ui doesn't provide vite (pb920ee), requested by @storybook/react-vite and other dependencies.
+➤ YN0002: │ twenty-website@workspace:packages/twenty-website doesn't provide @babel/core (pfb6351), requested by @babel/plugin-transform-export-namespace-from and other dependencies.
+➤ YN0002: │ twenty-website@workspace:packages/twenty-website doesn't provide @testing-library/dom (p770f31), requested by @testing-library/react and other dependencies.
+➤ YN0002: │ twenty-website@workspace:packages/twenty-website doesn't provide monaco-editor (p5f1c4a), requested by twenty-ui.
+➤ YN0002: │ twenty-zapier@workspace:packages/twenty-zapier doesn't provide typescript (p1a7c14), requested by ts-jest and other dependencies.
+➤ YN0002: │ twenty@workspace:. doesn't provide storybook (p8a1a51), requested by @nx/storybook.
+➤ YN0002: │ twenty@workspace:. doesn't provide vite (p5f0369), requested by @nx/vite.
+➤ YN0002: │ twenty@workspace:. doesn't provide vitest (pe204bf), requested by @nx/vite.
+➤ YN0086: │ Some peer dependencies are incorrectly met by your project; run yarn explain peer-requirements <hash> for details, where <hash> is the six-letter p-prefixed code.
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ 4428 packages were added to the project (+ 3.11 GiB).
+➤ YN0000: └ Completed in 44s 131ms
+➤ YN0000: ┌ Link step
+➤ YN0004: │ @nestjs/core@npm:11.1.24 [d24c7] lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ @parcel/watcher@npm:2.5.6 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ @sentry/node-cpu-profiler@npm:2.4.2 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ @swc/core@npm:1.15.18 [8f76d] lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ bcrypt@npm:6.0.0 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ canvas@npm:3.1.0 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ core-js-pure@npm:3.46.0 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ core-js@npm:3.40.0 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ cpu-features@npm:0.0.10 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ esbuild@npm:0.27.2 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ esbuild@npm:0.28.1 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ keytar@npm:7.9.0 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ msgpackr-extract@npm:3.0.4 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ msw@npm:2.12.14 [8bbfd] lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ nx@npm:22.7.8 [6b9dc] lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ protobufjs@npm:7.6.5 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ puppeteer@npm:22.14.0 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ sharp@npm:0.33.5 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ sharp@npm:0.34.5 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ ssh2@npm:1.17.0 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ unrs-resolver@npm:1.11.1 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ vue-demi@npm:0.14.10 [bdfa8] lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ workerd@npm:1.20260730.1 lists build scripts, but all build scripts have been disabled.
+➤ YN0000: └ Completed in 1m 48s
+➤ YN0000: · Done with warnings in 2m 33s

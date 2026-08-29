@@ -1,6 +1,7 @@
 import { STANDARD_PAGE_LAYOUT_UNIVERSAL_IDENTIFIERS } from 'twenty-shared/metadata';
-import { PageLayoutTabLayoutMode, PageLayoutType } from 'twenty-shared/types';
+import { PageLayoutTabLayoutMode } from 'twenty-shared/types';
 
+import { PageLayoutType } from 'src/engine/metadata-modules/page-layout/enums/page-layout-type.enum';
 import {
   type StandardPageLayoutConfig,
   type StandardPageLayoutTabConfig,

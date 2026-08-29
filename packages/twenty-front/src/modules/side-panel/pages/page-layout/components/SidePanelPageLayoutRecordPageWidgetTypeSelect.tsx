@@ -31,7 +31,7 @@ import { useStore } from 'jotai';
 import { useCallback } from 'react';
 import { SidePanelPages } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
-import { IconApps, IconListDetails } from 'twenty-ui/icon';
+import { IconApps, IconList } from 'twenty-ui/icon';
 import { v4 as uuidv4 } from 'uuid';
 import {
   type FrontComponent,
@@ -290,6 +290,13 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
           configurationType: WidgetConfigurationType.FRONT_COMPONENT,
           frontComponentId: frontComponent.id,
         },
+        gridPosition: {
+          __typename: 'GridPosition',
+          row: 0,
+          column: 0,
+          rowSpan: 1,
+          columnSpan: 12,
+        },
         position: {
           __typename: 'PageLayoutWidgetVerticalListPosition',
           layoutMode: PageLayoutTabLayoutMode.VERTICAL_LIST,
@@ -334,7 +341,7 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
       <SidePanelGroup heading={t`Widget type`}>
         <SelectableListItem itemId="fields" onEnter={handleCreateFieldsWidget}>
           <CommandMenuItem
-            Icon={IconListDetails}
+            Icon={IconList}
             label={t`Fields`}
             id="fields"
             onClick={handleCreateFieldsWidget}
@@ -342,7 +349,7 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
         </SelectableListItem>
         <SelectableListItem itemId="field" onEnter={handleCreateFieldWidget}>
           <CommandMenuItem
-            Icon={IconListDetails}
+            Icon={IconList}
             label={t`Field`}
             id="field"
             onClick={handleCreateFieldWidget}

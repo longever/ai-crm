@@ -18,7 +18,6 @@ export type WorkflowRunState = {
     {
       status: string;
       result?: Record<string, unknown>;
-      error?: string;
     }
   >;
   flow?: {

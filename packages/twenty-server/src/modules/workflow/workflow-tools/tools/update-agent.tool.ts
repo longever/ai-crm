@@ -62,7 +62,7 @@ const resyncAiAgentStepOutputSchemas = async (
   deps: Pick<
     WorkflowToolDependencies,
     | 'workflowVersionStepService'
-    | 'workspaceOrmManager'
+    | 'globalWorkspaceOrmManager'
     | 'flatEntityMapsCacheService'
   >,
   { workspaceId, agentId }: { workspaceId: string; agentId: string },
@@ -73,7 +73,8 @@ const resyncAiAgentStepOutputSchemas = async (
   });
 
   const workflowVersionRepository =
-    deps.workspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
+    await deps.globalWorkspaceOrmManager.getRepository<WorkflowVersionWorkspaceEntity>(
+      workspaceId,
       'workflowVersion',
       { shouldBypassPermissionChecks: true },
     );
@@ -112,7 +113,7 @@ export const createUpdateAgentTool = (
     WorkflowToolDependencies,
     | 'agentService'
     | 'workflowVersionStepService'
-    | 'workspaceOrmManager'
+    | 'globalWorkspaceOrmManager'
     | 'flatEntityMapsCacheService'
   >,
   context: WorkflowToolContext,

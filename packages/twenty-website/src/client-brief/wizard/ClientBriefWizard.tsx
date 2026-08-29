@@ -135,13 +135,7 @@ function StepRenderer({ controller }: { controller: ClientBriefController }) {
   }
 }
 
-export function ClientBriefWizard({
-  onSuccess,
-  partnerSlug,
-}: {
-  onSuccess?: () => void;
-  partnerSlug?: string;
-}) {
+export function ClientBriefWizard({ partnerSlug }: { partnerSlug?: string }) {
   const { i18n } = useLingui();
   const controller = useClientBriefState();
   const {
@@ -215,7 +209,7 @@ export function ClientBriefWizard({
   );
 
   if (state.isSubmitted) {
-    return <ClientBriefSuccess onDismiss={onSuccess} />;
+    return <ClientBriefSuccess />;
   }
 
   const stepLabel = `${i18n._(

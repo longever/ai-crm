@@ -1,12 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import {
-  IsArray,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUUID,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 import { UUIDScalarType } from 'src/engine/api/graphql/workspace-schema-builder/graphql-types/scalars';
 
@@ -26,10 +20,4 @@ export class ConnectedAccountHandleDTO {
   @IsNotEmpty()
   @Field()
   provider: string;
-
-  @IsArray()
-  @IsString({ each: true })
-  @IsOptional()
-  @Field(() => [String], { nullable: true })
-  handleAliases?: string[] | null;
 }

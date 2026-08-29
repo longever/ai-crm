@@ -21,10 +21,10 @@ import { getFlatFieldsFromFlatObjectMetadata } from 'src/engine/api/graphql/work
 import { FileEntity } from 'src/engine/core-modules/file/entities/file.entity';
 import { FILE_STATUS } from 'src/engine/core-modules/file/types/file-status.types';
 import { findFlatEntityByIdInFlatEntityMaps } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps.util';
-import { type OrmFlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/orm-flat-field-metadata.type';
+import { type FlatFieldMetadata } from 'src/engine/metadata-modules/flat-field-metadata/types/flat-field-metadata.type';
 import {
-  TwentyOrmException,
-  TwentyOrmExceptionCode,
+  TwentyORMException,
+  TwentyORMExceptionCode,
 } from 'src/engine/twenty-orm/exceptions/twenty-orm.exception';
 import { getObjectMetadataFromEntityTarget } from 'src/engine/twenty-orm/utils/get-object-metadata-from-entity-target.util';
 
@@ -144,9 +144,9 @@ export class FilesFieldSync {
     }
 
     if (existingRecords.length !== 1) {
-      throw new TwentyOrmException(
+      throw new TwentyORMException(
         `Cannot update multiple records with files field at once`,
-        TwentyOrmExceptionCode.INVALID_INPUT,
+        TwentyORMExceptionCode.INVALID_INPUT,
         {
           userFriendlyMessage: msg`You can only update one record with files field at once.`,
         },
@@ -268,7 +268,7 @@ export class FilesFieldSync {
   }
 
   private validateFilesFieldMaxValues(
-    filesField: OrmFlatFieldMetadata,
+    filesField: FlatFieldMetadata,
     newFilesValue: FileItem[],
   ): void {
     const filesFieldMaxNumberOfValues = (
@@ -276,9 +276,9 @@ export class FilesFieldSync {
     ).maxNumberOfValues;
 
     if (newFilesValue.length > filesFieldMaxNumberOfValues) {
-      throw new TwentyOrmException(
+      throw new TwentyORMException(
         `Max number of files is ${filesFieldMaxNumberOfValues}`,
-        TwentyOrmExceptionCode.INVALID_INPUT,
+        TwentyORMExceptionCode.INVALID_INPUT,
         {
           userFriendlyMessage: msg`Max number of files is ${filesFieldMaxNumberOfValues}`,
         },
@@ -298,9 +298,9 @@ export class FilesFieldSync {
       isDefined(expectedUniversalIdentifier) &&
       !fileEntity.path.includes(expectedUniversalIdentifier)
     ) {
-      throw new TwentyOrmException(
+      throw new TwentyORMException(
         `File ${fileId} was not uploaded for this field`,
-        TwentyOrmExceptionCode.INVALID_INPUT,
+        TwentyORMExceptionCode.INVALID_INPUT,
         {
           userFriendlyMessage: msg`File ${fileId} was not uploaded for this field. Please re-upload the file.`,
         },
@@ -310,7 +310,7 @@ export class FilesFieldSync {
 
   private validateAndComputeFilesFieldDiff(
     entity: Record<string, unknown>,
-    filesField: OrmFlatFieldMetadata,
+    filesField: FlatFieldMetadata,
     existingFilesValue: FileItem[],
   ): FilesFieldDiff | null {
     const newFilesValue = entity[filesField.name] as
@@ -500,9 +500,9 @@ export class FilesFieldSync {
           const fileEntity = existingFileMap.get(file.fileId);
 
           if (!fileEntity) {
-            throw new TwentyOrmException(
+            throw new TwentyORMException(
               `File not found: ${file.fileId}`,
-              TwentyOrmExceptionCode.INVALID_INPUT,
+              TwentyORMExceptionCode.INVALID_INPUT,
             );
           }
 
@@ -515,9 +515,9 @@ export class FilesFieldSync {
           if (!fileEntity.settings?.isTemporaryFile) {
             const fileId = file.fileId;
 
-            throw new TwentyOrmException(
+            throw new TwentyORMException(
               `File ${fileId} is already associated with a permanent files field`,
-              TwentyOrmExceptionCode.INVALID_INPUT,
+              TwentyORMExceptionCode.INVALID_INPUT,
               {
                 userFriendlyMessage: msg`File ${fileId} is already associated with a permanent files field. Please re-upload the file.`,
               },
@@ -530,9 +530,9 @@ export class FilesFieldSync {
           if (fileEntity.status !== FILE_STATUS.UPLOADED) {
             const fileId = file.fileId;
 
-            throw new TwentyOrmException(
+            throw new TwentyORMException(
               `File ${fileId} upload has not been completed`,
-              TwentyOrmExceptionCode.INVALID_INPUT,
+              TwentyORMExceptionCode.INVALID_INPUT,
               {
                 userFriendlyMessage: msg`File ${fileId} upload has not been completed. Please retry the upload.`,
               },
@@ -546,9 +546,9 @@ export class FilesFieldSync {
           const fileEntity = existingFileMap.get(file.fileId);
 
           if (!fileEntity) {
-            throw new TwentyOrmException(
+            throw new TwentyORMException(
               `File not found: ${file.fileId}`,
-              TwentyOrmExceptionCode.INVALID_INPUT,
+              TwentyORMExceptionCode.INVALID_INPUT,
             );
           }
 
@@ -559,9 +559,9 @@ export class FilesFieldSync {
           );
 
           if (fileEntity.settings?.isTemporaryFile) {
-            throw new TwentyOrmException(
+            throw new TwentyORMException(
               `File ${file.fileId} to update should not be a temporary file`,
-              TwentyOrmExceptionCode.INVALID_INPUT,
+              TwentyORMExceptionCode.INVALID_INPUT,
               {
                 userFriendlyMessage: STANDARD_ERROR_MESSAGE,
               },
@@ -635,7 +635,7 @@ export class FilesFieldSync {
     });
   }
 
-  private getFilesFields(objectMetadataId: string): OrmFlatFieldMetadata[] {
+  private getFilesFields(objectMetadataId: string): FlatFieldMetadata[] {
     const objectMetadata = findFlatEntityByIdInFlatEntityMaps({
       flatEntityId: objectMetadataId,
       flatEntityMaps: this.internalContext.flatObjectMetadataMaps,

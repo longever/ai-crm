@@ -90,8 +90,6 @@ export const generateJunctionRelationGqlFields = ({
     settings: fieldMetadataItem.settings,
     relationObjectMetadataId:
       fieldMetadataItem.relation?.targetObjectMetadata.id ?? '',
-    relationTargetFieldMetadataId:
-      fieldMetadataItem.relation?.targetFieldMetadata.id,
     objectMetadataItems,
   });
 

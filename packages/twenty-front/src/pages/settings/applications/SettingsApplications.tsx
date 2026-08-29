@@ -7,12 +7,7 @@ import { useHasPermissionFlag } from '@/settings/roles/hooks/useHasPermissionFla
 import { useLingui } from '@lingui/react/macro';
 import { SettingsPath } from 'twenty-shared/types';
 import { getSettingsPath } from 'twenty-shared/utils';
-import {
-  IconApps,
-  IconCode,
-  IconShoppingBag,
-  IconSparkle2,
-} from 'twenty-ui/icon';
+import { IconApps, IconCode, IconDownload, IconSparkle2 } from 'twenty-ui/icon';
 import { Section } from 'twenty-ui/layout';
 import { PermissionFlagType } from '~/generated-metadata/graphql';
 import coverDark from '~/pages/settings/applications/assets/cover-dark.png';
@@ -34,7 +29,7 @@ export const SettingsApplications = () => {
   );
 
   const tabs = [
-    { id: 'marketplace', title: t`Marketplace`, Icon: IconShoppingBag },
+    { id: 'marketplace', title: t`Marketplace`, Icon: IconDownload },
     { id: 'installed', title: t`Installed`, Icon: IconApps },
     ...(hasDeveloperAccess
       ? [{ id: DEVELOPER_TAB_ID, title: t`Developer`, Icon: IconCode }]

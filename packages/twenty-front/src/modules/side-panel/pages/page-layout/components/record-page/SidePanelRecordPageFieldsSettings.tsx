@@ -39,7 +39,7 @@ export const SidePanelRecordPageFieldsSettings = () => {
   const { pageLayoutId, objectNameSingular } =
     usePageLayoutIdFromContextStore();
 
-  const { placementSelectableItemIds, widgetSettingsPlacement } =
+  const { placementSelectableItemIds } =
     useWidgetSettingsPlacementSelectableItemIds(pageLayoutId);
 
   const { updateCurrentWidgetConfig } =
@@ -130,18 +130,7 @@ export const SidePanelRecordPageFieldsSettings = () => {
             />
           </SidePanelGroup>
           <WidgetSettingsManageSection pageLayoutId={pageLayoutId} />
-          <WidgetSettingsPlacementSection
-            pageLayoutId={pageLayoutId}
-            isPlacementSectionVisible={
-              widgetSettingsPlacement.isPlacementSectionVisible
-            }
-            pageLayoutEditingWidgetId={
-              widgetSettingsPlacement.pageLayoutEditingWidgetId
-            }
-            showAddWidgetBelow={widgetSettingsPlacement.showAddWidgetBelow}
-            showMoveDown={widgetSettingsPlacement.showMoveDown}
-            showMoveUp={widgetSettingsPlacement.showMoveUp}
-          />
+          <WidgetSettingsPlacementSection pageLayoutId={pageLayoutId} />
         </SidePanelList>
       </StyledSidePanelContainer>
     </StyledContainer>

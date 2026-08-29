@@ -2,7 +2,7 @@ import {
   RestrictToHorizontalAxis,
   RestrictToVerticalAxis,
 } from '@dnd-kit/abstract/modifiers';
-import { type UseSortableInput, useSortable } from '@dnd-kit/react/sortable';
+import { useSortable } from '@dnd-kit/react/sortable';
 import { styled } from '@linaria/react';
 import { type ReactNode } from 'react';
 import { isDefined } from 'twenty-shared/utils';
@@ -55,8 +55,7 @@ const StyledSortableRoot = styled.div<{
 `;
 
 type DragDropItemSortableCellProps = {
-  accept?: UseSortableInput['accept'];
-  allowNativeDragWhenDisabled?: boolean;
+  accept?: string;
   children: ReactNode;
   data?: Record<string, unknown>;
   disabled?: boolean;
@@ -76,7 +75,6 @@ type DragDropItemSortableCellProps = {
 
 export const DragDropItemSortableCell = ({
   accept,
-  allowNativeDragWhenDisabled = false,
   children,
   data,
   disabled = false,
@@ -124,11 +122,7 @@ export const DragDropItemSortableCell = ({
         $fill={fill}
         $isDragSourceFaded={fadeSourceWhileDragging && isDragSource}
         $isDraggingHighlighted={highlightWhileDragging && isDragging}
-        onDragStart={
-          disabled && allowNativeDragWhenDisabled
-            ? undefined
-            : preventNativeDragStart
-        }
+        onDragStart={preventNativeDragStart}
       >
         {children}
       </StyledSortableRoot>

@@ -20,7 +20,6 @@ export const useEmailForm = ({
 
     return {
       connectedAccountId: action.settings.input.connectedAccountId,
-      fromHandle: action.settings.input.fromHandle ?? '',
       recipients: {
         to: inputRecipients?.to ?? '',
         cc: inputRecipients?.cc ?? '',
@@ -44,7 +43,6 @@ export const useEmailForm = ({
         ...action.settings,
         input: {
           connectedAccountId: formData.connectedAccountId,
-          fromHandle: formData.fromHandle,
           recipients: formData.recipients,
           subject: formData.subject,
           body: formData.body,
@@ -55,26 +53,22 @@ export const useEmailForm = ({
     });
   }, 1_000);
 
-  const applyFormData = (newFormData: EmailFormData) => {
-    setFormData(newFormData);
-    saveAction(newFormData);
-  };
-
-  const handleFieldsChange = (updatedFields: Partial<EmailFormData>) => {
-    applyFormData({ ...formData, ...updatedFields });
-  };
-
   const handleFieldChange = (
     fieldName: keyof EmailFormData,
     updatedValue: JsonValue,
   ) => {
-    applyFormData({ ...formData, [fieldName]: updatedValue });
+    const newFormData: EmailFormData = {
+      ...formData,
+      [fieldName]: updatedValue,
+    };
+
+    setFormData(newFormData);
+    saveAction(newFormData);
   };
 
   return {
     formData,
     handleFieldChange,
-    handleFieldsChange,
     saveAction,
   };
 };

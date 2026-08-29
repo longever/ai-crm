@@ -1,7 +1,6 @@
 import { styled } from '@linaria/react';
 
 import { EventRow } from '@/activities/timeline-activities/components/EventRow';
-import { TIMELINE_ICON_SLOT_SIZE } from '@/activities/timeline-activities/constants/TimelineIconSlotSize';
 import { type EventGroup } from '@/activities/timeline-activities/utils/groupEventsByMonth';
 import { type EnrichedObjectMetadataItem } from '@/object-metadata/types/EnrichedObjectMetadataItem';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
@@ -28,14 +27,17 @@ const StyledActivityGroupContainer = styled.div`
 `;
 
 const StyledActivityGroupBar = styled.div`
+  align-items: center;
   background: ${themeCssVariables.background.secondary};
   border: 1px solid ${themeCssVariables.border.color.light};
   border-radius: ${themeCssVariables.border.radius.md};
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  left: 0;
+  justify-content: center;
   position: absolute;
   top: 0;
-  width: ${TIMELINE_ICON_SLOT_SIZE}px;
+  width: 24px;
 `;
 
 const StyledMonthSeperator = styled.div`

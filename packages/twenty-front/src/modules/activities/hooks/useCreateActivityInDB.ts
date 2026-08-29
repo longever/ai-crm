@@ -14,9 +14,9 @@ import { useCreateOneRecord } from '@/object-record/hooks/useCreateOneRecord';
 import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
 
 import { createOneActivityOperationSignatureFactory } from '@/activities/graphql/operation-signatures/factories/createOneActivityOperationSignatureFactory';
-import { useObjectMorphJunctionConfigOrThrow } from '@/object-record/record-field/ui/hooks/useObjectMorphJunctionConfigOrThrow';
-import { getJunctionRecordsFromRecord } from '@/object-record/record-field/ui/utils/junction/getJunctionRecordsFromRecord';
-import { type ActivityTarget } from '@/activities/types/ActivityTarget';
+import { type NoteTarget } from '@/activities/types/NoteTarget';
+import { type TaskTarget } from '@/activities/types/TaskTarget';
+import { getJoinObjectNameSingular } from '@/activities/utils/getJoinObjectNameSingular';
 import { capitalize } from 'twenty-shared/utils';
 
 export const useCreateActivityInDB = ({
@@ -37,22 +37,23 @@ export const useCreateActivityInDB = ({
     shouldMatchRootQueryFilter: true,
   });
 
+  const { createManyRecords: createManyActivityTargets } = useCreateManyRecords<
+    TaskTarget | NoteTarget
+  >({
+    objectNameSingular: getJoinObjectNameSingular(activityObjectNameSingular),
+    shouldMatchRootQueryFilter: true,
+  });
+
   const { objectMetadataItems } = useObjectMetadataItems();
+
+  const { objectMetadataItem: objectMetadataItemActivityTarget } =
+    useObjectMetadataItem({
+      objectNameSingular: getJoinObjectNameSingular(activityObjectNameSingular),
+    });
 
   const { objectMetadataItem: objectMetadataItemActivity } =
     useObjectMetadataItem({
       objectNameSingular: activityObjectNameSingular,
-    });
-
-  const morphJunctionConfig = useObjectMorphJunctionConfigOrThrow({
-    objectNameSingular: activityObjectNameSingular,
-  });
-
-  const { createManyRecords: createManyActivityTargets } =
-    useCreateManyRecords<ActivityTarget>({
-      objectNameSingular:
-        morphJunctionConfig.junctionObjectMetadata.nameSingular,
-      shouldMatchRootQueryFilter: true,
     });
 
   const cache = useApolloCoreClient().cache;
@@ -65,12 +66,8 @@ export const useCreateActivityInDB = ({
         updatedAt: new Date().toISOString(),
       });
 
-      const { junctionObjectMetadata, junctionField } = morphJunctionConfig;
-
-      const activityTargetsToCreate = getJunctionRecordsFromRecord({
-        record: activityToCreate,
-        junctionFieldName: junctionField.name,
-      });
+      const activityTargetsToCreate =
+        activityToCreate.noteTargets ?? activityToCreate.taskTargets ?? [];
 
       if (isNonEmptyArray(activityTargetsToCreate)) {
         await createManyActivityTargets({
@@ -80,10 +77,10 @@ export const useCreateActivityInDB = ({
 
       const activityTargetsConnection = getRecordConnectionFromRecords({
         objectMetadataItems,
-        objectMetadataItem: junctionObjectMetadata,
+        objectMetadataItem: objectMetadataItemActivityTarget,
         records: activityTargetsToCreate.map((activityTarget) => ({
           ...activityTarget,
-          __typename: capitalize(junctionObjectMetadata.nameSingular),
+          __typename: capitalize(objectMetadataItemActivityTarget.nameSingular),
         })),
         withPageInfo: false,
         computeReferences: true,
@@ -94,14 +91,14 @@ export const useCreateActivityInDB = ({
         recordId: createdActivity.id,
         cache,
         fieldModifiers: {
-          [junctionField.name]: () => activityTargetsConnection,
+          activityTargets: () => activityTargetsConnection,
         },
         objectMetadataItem: objectMetadataItemActivity,
       });
 
       store.set(recordStoreFamilyState.atomFamily(createdActivity.id), {
         ...createdActivity,
-        [junctionField.name]: activityTargetsToCreate,
+        activityTargets: activityTargetsToCreate,
       });
     },
     [
@@ -109,8 +106,8 @@ export const useCreateActivityInDB = ({
       cache,
       createManyActivityTargets,
       createOneActivity,
-      morphJunctionConfig,
       objectMetadataItemActivity,
+      objectMetadataItemActivityTarget,
       objectMetadataItems,
     ],
   );

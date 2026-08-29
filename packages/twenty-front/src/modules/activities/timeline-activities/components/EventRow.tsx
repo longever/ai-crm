@@ -4,11 +4,8 @@ import { useContext } from 'react';
 
 import { TimelineActivityContext } from '@/activities/timeline-activities/contexts/TimelineActivityContext';
 
-import { TIMELINE_ICON_SLOT_SIZE } from '@/activities/timeline-activities/constants/TimelineIconSlotSize';
 import { EventIconDynamicComponent } from '@/activities/timeline-activities/rows/components/EventIconDynamicComponent';
 import { EventRowDynamicComponent } from '@/activities/timeline-activities/rows/components/EventRowDynamicComponent';
-import { getStandardTimelineActivityRenderer } from '@/activities/timeline-activities/rows/components/StandardTimelineActivityRenderer';
-import { type TimelineActivityRenderer } from '@/activities/timeline-activities/rows/components/TimelineActivityRenderer';
 import { type TimelineActivity } from '@/activities/timeline-activities/types/TimelineActivity';
 import { useTimelineActivityTypes } from '@/activities/timeline-activities/hooks/useTimelineActivityTypes';
 import { getTimelineActivityAction } from '@/activities/timeline-activities/utils/getTimelineActivityAction';
@@ -24,43 +21,51 @@ import { useObjectMetadataItems } from '@/object-metadata/hooks/useObjectMetadat
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { isUndefinedOrNull } from '~/utils/isUndefinedOrNull';
 import { allowRequestsToTwentyIconsState } from '@/client-config/states/allowRequestsToTwentyIcons';
-import { frontComponentsSelector } from '@/front-components/states/frontComponentsSelector';
-import { isDefined } from 'twenty-shared/utils';
 
 const StyledTimelineItemContainer = styled.div`
   color: ${themeCssVariables.font.color.primary};
   display: flex;
   gap: ${themeCssVariables.spacing[4]};
+  height: 'auto';
   justify-content: space-between;
   overflow: hidden;
   white-space: nowrap;
 `;
 
 const StyledLeftContainer = styled.div`
-  align-items: center;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  width: ${TIMELINE_ICON_SLOT_SIZE}px;
 `;
 
 const StyledIconContainer = styled.div`
   align-items: center;
   color: ${themeCssVariables.font.color.tertiary};
   display: flex;
-  flex-shrink: 0;
-  height: ${TIMELINE_ICON_SLOT_SIZE}px;
+  height: 16px;
   justify-content: center;
+  margin: 5px;
+  text-decoration-line: underline;
   user-select: none;
-  width: 100%;
+  width: 16px;
+  z-index: 2;
+`;
+
+const StyledVerticalLineContainer = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  height: 100%;
+  justify-content: center;
   z-index: 2;
 `;
 
 const StyledVerticalLine = styled.div`
   background: ${themeCssVariables.border.color.light};
-  flex: 1;
+  height: 100%;
   width: 2px;
-  z-index: 2;
+`;
+
+const StyledSummary = styled.summary`
+  width: 100%;
 `;
 
 const StyledItemContainer = styled.div<{ isMarginBottom?: boolean }>`
@@ -71,8 +76,7 @@ const StyledItemContainer = styled.div<{ isMarginBottom?: boolean }>`
   gap: ${themeCssVariables.spacing[1]};
   margin-bottom: ${({ isMarginBottom }) =>
     isMarginBottom ? themeCssVariables.spacing[3] : '0'};
-  min-height: ${TIMELINE_ICON_SLOT_SIZE}px;
-  min-width: 0;
+  min-height: 26px;
   overflow: hidden;
 `;
 
@@ -80,24 +84,6 @@ type EventRowProps = {
   mainObjectMetadataItem: EnrichedObjectMetadataItem | null;
   isLastEvent?: boolean;
   event: TimelineActivity;
-};
-
-const getTimelineActivityRenderer = ({
-  standardRenderer,
-  frontComponentId,
-}: {
-  standardRenderer: ReturnType<typeof getStandardTimelineActivityRenderer>;
-  frontComponentId: string | null;
-}): TimelineActivityRenderer | null => {
-  if (isDefined(standardRenderer)) {
-    return { type: 'standard', Component: standardRenderer };
-  }
-
-  if (isDefined(frontComponentId)) {
-    return { type: 'frontComponent', frontComponentId };
-  }
-
-  return null;
 };
 
 export const EventRow = ({
@@ -115,41 +101,24 @@ export const EventRow = ({
 
   const recordStore = useAtomFamilyStateValue(recordStoreFamilyState, recordId);
 
-  const { timelineActivityTypeMaps } = useTimelineActivityTypes();
-  const frontComponents = useAtomStateValue(frontComponentsSelector);
+  const { timelineActivityTypeById } = useTimelineActivityTypes();
 
   const { objectMetadataItems } = useObjectMetadataItems();
 
   const timelineActivityType = getTimelineActivityType(
     event,
-    timelineActivityTypeMaps,
+    timelineActivityTypeById,
   );
-
-  const rendererUniversalIdentifier =
-    timelineActivityType?.frontComponentUniversalIdentifier;
-  const standardRenderer = getStandardTimelineActivityRenderer(
-    rendererUniversalIdentifier,
-  );
-  const frontComponentId = isDefined(rendererUniversalIdentifier)
-    ? (frontComponents.find(
-        (frontComponent) =>
-          frontComponent.universalIdentifier === rendererUniversalIdentifier,
-      )?.id ?? null)
-    : null;
-  const renderer = getTimelineActivityRenderer({
-    standardRenderer,
-    frontComponentId,
-  });
 
   const timelineActivityAction = getTimelineActivityAction(
     event,
-    timelineActivityTypeMaps,
+    timelineActivityTypeById,
   );
 
   const linkedObjectMetadataItem =
     getTimelineActivityLinkedObjectMetadataItem({
       timelineActivity: event,
-      timelineActivityTypeMaps,
+      timelineActivityTypeById,
       objectMetadataItems,
     }) ?? null;
 
@@ -175,6 +144,10 @@ export const EventRow = ({
     currentWorkspaceMember,
   );
 
+  if (isUndefinedOrNull(mainObjectMetadataItem)) {
+    throw new Error('mainObjectMetadataItem is required');
+  }
+
   return (
     <>
       <StyledTimelineItemContainer>
@@ -185,20 +158,25 @@ export const EventRow = ({
               linkedObjectMetadataItem={linkedObjectMetadataItem}
             />
           </StyledIconContainer>
-          {!isLastEvent && <StyledVerticalLine />}
+          {!isLastEvent && (
+            <StyledVerticalLineContainer>
+              <StyledVerticalLine />
+            </StyledVerticalLineContainer>
+          )}
         </StyledLeftContainer>
         <StyledItemContainer isMarginBottom={!isLastEvent}>
-          <EventRowDynamicComponent
-            authorFullName={authorFullName}
-            labelIdentifierValue={labelIdentifier.name}
-            event={event}
-            eventAction={timelineActivityAction}
-            eventTypeLabel={timelineActivityType?.label}
-            renderer={renderer}
-            mainObjectMetadataItem={mainObjectMetadataItem}
-            linkedObjectMetadataItem={linkedObjectMetadataItem}
-            happensAt={event.happensAt}
-          />
+          <StyledSummary>
+            <EventRowDynamicComponent
+              authorFullName={authorFullName}
+              labelIdentifierValue={labelIdentifier.name}
+              event={event}
+              eventAction={timelineActivityAction}
+              eventRenderer={timelineActivityType?.renderer ?? null}
+              mainObjectMetadataItem={mainObjectMetadataItem}
+              linkedObjectMetadataItem={linkedObjectMetadataItem}
+              createdAt={event.createdAt}
+            />
+          </StyledSummary>
         </StyledItemContainer>
       </StyledTimelineItemContainer>
     </>

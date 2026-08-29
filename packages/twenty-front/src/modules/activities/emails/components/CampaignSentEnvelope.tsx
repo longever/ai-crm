@@ -9,7 +9,7 @@ import {
   CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH,
   CampaignEnvelopeBox,
 } from '@/activities/emails/components/CampaignEnvelopeBox';
-import { ComposerFieldRow } from '@/activities/components/ComposerFieldRow';
+import { EmailComposerFieldRow } from '@/activities/emails/components/EmailComposerFieldRow';
 import { useUnsubscribeTopics } from '@/activities/emails/hooks/useUnsubscribeTopics';
 import { type MessageCampaign } from '@/activities/emails/types/MessageCampaign';
 import { RecordChip } from '@/object-record/components/RecordChip';
@@ -82,7 +82,7 @@ export const CampaignSentEnvelope = ({
 
   return (
     <CampaignEnvelopeBox width={width}>
-      <ComposerFieldRow
+      <EmailComposerFieldRow
         label={t`From`}
         labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
       >
@@ -91,8 +91,8 @@ export const CampaignSentEnvelope = ({
         ) : (
           <StyledEmptyValue>{t`No sender`}</StyledEmptyValue>
         )}
-      </ComposerFieldRow>
-      <ComposerFieldRow
+      </EmailComposerFieldRow>
+      <EmailComposerFieldRow
         label={t`To`}
         labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
       >
@@ -108,9 +108,9 @@ export const CampaignSentEnvelope = ({
             <StyledEmptyValue>{t`Unavailable`}</StyledEmptyValue>
           )
         )}
-      </ComposerFieldRow>
+      </EmailComposerFieldRow>
       {hasUnsubscribeTopic && (
-        <ComposerFieldRow
+        <EmailComposerFieldRow
           label={t`Unsubscribe topic`}
           labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
         >
@@ -123,9 +123,9 @@ export const CampaignSentEnvelope = ({
               <StyledEmptyValue>{t`Unavailable`}</StyledEmptyValue>
             )
           )}
-        </ComposerFieldRow>
+        </EmailComposerFieldRow>
       )}
-      <ComposerFieldRow
+      <EmailComposerFieldRow
         label={t`Subject`}
         labelMinWidth={CAMPAIGN_ENVELOPE_LABEL_MIN_WIDTH}
       >
@@ -134,7 +134,7 @@ export const CampaignSentEnvelope = ({
         ) : (
           <StyledEmptyValue>{t`No subject`}</StyledEmptyValue>
         )}
-      </ComposerFieldRow>
+      </EmailComposerFieldRow>
     </CampaignEnvelopeBox>
   );
 };

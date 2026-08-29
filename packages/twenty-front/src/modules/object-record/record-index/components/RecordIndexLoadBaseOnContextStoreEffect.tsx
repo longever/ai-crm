@@ -4,13 +4,18 @@ import { useLoadRecordIndexStates } from '@/object-record/record-index/hooks/use
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useAtomFamilySelectorValue } from '@/ui/utilities/state/jotai/hooks/useAtomFamilySelectorValue';
 import { viewFromViewIdFamilySelector } from '@/views/states/selectors/viewFromViewIdFamilySelector';
+import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
 import { useEffect, useState } from 'react';
 import { isDefined } from 'twenty-shared/utils';
+import { FeatureFlagKey } from '~/generated-metadata/graphql';
 
 export const RecordIndexLoadBaseOnContextStoreEffect = () => {
   const { loadRecordIndexStates } = useLoadRecordIndexStates();
   const contextStoreCurrentViewId = useAtomComponentStateValue(
     contextStoreCurrentViewIdComponentState,
+  );
+  const isCalendarWeekViewEnabled = useIsFeatureEnabled(
+    FeatureFlagKey.IS_CALENDAR_WEEK_VIEW_ENABLED,
   );
 
   const [loadedViewKey, setLoadedViewKey] = useState<string | undefined>();
@@ -25,7 +30,7 @@ export const RecordIndexLoadBaseOnContextStoreEffect = () => {
     .join(',');
 
   const currentViewLoadKey = isDefined(contextStoreCurrentViewId)
-    ? `${contextStoreCurrentViewId}-${viewGroupsSignature}`
+    ? `${contextStoreCurrentViewId}-${isCalendarWeekViewEnabled}-${viewGroupsSignature}`
     : undefined;
 
   const { objectMetadataItem } = useContextStoreObjectMetadataItemOrThrow();
